@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Eventos Platinum{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Platinum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_evento' %}">Registro de Gastos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_evento_listar_gastos' %}">Listar Gastos x Evento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_evento_listar_gastos2' %}">Imprimir Gastos x Evento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_eventos' %}">Eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_proveedores' %}">Proveedores</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="navbar-text text-white me-3">
+                        Bienvenido, {{ user.get_full_name|default:user.username }}
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

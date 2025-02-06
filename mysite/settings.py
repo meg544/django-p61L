@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'myapp',
+    'data_wizard',
+    'data_wizard.sources',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    # Nuestro middleware personalizado
+    'myapp.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -75,19 +80,35 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ["PGDATABASE"],
-        'USER': os.environ["PGUSER"],
-        'PASSWORD': os.environ["PGPASSWORD"],
-        'HOST': os.environ["PGHOST"],
-        'PORT': os.environ["PGPORT"],
+
+# Por ejemplo, una variable que indique el modo:
+DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
+
+if DEBUG:
+    # Configuración para desarrollo (puede ser SQLite o tu BD local)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    # Configuración para producción (por ejemplo, PostgreSQL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get("PGDATABASE"),
+            'USER': os.environ.get("PGUSER"),
+            'PASSWORD': os.environ.get("PGPASSWORD"),
+            'HOST': os.environ.get("PGHOST"),
+            'PORT': os.environ.get("PGPORT"),
+        }
+    }
+
 
 
 # Password validation
@@ -112,9 +133,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-mx'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
@@ -133,3 +154,21 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Prueba
+
+
+# Redirigir después de un inicio de sesión exitoso
+LOGIN_REDIRECT_URL = '/seleccionar-evento/'  # Cambia '/' por la URL a donde quieras redirigir al usuario después de iniciar sesión
+
+# Redirigir después de cerrar sesión
+LOGOUT_REDIRECT_URL = '/login/'  # Cambia '/login/' por la URL de tu formulario de login
+
+# URL a la que se redirige si el usuario no está autenticado
+LOGIN_URL = '/login/'
+
+# URLs exentas de autenticación
+LOGIN_EXEMPT_URLS = [
+    '/',              # Página de inicio
+    '/login/',        # Página de login
+    '/register/',     # Página de registro
+    '/logout/',       # Página de cerrar sesión
+]

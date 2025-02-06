@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eliminar Evento</title>
+</head>
+<body>
+<h1>Eliminar Evento</h1>
+<p>¿Estás seguro de que deseas eliminar el evento "{{ evento.nombre }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+</form>
+<a href="{% url 'listar_eventos' %}">Regresar</a>
+</body>
+</html>
+
+{% endblock %}

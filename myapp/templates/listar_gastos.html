@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load formatos %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Gastos</title>
+    <style>
+         #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        }
+
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers tr:hover {background-color: #ddd;}
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h3>Gastos para el Evento: {{ evento.nombre }}</h3>
+<table id="customers">
+    <thead>
+    <tr>
+        <th>Folio</th>
+        <th>Fecha</th>
+        <th>Importe</th>
+        <th>Concepto</th>
+        <th>Proveedor</th>
+        <th>Comentarios</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for gasto in gastos %}
+    <tr>
+        <td>{{ gasto.folio }}</td>
+        <!-- <td>{{ gasto.fecha }}</td>
+         <td>{{ gasto.importe }}</td> -->
+        <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
+        <td>{{ gasto.importe|formato_pesos }}</td>
+        <td>{{ gasto.concepto }}</td>
+        <td>{{ gasto.proveedor.nombre }}</td>
+        <td>{{ gasto.comentarios }}</td>
+        <td>
+            <a href="{% url 'generar_pdf' gasto.folio %}">Imprimir Recibo</a>
+        </td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="2"><strong>Total:</strong></td>
+        <td colspan="5"><strong>{{ total|formato_pesos }}</strong></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+{% endblock %}
