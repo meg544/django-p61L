@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
 # Por ejemplo, una variable que indique el modo:
-DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 if DEBUG:
     # Configuración para desarrollo (puede ser SQLite o tu BD local)
