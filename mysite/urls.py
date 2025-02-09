@@ -31,7 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # data wizard
-    path('datawizard/', include('data-wizard.urls')),
+    # path('datawizard/', include('data-wizard.urls')),
 
     # Página de login
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
