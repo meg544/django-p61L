@@ -1,4 +1,4 @@
-import data_wizard
+import data-wizard
 from .models import DetalleGasto
 
-data_wizard.register(DetalleGasto)
+data-wizard.register(DetalleGasto)

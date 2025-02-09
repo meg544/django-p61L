@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
-    'data_wizard',
-    'data_wizard.sources',
+    'data-wizard',
+    'data-wizard.sources',
 ]
 
 MIDDLEWARE = [
