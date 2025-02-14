@@ -29,6 +29,7 @@ from myapp.views import logout_view,generar_pdf_multiple,listar_gastos2,seleccio
 from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  # URL raíz para la página de inicio
 
     # data wizard
     # path('datawizard/', include('data-wizard.urls')),
