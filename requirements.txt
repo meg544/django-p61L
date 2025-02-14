@@ -5,7 +5,7 @@ gunicorn==22.0.0
 psycopg2==2.9.9
 sqlparse==0.5.0
 whitenoise==6.7.0
-pycairo==1.25.1
+
 
 
 
