@@ -1,0 +1,4 @@
+id,password,last_login,is_superuser,username,last_name,email,is_staff,is_active,date_joined,first_name
+1,pbkdf2_sha256$870000$edYHPhTK2eC04JPR3KUdTe$JrmQmybmmrqmT/sT7pltUZ7mIesrp4+I+f5vQbENQ9U=,2025-02-03 20:32:22.803861,1,admin,,meg_544@yahoo.com.mx,1,1,2025-01-24 01:28:43.760237,
+2,pbkdf2_sha256$180000$r4phcEy5wLWj$NSjKxfGLkf+lVwLzJIS0LTuV4KmCIG+upJ4ebW1R/hI=,2025-01-25 04:54:18.075755,0,Conny,,,0,1,2025-01-24 23:04:30,Conny
+3,pbkdf2_sha256$180000$JBTH345QRelL$GiS43Bn5E0DsTTFotnE6ezZT9Pj7RHGOmj15TdB89VE=,2025-01-25 05:47:24.028947,0,Alma,,,0,1,2025-01-24 23:11:43,Alma

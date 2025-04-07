@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "password": "pbkdf2_sha256$870000$edYHPhTK2eC04JPR3KUdTe$JrmQmybmmrqmT/sT7pltUZ7mIesrp4+I+f5vQbENQ9U=",
+    "last_login": "2025-02-03 20:32:22.803861",
+    "is_superuser": "1",
+    "username": "admin",
+    "last_name": "",
+    "email": "meg_544@yahoo.com.mx",
+    "is_staff": "1",
+    "is_active": "1",
+    "date_joined": "2025-01-24 01:28:43.760237",
+    "first_name": ""
+  },
+  {
+    "id": 2,
+    "password": "pbkdf2_sha256$180000$r4phcEy5wLWj$NSjKxfGLkf+lVwLzJIS0LTuV4KmCIG+upJ4ebW1R/hI=",
+    "last_login": "2025-01-25 04:54:18.075755",
+    "is_superuser": "0",
+    "username": "Conny",
+    "last_name": "",
+    "email": "",
+    "is_staff": "0",
+    "is_active": "1",
+    "date_joined": "2025-01-24 23:04:30",
+    "first_name": "Conny"
+  },
+  {
+    "id": 3,
+    "password": "pbkdf2_sha256$180000$JBTH345QRelL$GiS43Bn5E0DsTTFotnE6ezZT9Pj7RHGOmj15TdB89VE=",
+    "last_login": "2025-01-25 05:47:24.028947",
+    "is_superuser": "0",
+    "username": "Alma",
+    "last_name": "",
+    "email": "",
+    "is_staff": "0",
+    "is_active": "1",
+    "date_joined": "2025-01-24 23:11:43",
+    "first_name": "Alma"
+  }
+]

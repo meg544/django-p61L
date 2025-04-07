@@ -1,0 +1,382 @@
+[
+  {
+    "id": 112,
+    "nombre": "10 ENERO 2025 / CANDILES / UNIVERSIDAD ROSARIO CASTELLANOS LIC. CONTADURIA Y FINANZAS"
+  },
+  {
+    "id": 113,
+    "nombre": "11 ENERO 2025 / CANDILES POLANCO / UPIICSA ING. INDUSTRIAL"
+  },
+  {
+    "id": 114,
+    "nombre": "11 ENERO 2025 / SALON GAUDI / UNITEC MARINA LIC. ENFERMERIA"
+  },
+  {
+    "id": 115,
+    "nombre": "11 ENERO 2025 / POLIFORUM SIQUEIROS / UNIVERSIDAD ROSARIO CASTELLANOS RELACIONES INTERNACIONALES"
+  },
+  {
+    "id": 116,
+    "nombre": "11 ENERO 2025 / SANTA RITA / UPIICSA"
+  },
+  {
+    "id": 117,
+    "nombre": "11 ENERO 2025 / SALON TERRAZAS BELVEDERE / UNITEC ATIZAPAN"
+  },
+  {
+    "id": 118,
+    "nombre": "17 ENERO  2025 / CLAUSTRO DE SOR JUANA / IPN ESIME ING. MECANICA Y ELECTRONICA"
+  },
+  {
+    "id": 119,
+    "nombre": "18 ENERO 2025 / JARDIN FORESTA / UNAM FES CUAUTITLAN"
+  },
+  {
+    "id": 120,
+    "nombre": "18 ENERO 2025 / HSA CAMPOS / UNIV. ESTATAL DEL VALLE ECATEPEC / ING.COMUNICACION MULTIMEDIA"
+  },
+  {
+    "id": 121,
+    "nombre": "18 ENERO 2025 / PONSA / UAM IZTAPALAPA"
+  },
+  {
+    "id": 122,
+    "nombre": "25 Enero 2025 / JARDIN CANDILES POLANCO / IPN ING. GEOFISICA"
+  },
+  {
+    "id": 123,
+    "nombre": "25 ENERO 2025 /  SALON FORESTA /  UPIICSA ING. FERROVIARIA"
+  },
+  {
+    "id": 124,
+    "nombre": "31 ENERO 2025 / HSA CUPULA / UPIBI"
+  },
+  {
+    "id": 125,
+    "nombre": "31 ENERO 2025 / HACIENDA SAN FERNANDO / UNITEC"
+  },
+  {
+    "id": 126,
+    "nombre": "1 FEBRERO 2025 / CANDILES POLANCO / UNAM FISICA BIOMEDICA"
+  },
+  {
+    "id": 127,
+    "nombre": "1 FEBRERO 2025 / CANDILES POLANCO / IPN ESE ECONOMIA"
+  },
+  {
+    "id": 128,
+    "nombre": "1 FEBRERO 2025 / HACIENDA SAN ANDRES  / IPN UPIEM LIC. SISTEMAS ENERGETICOS Y REDES INTELIGENTES"
+  },
+  {
+    "id": 129,
+    "nombre": "8 FEBRERO 2025 / HSA CUPULA / ENCB IPN QUIMICA BATERIOLOGO PARASITOLOGO"
+  },
+  {
+    "id": 130,
+    "nombre": "21 FEBRERO 2025 / CANDILES POLANCO / IPN UPIITA ING. SISTEMAS AUTOMOTRICES"
+  },
+  {
+    "id": 131,
+    "nombre": "21 FEBRERO 2025 / HSA Cúpula / Unitec Nutrición"
+  },
+  {
+    "id": 132,
+    "nombre": "28  FEBRERO 2025 / POLYFORUM / HOSPITAL GENERAL 4 IMSS / GINECOLOGIA Y OBSTETRICIA"
+  },
+  {
+    "id": 133,
+    "nombre": "7 MARZO 2025 / HACIENDA SAN FERNANDO / UAM IZTAPALAPA"
+  },
+  {
+    "id": 134,
+    "nombre": "29 MARZO 2025 / CANDILES POLANCO / ITAO"
+  },
+  {
+    "id": 135,
+    "nombre": "9 MAYO 2025 / CEDROS / UNAM ARQUITECTURA"
+  },
+  {
+    "id": 136,
+    "nombre": "9 MAYO 2025 / CEDROS / UAM ARQUITECTURA"
+  },
+  {
+    "id": 137,
+    "nombre": "17 MAYO 2025 / HOTEL HILTON / UNIVERSIDAD DE LA SALUD"
+  },
+  {
+    "id": 138,
+    "nombre": "23 MAYO 2025  / PONSA / UAM  XOCHIMILCO LIC.  QUIMICA FARMACEUTICA BIOLOGICA"
+  },
+  {
+    "id": 139,
+    "nombre": "23 MAYO 2025 / HSA LOS CAMPOS / UNITEC CAMPUS SUR LIC. DERECHO"
+  },
+  {
+    "id": 140,
+    "nombre": "24 MAYO 2025 / HSA JARDIN CAMPOS / UNITEC / LIC. ENFERMERIA"
+  },
+  {
+    "id": 141,
+    "nombre": "24 MAYO 2025 / HSA ARCOS / UNAM FES IZTACALA CIRUJANO DENTISTA"
+  },
+  {
+    "id": 142,
+    "nombre": "7 JUNIO 2025 / JARDIN FORESTA / UNAM CIDI"
+  },
+  {
+    "id": 143,
+    "nombre": "7 JUNIO 2025 / SAN HIPOLITO / UNAM FES ZARAGOZA / LIC. ENFERMERIA"
+  },
+  {
+    "id": 144,
+    "nombre": "13 JUNIO 2025 / CANDILES POLANCO / CENTRO UNIVERSITARIO INCARNATE WORD"
+  },
+  {
+    "id": 145,
+    "nombre": "13 JUNIO 2025 / HSA CUPULA / FES ACATLAN - DERECHO"
+  },
+  {
+    "id": 146,
+    "nombre": "13 JUNIO 2025 / JARDIN FORESTA / UNISA ENFERMERIA"
+  },
+  {
+    "id": 147,
+    "nombre": "14 JUNIO 2025 / JARDIN FORESTA / UNAM FACULTAD ODONTOLOGIA"
+  },
+  {
+    "id": 148,
+    "nombre": "14 JUNIO 2025 / JARDIN VOLTERRA / FES ACATLAN CIRUJANO DENTISTA"
+  },
+  {
+    "id": 149,
+    "nombre": "20 JUNIO 2025 / CANDILES POLANCO / FES ACATLAN ING. CIVIL"
+  },
+  {
+    "id": 150,
+    "nombre": "21 JUNIO 2025 / HOTEL HILTON / UNAM FES ZARAGOZA LIC PSICOLOGIA"
+  },
+  {
+    "id": 151,
+    "nombre": "21 JUNIO 2025 / SANTA RITA /ESC. BANCARIA Y COMERCIAL LIC. NEGOCIOS Y COMERCIO INTERNACIONAL"
+  },
+  {
+    "id": 152,
+    "nombre": "21 JUNIO 2025 / CLUB BANQUEROS / UNIVERSIDAD DEL CLAUSTRO"
+  },
+  {
+    "id": 153,
+    "nombre": "27 JUNIO 2025 / SALON PONSA / UNAM FACULTAD ODONTOLOGIA"
+  },
+  {
+    "id": 154,
+    "nombre": "28 JUNIO 2025 / SANTA RITA / FES ZARAGOZA QFB"
+  },
+  {
+    "id": 155,
+    "nombre": "5 JULIO 2025 / HSA LOS CAMPOS / UVM LOMAS VERDES LIC. FISIOTERAPIA"
+  },
+  {
+    "id": 156,
+    "nombre": "5 JULIO 2025 / VIZCAINAS / FES ZARAGOZA CIRUJANO DENTISTA"
+  },
+  {
+    "id": 157,
+    "nombre": "11 JULIO 2025 / CLAUSTRO SOR JUANA / UNAM FES ZARAGOZA / LIC. EN BIOLOGIA"
+  },
+  {
+    "id": 158,
+    "nombre": "12 JULIO 2025 / HSA LOS ARCOS / UAEM VALLE DE MEXICO RELACIONES ECONOMICAS INTERNACIONALES"
+  },
+  {
+    "id": 159,
+    "nombre": "12 JULIO 2025 / SALON GAUDI / IPN ESCUELA SUPERIOR DE ENFERMERIA Y OBSTETRICIA"
+  },
+  {
+    "id": 160,
+    "nombre": "12 JULIO 2025 / HSA LOS CAMPOS /  LA SALLE LIC. ACTUARIA"
+  },
+  {
+    "id": 161,
+    "nombre": "12 JULIO 2025 / SAN HIPOLITO / UNAM ECONOMIA CANCELADO"
+  },
+  {
+    "id": 162,
+    "nombre": "19 JULIO 2025 / CANDILES POLANCO / UNIVERSIDAD INSURGENTES LIC. ENFERMERIA"
+  },
+  {
+    "id": 163,
+    "nombre": "19 JULIO 2025 / HOTEL HILTON / UNAM PSICOLOGIA"
+  },
+  {
+    "id": 164,
+    "nombre": "19 JULIO 2025 / HACIENDA SAN ANDRES LOS ARCOS / UNAM FES ARAGON LIC. DERECHO"
+  },
+  {
+    "id": 165,
+    "nombre": "25 JULIO 2025 / CANDILES / ESCA SANTO TOMAS LIC. RELACIONES COMERCIALES"
+  },
+  {
+    "id": 166,
+    "nombre": "25 JULIO 2025 / HACIENDA SAN FERNANDO / UNAM LENGUA Y LITERATURA PREHISPANICAS"
+  },
+  {
+    "id": 167,
+    "nombre": "25 JULIO 2025 / EX CONVENTO SAN HIPOLITO / UNITEC MARINA CIRUJANO DENTISTA"
+  },
+  {
+    "id": 168,
+    "nombre": "26 JULIO 2025 / SAN HIPOLITO / UNAM ING. MECANICA"
+  },
+  {
+    "id": 169,
+    "nombre": "2 AGOSTO 2025 / SALON PONSA / IPN ESCA"
+  },
+  {
+    "id": 170,
+    "nombre": "9 AGOSTO 2025 / CANDILES POLANCO / ESCUELA NORMAL SUPERIOR DE MEXICO"
+  },
+  {
+    "id": 171,
+    "nombre": "15 AGOSTO 2025 / HSA CUPULA / EBC"
+  },
+  {
+    "id": 172,
+    "nombre": "16 AGOSTO 2025 / PONSA / UPIICSA ING. INDUSTRIAL"
+  },
+  {
+    "id": 173,
+    "nombre": "16 AGOSTO 2025 / CANDILES / UNIVERSIDAD ROSARIO CASTELLANOS / CIENCIAS DE LA COMUNICACION"
+  },
+  {
+    "id": 174,
+    "nombre": "5 SEPTIEMBRE 2025 / HACIENDA SAN ANDRES LA CUPULA / IPN ESCUELA SUPERIOR DE ECONOMIA"
+  },
+  {
+    "id": 175,
+    "nombre": "12 DICIEMBRE 2025 / HSA JARDIN CUPULA / UVM LOMAS VERDES LIC. PSICOLOGIA"
+  },
+  {
+    "id": 176,
+    "nombre": "15 FEBRERO 2025 / CANDILES POLANCO SALON VICTORIA / UAM XOCHIMILCO LIC. BIOLOGIA"
+  },
+  {
+    "id": 177,
+    "nombre": "11 ENERO 2025 / CANDILES POLANCO / COCO SCHOOL / PRODUCCION 3D PARA CINE Y PUBLICIDAD"
+  },
+  {
+    "id": 178,
+    "nombre": "20 SEPTIEMBRE 2025 / CANDILES POLANCO / UNIVERSIDAD DE LONDRES PEDAGOGÍA"
+  },
+  {
+    "id": 179,
+    "nombre": "27 SEPTIEMBRE 2025 / JARDIN FORESTA / ULA ARQUITECTURA"
+  },
+  {
+    "id": 180,
+    "nombre": "23 AGOSTO 2025  / VIZCAINAS /  IPN ESCA TEPEPAN "
+  },
+  {
+    "id": 181,
+    "nombre": "20 DICIEMBRE 2025 / CANDILES POLANCO / ESCA SANTO TOMAS"
+  },
+  {
+    "id": 182,
+    "nombre": "18 JULIO 2025 / HACIENDA SAN FERNANDO / UNITEC SUR LIC. DERECHO"
+  },
+  {
+    "id": 183,
+    "nombre": "13 DICIEMBRE 2025 / UNIVERSIDAS LA SALLE / QUÍMICO FARMACÉUTICO BIÓLOGO"
+  },
+  {
+    "id": 184,
+    "nombre": "6 DICIEMBRE 2025 / CANDILES POLANCO / ESCA SANTO TOMAS LIC. RELACIONES COMERCIALES"
+  },
+  {
+    "id": 185,
+    "nombre": "9 AGOSTO 2025 / CAMPO MARTE / ESIME CULHUACAN INGENIERIAS"
+  },
+  {
+    "id": 186,
+    "nombre": "6 JUNIO 2025 / EX CONVENTO SAN HIPOLITO / ESCA SANTO TOMAS LIC. RELACIONES COMERCIALES"
+  },
+  {
+    "id": 187,
+    "nombre": "6 DICIEMBRE 2025 / JARDIN CANDILES POLANCO / UNIVERSIDAD LA SALLE  LIC. QUIMICA DE ALIMENTOS"
+  },
+  {
+    "id": 188,
+    "nombre": "19 JULIO 2025 / SALON CRISTAL AMBROSIA / Universidad St. John’s (Preparatoria)"
+  },
+  {
+    "id": 189,
+    "nombre": "22 FEBRERO 2025 / CANDILES POLANCO / UNIVERSIDAD MEXICANA MERCADOTECNIA Y PUBLICIDAD"
+  },
+  {
+    "id": 190,
+    "nombre": "9 MAYO 2025 / JARDIN CEDROS / UNITEC SUR"
+  },
+  {
+    "id": 191,
+    "nombre": "20 DICIEMBRE 2025 / JARDIN PONSA / ESE LIC. ECONOMIA"
+  },
+  {
+    "id": 192,
+    "nombre": "20 DICIEMBRE 2025 / JARDIN CEDROS / UVM MEDICO CIRUJANO"
+  },
+  {
+    "id": 193,
+    "nombre": "2 AGOSTO 2025 / CLAUSTRO DE SOR JUANA / ENCB LIC. QUIMICO FARMACEUTICO INDUSTRIAL"
+  },
+  {
+    "id": 194,
+    "nombre": "28 NOVIEMBRE 2025 / HILTON REFORMA / UNITEC SUR"
+  },
+  {
+    "id": 195,
+    "nombre": "20 DICIEMBRE 2025 / POLYFORUM SIQUEIROS / UNIVERSIDAD SIMON BOLIVAR QFB"
+  },
+  {
+    "id": 196,
+    "nombre": "15 AGOSTO 2025 / CANDILES POLANCO / UAM XOCHIMILCO LIC. ENFERMERIA"
+  },
+  {
+    "id": 197,
+    "nombre": "7 JUNIO 2025 / CASINO CAMPO MARTE / UAM DISEÑO DE LA COMUNICACION GRAFICA"
+  },
+  {
+    "id": 198,
+    "nombre": "31 ENERO 2026 / CAMINO REAL POLANCO / ESCA TEPEPAN RELACIONES COMERCIALES"
+  },
+  {
+    "id": 199,
+    "nombre": "JUNIO 2026 / WTC / FES ZARAGOZA LIC. PSICOLOGÍA"
+  },
+  {
+    "id": 200,
+    "nombre": "JUNIO 2026 / WTC / UNAM LIC. EN DISEÑO Y COMUNICACION VISUAL"
+  },
+  {
+    "id": 201,
+    "nombre": "24 ENERO 2026 / CANDILES POLANCO / ESCA TEPEPAN CONTADOR PUBLICO"
+  },
+  {
+    "id": 202,
+    "nombre": "31 JULIO 2026 / SALON AMBROSIA / PSICOLOGIA"
+  },
+  {
+    "id": 203,
+    "nombre": "00 GASTOS DE OFICINA"
+  },
+  {
+    "id": 204,
+    "nombre": "1 FEBRERO 2025 / HACIENDA SAN ANDRES / IPN UPIEM LIC. SISTEMAS ENERGETICOS Y REDES INTELIGENTES"
+  },
+  {
+    "id": 205,
+    "nombre": "20 DICIEMBRE 2025 / VIZCAINAS / UVM MEDICO CIRUJANO"
+  },
+  {
+    "id": 206,
+    "nombre": "01 NO APLICA"
+  }
+]
