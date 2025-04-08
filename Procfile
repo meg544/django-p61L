@@ -1,4 +1,4 @@
 
 web: gunicorn mysite.wsgi --log-file -
-python createsu.py && gunicorn tu_proyecto.wsgi
+python createsu.py && gunicorn mysite.wsgi
 
