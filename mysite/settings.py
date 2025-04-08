@@ -112,7 +112,7 @@ else:
     #        'PASSWORD': os.environ.get("PGPASSWORD"),
     #        'HOST': os.environ.get("PGHOST"),
     #        'PORT': os.environ.get("PGPORT"),
-        }
+    #    }
         DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
