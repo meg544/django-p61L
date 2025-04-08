@@ -12,7 +12,7 @@ User = get_user_model()
 username = "admin"
 email = "meg_544@yahoo.com.mx"
 password = "rabanito"
-
+print("✅ si ejecuto Procfile.")
 if not User.objects.filter(username=username).exists():
     User.objects.create_superuser(username, email, password)
     print("✅ Superusuario creado con éxito.")
