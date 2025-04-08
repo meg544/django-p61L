@@ -104,14 +104,23 @@ if DEBUG:
     }
 else:
     # Configuración para producción (por ejemplo, PostgreSQL)
-    DATABASES = {
+    #DATABASES = {
+    #    'default': {
+    #        'ENGINE': 'django.db.backends.postgresql',
+    #        'NAME': os.environ.get("PGDATABASE"),
+    #        'USER': os.environ.get("PGUSER"),
+    #        'PASSWORD': os.environ.get("PGPASSWORD"),
+    #        'HOST': os.environ.get("PGHOST"),
+    #        'PORT': os.environ.get("PGPORT"),
+        }
+        DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get("PGDATABASE"),
-            'USER': os.environ.get("PGUSER"),
-            'PASSWORD': os.environ.get("PGPASSWORD"),
-            'HOST': os.environ.get("PGHOST"),
-            'PORT': os.environ.get("PGPORT"),
+            'NAME': 'railway',
+            'USER': 'postgres',
+            'PASSWORD': 'vqeCMieQrusbwLQfNiUZhvRAxsKlgFuc',
+            'HOST': 'postgres.railway.internal',
+            'PORT': '5432',
         }
     }
 
