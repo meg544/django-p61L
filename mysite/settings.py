@@ -118,9 +118,9 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'railway',
             'USER': 'postgres',
-            'PASSWORD': 'vqeCMieQrusbwLQfNiUZhvRAxsKlgFuc',
-            'HOST': 'postgres.railway.internal',
-            'PORT': '5432',
+            'PASSWORD': 'abcDEfgHijklmLQfNiUZhvRAxsKlgFuc',
+            'HOST': 'viaduct.proxy.rlwy.net',
+            'PORT': '58561',
         }
     }
 
