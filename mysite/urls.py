@@ -31,23 +31,23 @@ urlpatterns = [path('admin/', admin.site.urls),
 
                #cambio 2 mayo 2025
                # Página de inicio personalizada
-               path('', seleccionar_evento, name='inicio'),
+               #path('', seleccionar_evento, name='inicio'),
 
                # Página de login (acceso explícito)
+               #path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+
+               # Página de logout
+               #path('logout/', logout_view, name='logout'),
+               #aqui termina el cambio 2 mayo 2025
+
+               #penultimo cambio
+               path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  # URL raíz para la página de inicio
+
+               # Página de login
                path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
 
                # Página de logout
                path('logout/', logout_view, name='logout'),
-               #aqui termina el cambio 2 mayo 2025
-
-               #penultimo cambio
-               #path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  # URL raíz para la página de inicio
-
-               # Página de login
-               #path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-
-               # Página de logout
-                #path('logout/', logout_view, name='logout'),
                 #fin penultimo cambio
 
     path('seleccionar-evento/', seleccionar_evento, name='seleccionar_evento'),
