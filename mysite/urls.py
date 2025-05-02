@@ -27,20 +27,28 @@ from django.urls import path, include
 
 from myapp.views import logout_view,generar_pdf_multiple,listar_gastos2,seleccionar_evento_listar_gastos2,seleccionar_evento_listar_gastos, seleccionar_evento, capturar_gastos, listar_gastos, generar_pdf, listar_eventos, crear_evento, editar_evento, eliminar_evento,listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
 from django.contrib.auth import views as auth_views
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  # URL raíz para la página de inicio
+urlpatterns = [path('admin/', admin.site.urls),
 
-    # data wizard
-    # path('datawizard/', include('data-wizard.urls')),
+               #cambio 2 mayo 2025
+               # Página de inicio personalizada
+               path('', seleccionar_evento, name='inicio'),
 
-    # Página de login
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+               # Página de login (acceso explícito)
+               path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
 
-    # Página de logout
-    #path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    #path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-    path('logout/', logout_view, name='logout'),
+               # Página de logout
+               path('logout/', logout_view, name='logout'),
+               #aqui termina el cambio 2 mayo 2025
+
+               #penultimo cambio
+               #path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),  # URL raíz para la página de inicio
+
+               # Página de login
+               #path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+
+               # Página de logout
+                #path('logout/', logout_view, name='logout'),
+                #fin penultimo cambio
 
     path('seleccionar-evento/', seleccionar_evento, name='seleccionar_evento'),
     path('capturar-gastos/<int:evento_id>/', capturar_gastos, name='capturar_gastos'),
