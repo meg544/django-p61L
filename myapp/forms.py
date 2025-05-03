@@ -10,11 +10,7 @@ class EventoForm(forms.ModelForm):
     class Meta:
         model = Evento
         fields = ['nombre']
-        widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 600px;'}),
-            #'descripcion': forms.Textarea(attrs={'class': 'form-control', 'style': 'width: 600px;'}),
-            # Repite para los campos que quieras ajustar
-        }
+        
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
 
