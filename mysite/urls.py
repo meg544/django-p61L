@@ -25,7 +25,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-from myapp.views import logout_view,generar_pdf_multiple,listar_gastos2,seleccionar_evento_listar_gastos2,seleccionar_evento_listar_gastos, seleccionar_evento, capturar_gastos, listar_gastos, generar_pdf, listar_eventos, crear_evento, editar_evento, eliminar_evento,listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
+from myapp.views import logout_view,generar_pdf_multiple,listar_gastos2,seleccionar_evento_listar_gastos2,seleccionar_evento_listar_gastos,seleccionar_evento,capturar_gastos,listar_gastos, generar_pdf, listar_eventos, crear_evento, editar_evento, eliminar_evento,listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
 from django.contrib.auth import views as auth_views
 urlpatterns = [path('admin/', admin.site.urls),
 
