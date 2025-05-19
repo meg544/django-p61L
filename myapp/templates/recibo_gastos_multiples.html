@@ -1,0 +1,87 @@
+{% load static %}
+{% load formatos %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo de Gasto</title>
+    <style>
+        body { page-break-after: always; }
+        #customers, #customers2 {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td, #customers th,
+        #customers2 td, #customers2 th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even),
+        #customers2 tr:nth-child(even) { background-color: #f2f2f2; }
+
+        #customers tr:hover,
+        #customers2 tr:hover { background-color: #ddd; }
+
+        #customers th, #customers2 th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+
+{% for gasto in gastos %}
+<table id="customers">
+    <tr>
+        <th><img src="{{ icon }}" alt="Logotipo" style="width: 150px; height: auto"></th>
+        <th><h1>Recibo de Gasto</h1></th>
+        <th><p><strong>Folio:</strong> {{ gasto.folio }}</p></th>
+    </tr>
+</table>
+
+<table id="customers2">
+    <tr>
+        <td style="width:20%;"><strong>Evento:</strong></td>
+        <td style="width:80%;">{{ gasto.evento.nombre }}</td>
+    </tr>
+    <tr>
+        <td><strong>Fecha:</strong></td>
+        <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
+    </tr>
+    <tr>
+        <td><strong>Importe:</strong></td>
+        <td>{{ gasto.importe|formato_pesos }}</td>
+    </tr>
+    <tr>
+        <td><strong>Concepto:</strong></td>
+        <td>{{ gasto.concepto }}</td>
+    </tr>
+    <tr>
+        <td><strong>Proveedor:</strong></td>
+        <td>{{ gasto.proveedor.nombre }}</td>
+    </tr>
+    <tr>
+        <td><strong>Comentarios:</strong></td>
+        <td>{{ gasto.comentarios }}</td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"><strong>Autorizo Vo.Bo:</strong><br>_______________</td>
+        <td style="text-align: center;"><strong>Firma de Recibido:</strong><br>______________________________</td>
+    </tr>
+</table>
+
+<div class="page-break"></div>
+{% endfor %}
+
+</body>
+</html>

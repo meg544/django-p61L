@@ -201,14 +201,14 @@ def generar_pdf_multiple(request):
     folios = folios.split(",")
     gastos = DetalleGasto.objects.filter(folio__in=folios)
 
-    template_path = 'recibo_gasto.html'
+    template_path = 'recibo_gastos_multiples.html'
     context = {'gastos': gastos, 'icon': f"{settings.STATIC_URL}images/logo.jpg"}
 
     template = get_template(template_path)
     html = template.render(context)
 
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="recibo_gastos.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
 
     def link_callback(uri, rel):
         if uri.startswith("/static/"):

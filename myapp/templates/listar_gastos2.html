@@ -34,7 +34,8 @@
             folios.push(checkbox.value); // Ahora toma correctamente el folio numérico
         });
 
-        let url = `{% url 'generar_pdf_multiple' %}?folios=` + folios.join(",");
+        let base_url = "{% url 'generar_pdf_multiple' %}";
+        let url = base_url + "?folios=" + folios.join(",");
         window.open(url, "_blank"); // Abre el PDF en una nueva pestaña
     }
   </script>
