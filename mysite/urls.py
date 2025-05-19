@@ -25,7 +25,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-from myapp.views import logout_view,generar_pdf_multiple,listar_gastos2,seleccionar_evento_listar_gastos2,seleccionar_evento_listar_gastos, seleccionar_evento, capturar_gastos, listar_gastos, generar_pdf, listar_eventos, crear_evento, editar_evento, eliminar_evento,listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
+from myapp.views import logout_view,generar_pdf_multiple,editar_gastos,eliminar_gastos,seleccionar_evento_gastos_editar_eliminar,gastos_editar_eliminar,listar_gastos2,seleccionar_evento_listar_gastos2,seleccionar_evento_listar_gastos, seleccionar_evento, capturar_gastos, listar_gastos, generar_pdf, listar_eventos, crear_evento, editar_evento, eliminar_evento,listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
 from django.contrib.auth import views as auth_views
 urlpatterns = [path('admin/', admin.site.urls),
 
@@ -54,8 +54,11 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('capturar-gastos/<int:evento_id>/', capturar_gastos, name='capturar_gastos'),
     path('listar-gastos/<int:evento_id>/', listar_gastos, name='listar_gastos'),
     path('listar-gastos2/<int:evento_id>/', listar_gastos2, name='listar_gastos2'),
+    path('gastos-editar-eliminar/<int:evento_id>/', gastos_editar_eliminar, name='gastos_editar_eliminar'),
     path('pdf/<int:folio>/', generar_pdf, name='generar_pdf'),
     path('generar_pdf_multiple/', generar_pdf_multiple, name='generar_pdf_multiple'),
+    path('editar_gastos/<int:folio>/', editar_gastos, name='editar_gastos'),
+    path('eliminar_gastos/<int:folio>/', eliminar_gastos, name='eliminar_gastos'),
 
     #eventos
     path('eventos/', listar_eventos, name='listar_eventos'),
@@ -69,6 +72,7 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('proveedores/eliminar/<int:pk>/', eliminar_proveedor, name='eliminar_proveedor'),
     path('seleccionar-evento-listar-gastos/', seleccionar_evento_listar_gastos, name='seleccionar_evento_listar_gastos'),
     path('seleccionar-evento-listar-gastos2/', seleccionar_evento_listar_gastos2, name='seleccionar_evento_listar_gastos2'),
+    path('seleccionar-evento-gastos-editar-eliminar/', seleccionar_evento_gastos_editar_eliminar, name='seleccionar_evento_gastos_editar_eliminar'),
 ]
 
 

@@ -6,6 +6,7 @@ import os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth import logout
+from django.urls import reverse
 
 def logout_view(request):
     request.session.flush()
@@ -72,6 +73,13 @@ def seleccionar_evento_listar_gastos2(request):
         return redirect('listar_gastos2', evento_id=evento_id)
     return render(request, 'seleccionar_evento.html', {'eventos': eventos})
 
+def seleccionar_evento_gastos_editar_eliminar(request):
+    eventos = Evento.objects.all().order_by('nombre')
+    if request.method == 'POST':
+        evento_id = request.POST.get('evento')
+        return redirect('gastos_editar_eliminar', evento_id=evento_id)
+    return render(request, 'seleccionar_evento.html', {'eventos': eventos})
+
 def listar_gastos(request, evento_id):
     evento = get_object_or_404(Evento, pk=evento_id)
     gastos = DetalleGasto.objects.filter(evento=evento)
@@ -84,6 +92,11 @@ def listar_gastos2(request, evento_id):
     total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0  # Calcula la suma de los importes
     return render(request, 'listar_gastos2.html', {'gastos': gastos, 'evento': evento, 'total': total_importe,})
 
+def gastos_editar_eliminar(request, evento_id):
+    evento = get_object_or_404(Evento, pk=evento_id)
+    gastos = DetalleGasto.objects.filter(evento=evento)
+    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0  # Calcula la suma de los importes
+    return render(request, 'gastos_editar_eliminar.html', {'gastos': gastos, 'evento': evento, 'total': total_importe,})
 
 
 def generar_pdf(request, folio):
@@ -229,3 +242,31 @@ def generar_pdf_multiple(request):
         return HttpResponse(f'Error al generar el PDF: {pisa_status.err}', content_type='text/plain')
 
     return response
+def editar_gastos(request, folio):
+    gasto = get_object_or_404(DetalleGasto, folio=folio)
+    evento = gasto.evento
+
+    if request.method == 'POST':
+        form = DetalleGastoForm(request.POST, instance=gasto)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('listar_gastos', kwargs={'evento_id': evento.id}))
+    else:
+        form = DetalleGastoForm(instance=gasto)
+
+    return render(request, 'editar_gastos.html', {
+        'form': form,
+        'evento': evento,
+        'folio': folio
+    })
+def eliminar_gastos(request, folio):
+    gasto = get_object_or_404(DetalleGasto, folio=folio)
+    evento_id = gasto.evento.id
+
+    if request.method == 'POST':
+        gasto.delete()
+        return redirect(reverse('listar_gastos', kwargs={'evento_id': evento_id}))
+
+    return render(request, 'eliminar_gastos.html', {'gasto': gasto})
+
+
