@@ -39,17 +39,23 @@ def seleccionar_evento(request):
         return redirect('capturar_gastos', evento_id=evento_id)
     return render(request, 'seleccionar_evento.html', {'eventos': eventos})
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse  # para construir la URL correctamente
+
 def capturar_gastos(request, evento_id):
     evento = get_object_or_404(Evento, pk=evento_id)
+
     if request.method == 'POST':
         form = DetalleGastoForm(request.POST)
         if form.is_valid():
             gasto = form.save(commit=False)
             gasto.evento = evento
             gasto.save()
-            return redirect('listar_gastos', evento_id=evento_id)
+            # Redirigir a la misma vista para limpiar el formulario
+            return redirect(reverse('capturar_gastos', kwargs={'evento_id': evento_id}))
     else:
         form = DetalleGastoForm()
+
     return render(request, 'capturar_gastos.html', {'form': form, 'evento': evento})
 
 def seleccionar_evento_listar_gastos(request):
