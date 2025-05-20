@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Gasto por Folio</title>
+</head>
+<body>
+<h2>Seleccionar Gasto por Folio</h2>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <label for="folio">Seleccione un folio:</label>
+    <select name="folio" id="folio" required>
+        <option value="" disabled selected>-- Selecciona un folio --</option>
+        {% for gasto in folios %}
+        <option value="{{ gasto.folio }}">{{ gasto.folio }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Editar</button>
+</form>
+</body>
+</html>
+
+{% endblock %}

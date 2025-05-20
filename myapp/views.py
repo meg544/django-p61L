@@ -23,7 +23,7 @@ from django.template.loader import get_template
 from django.db.models import Sum
 from xhtml2pdf import pisa
 from myapp.models import Evento, DetalleGasto
-from myapp.forms import DetalleGastoForm, EventoForm
+from myapp.forms import DetalleGastoForm, EventoForm,DetalleGastoFormEvento
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Evento, Proveedor
@@ -268,5 +268,33 @@ def eliminar_gastos(request, folio):
         return redirect(reverse('listar_gastos', kwargs={'evento_id': evento_id}))
 
     return render(request, 'eliminar_gastos.html', {'gasto': gasto})
+
+def seleccionar_gasto(request):
+    folios = DetalleGasto.objects.all().order_by('folio')  # Lista de folios ordenados
+
+    if request.method == 'POST':
+        folio = request.POST.get('folio')
+        try:
+            gasto = DetalleGasto.objects.get(folio=folio)
+            return redirect('editar_gasto', folio=gasto.folio)
+        except DetalleGasto.DoesNotExist:
+            return render(request, 'seleccionar_gasto.html', {
+                'folios': folios,
+                'error': 'Folio no encontrado.'
+            })
+
+    return render(request, 'seleccionar_gasto.html', {'folios': folios})
+def editar_gasto(request, folio):
+    gasto = get_object_or_404(DetalleGasto, folio=folio)
+
+    if request.method == 'POST':
+        form = DetalleGastoFormEvento(request.POST, instance=gasto)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_gastos', evento_id=gasto.evento.id)
+    else:
+        form = DetalleGastoFormEvento(instance=gasto)
+
+    return render(request, 'editar_gasto.html', {'form': form, 'gasto': gasto})
 
 

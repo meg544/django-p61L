@@ -20,3 +20,8 @@ class ProveedorForm(forms.ModelForm):
         model = Proveedor
         fields = ['nombre', 'contacto']
 
+class DetalleGastoFormEvento(forms.ModelForm):
+    class Meta:
+        model = DetalleGasto
+        fields = ['evento','importe', 'concepto', 'tipo_gasto', 'proveedor', 'comentarios']
+

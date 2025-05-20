@@ -25,7 +25,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-from myapp.views import logout_view,generar_pdf_multiple,editar_gastos,eliminar_gastos,seleccionar_evento_gastos_editar_eliminar,gastos_editar_eliminar,listar_gastos2,seleccionar_evento_listar_gastos2,seleccionar_evento_listar_gastos, seleccionar_evento, capturar_gastos, listar_gastos, generar_pdf, listar_eventos, crear_evento, editar_evento, eliminar_evento,listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
+from myapp.views import logout_view,editar_gasto,seleccionar_gasto,generar_pdf_multiple,editar_gastos,eliminar_gastos,seleccionar_evento_gastos_editar_eliminar,gastos_editar_eliminar,listar_gastos2,seleccionar_evento_listar_gastos2,seleccionar_evento_listar_gastos, seleccionar_evento, capturar_gastos, listar_gastos, generar_pdf, listar_eventos, crear_evento, editar_evento, eliminar_evento,listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
 from django.contrib.auth import views as auth_views
 urlpatterns = [path('admin/', admin.site.urls),
 
@@ -59,6 +59,9 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('generar_pdf_multiple/', generar_pdf_multiple, name='generar_pdf_multiple'),
     path('editar_gastos/<int:folio>/', editar_gastos, name='editar_gastos'),
     path('eliminar_gastos/<int:folio>/', eliminar_gastos, name='eliminar_gastos'),
+    path('seleccionar_gasto/', seleccionar_gasto, name='seleccionar_gasto'),
+    path('editar_gasto/<int:folio>/', editar_gasto, name='editar_gasto'),
+
 
     #eventos
     path('eventos/', listar_eventos, name='listar_eventos'),
