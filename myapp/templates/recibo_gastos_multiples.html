@@ -20,7 +20,13 @@
         }
 
         .recibo-container {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+        }
+
+        .linea-punteada {
+            width: 100%;
+            border-top: 2px dashed #000;
+            margin: 25px 0;
         }
 
         .page-break {
@@ -54,7 +60,12 @@
 
 </div>
 
-{# --- Insertar salto de página cada 2 recibos --- #}
+{# === Línea punteada ENTRE recibos 1 y 2 === #}
+{% if forloop.counter|divisibleby:1 and not forloop.counter|divisibleby:2 %}
+<div class="linea-punteada"></div>
+{% endif %}
+
+{# === Salto de página DESPUÉS de cada 2 recibos === #}
 {% if forloop.counter|divisibleby:2 and not forloop.last %}
 <div class="page-break"></div>
 {% endif %}
