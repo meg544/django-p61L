@@ -18,17 +18,19 @@ RUN apt-get update && apt-get install -y \
     wget \
     && apt-get clean
 
-# Crear directorio de app
+# Set workdir
 WORKDIR /app
 
-# Copiar archivos
+# Copy requirements
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy project
 COPY . .
 
-# Exponer puerto
+# Expose port
 EXPOSE 8000
 
-
-
+# ---- AGREGAR ESTO ----
+# Ejecutar collectstatic, migrate y levantar gunicorn
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn mysite.wsgi --bind 0.0.0.0:8000"]
