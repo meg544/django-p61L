@@ -186,42 +186,50 @@ def eliminar_proveedor(request, pk):
 
 
 def generar_pdf_multiple(request):
+    # Obtener folios desde la query string
     folios = request.GET.get('folios')
     if not folios:
         return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
 
     folios = folios.split(',')
     gastos = DetalleGasto.objects.filter(folio__in=folios)
+    if not gastos.exists():
+        return HttpResponse("No se encontraron registros para los folios indicados.", content_type="text/plain")
 
+    # Renderizar plantilla
     template = get_template('recibo_gastos_multiples.html')
-    html = template.render({
+    context = {
         'gastos': gastos,
-        'icon': f"{settings.STATIC_URL}images/logo.jpg"
-    })
+        'icon': f"{settings.STATIC_URL}images/logo.jpg",
+    }
+    html = template.render(context)
 
-    # Convertir rutas estáticas a absolutas para WeasyPrint
-    def fix_static_paths(content):
+    # Convertir rutas estáticas a rutas absolutas para WeasyPrint
+    def fix_static_paths(html_content):
         static_prefix = settings.STATIC_URL
-        while static_prefix in content:
-            start = content.find(static_prefix)
-            end = content.find('"', start)
+        while static_prefix in html_content:
+            start = html_content.find(static_prefix)
+            end = html_content.find('"', start)
             if end == -1:
                 break
-            static_path = content[start:end]
+            static_path = html_content[start:end]
             real_path = finders.find(static_path.replace(static_prefix, ""))
             if real_path:
-                content = content.replace(static_path, "file://" + real_path)
+                html_content = html_content.replace(static_path, f"file://{real_path}")
             else:
-                break
-        return content
+                # Si no se encuentra el archivo, simplemente ignorar y continuar
+                html_content = html_content.replace(static_path, "")
+        return html_content
 
     html = fix_static_paths(html)
 
+    # Generar PDF y manejar errores
     try:
         pdf = HTML(string=html).write_pdf()
     except Exception as e:
-        return HttpResponse(f'Error al generar el PDF: {e}', content_type='text/plain')
+        return HttpResponse(f"Error al generar PDF: {str(e)}", content_type="text/plain")
 
+    # Devolver respuesta HTTP con PDF
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
     return response
