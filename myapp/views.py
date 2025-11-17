@@ -33,6 +33,11 @@ from django.conf import settings
 from django.contrib.staticfiles import finders
 from django.contrib.staticfiles.storage import staticfiles_storage
 
+def abs_static(path):
+    real_path = finders.find(path)
+    if real_path:
+        return "file://" + real_path
+    return ""
 
 def seleccionar_evento(request):
     eventos = Evento.objects.all().order_by('nombre')
@@ -194,20 +199,21 @@ def generar_pdf_multiple(request):
     folios = folios.split(',')
     gastos = DetalleGasto.objects.filter(folio__in=folios)
 
-    template_path = 'recibo_gastos_multiples.html'
+    template_path = "recibo_gastos_multiples.html"
+    template = get_template(template_path)
+
+    icon_path = abs_static("images/logo.jpg")   # ← ESTA ES LA CLAVE
+
     context = {
-        'gastos': gastos,
-        'icon': finders.find("images/logo.jpg"),  # ← ruta real
+        "gastos": gastos,
+        "icon": icon_path,
     }
 
-    template = get_template(template_path)
     html = template.render(context)
-
-    # Convertir ruta real a file://
-    context['icon'] = "file://" + context['icon']
 
     pdf = HTML(string=html).write_pdf()
 
     response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="recibos.pdf"'
+
     return response
