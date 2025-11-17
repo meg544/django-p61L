@@ -31,6 +31,7 @@ from .forms import EventoForm, ProveedorForm
 
 from django.conf import settings
 from django.contrib.staticfiles import finders
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 def seleccionar_evento(request):
@@ -186,50 +187,31 @@ def eliminar_proveedor(request, pk):
 
 
 def generar_pdf_multiple(request):
-    # Obtener folios desde la query string
     folios = request.GET.get('folios')
     if not folios:
         return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
 
     folios = folios.split(',')
     gastos = DetalleGasto.objects.filter(folio__in=folios)
-    if not gastos.exists():
-        return HttpResponse("No se encontraron registros para los folios indicados.", content_type="text/plain")
 
-    # Renderizar plantilla
-    template = get_template('recibo_gastos_multiples.html')
+    template_path = 'recibo_gastos_multiples.html'
     context = {
         'gastos': gastos,
-        'icon': f"{settings.STATIC_URL}images/logo.jpg",
+        'icon': staticfiles_storage.url('images/logo.jpg'),
     }
+
+    template = get_template(template_path)
     html = template.render(context)
 
-    # Convertir rutas estáticas a rutas absolutas para WeasyPrint
-    def fix_static_paths(html_content):
-        static_prefix = settings.STATIC_URL
-        while static_prefix in html_content:
-            start = html_content.find(static_prefix)
-            end = html_content.find('"', start)
-            if end == -1:
-                break
-            static_path = html_content[start:end]
-            real_path = finders.find(static_path.replace(static_prefix, ""))
-            if real_path:
-                html_content = html_content.replace(static_path, f"file://{real_path}")
-            else:
-                # Si no se encuentra el archivo, simplemente ignorar y continuar
-                html_content = html_content.replace(static_path, "")
-        return html_content
+    # ⛔ NO USAR función fix_static_paths
+    # WeasyPrint maneja los archivos estáticos usando base_url
 
-    html = fix_static_paths(html)
+    pdf = HTML(
+        string=html,
+        base_url=settings.STATIC_ROOT  # ← CLAVE
+    ).write_pdf()
 
-    # Generar PDF y manejar errores
-    try:
-        pdf = HTML(string=html).write_pdf()
-    except Exception as e:
-        return HttpResponse(f"Error al generar PDF: {str(e)}", content_type="text/plain")
-
-    # Devolver respuesta HTTP con PDF
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
+
     return response
