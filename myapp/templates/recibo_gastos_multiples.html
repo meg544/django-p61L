@@ -19,6 +19,10 @@
             padding: 8px;
         }
 
+        .recibo-container {
+            margin-bottom: 40px;
+        }
+
         .page-break {
             page-break-after: always;
         }
@@ -50,7 +54,8 @@
 
 </div>
 
-{% if not forloop.last %}
+{# --- Insertar salto de página cada 2 recibos --- #}
+{% if forloop.counter|divisibleby:2 and not forloop.last %}
 <div class="page-break"></div>
 {% endif %}
 
