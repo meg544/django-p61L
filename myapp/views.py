@@ -186,36 +186,40 @@ def eliminar_proveedor(request, pk):
 
 
 def generar_pdf_multiple(request):
+    # Obtener folios desde la URL
     folios = request.GET.get('folios')
-
     if not folios:
         return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
 
     folios = folios.split(',')
     gastos = DetalleGasto.objects.filter(folio__in=folios)
 
+    if not gastos.exists():
+        return HttpResponse("No se encontraron registros para los folios seleccionados.", content_type="text/plain")
+
+    # Plantilla y contexto
     template_path = 'recibo_gastos_multiples.html'
+    try:
+        logo_path = staticfiles_storage.path('images/logo.jpg')  # ruta absoluta de la imagen
+    except Exception:
+        logo_path = ''  # en caso de que no exista la imagen, evitar crash
+
     context = {
         'gastos': gastos,
-        'icon': f"{settings.STATIC_URL}images/logo.jpg",
+        'icon': f"file://{logo_path}" if logo_path else '',  # WeasyPrint necesita file://
     }
 
-    # Renderiza HTML
+    # Renderizar HTML
     template = get_template(template_path)
     html = template.render(context)
 
-    # Crear PDF usando base_url (IMPORTANTE)
-    pdf = HTML(
-        string=html,
-        base_url=request.build_absolute_uri('/')   # permite resolver /static/
-    ).write_pdf(
-        stylesheets=[
-            CSS(filename=finders.find("css/pdf.css"))  # opcional
-        ]
-    )
+    # Generar PDF
+    try:
+        pdf = HTML(string=html).write_pdf()
+    except Exception as e:
+        return HttpResponse(f"Error al generar PDF: {str(e)}", content_type="text/plain")
 
-    # Respuesta HTTP
+    # Retornar PDF como respuesta
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
-
     return response
