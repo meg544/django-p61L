@@ -20,7 +20,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.db.models import Sum
-from xhtml2pdf import pisa
+from weasyprint import HTML
 from myapp.models import Evento, DetalleGasto
 from myapp.forms import DetalleGastoForm, EventoForm
 
@@ -81,35 +81,42 @@ def listar_gastos2(request, evento_id):
 
 
 def generar_pdf(request, folio):
-    gasto = get_object_or_404(DetalleGasto, folio=folio)  # Asegúrate de tener el modelo `Gasto`.
-    template_path = 'recibo_gasto.html'
-    context = {'gasto': gasto,
-               'icon':'{}{}'.format(settings.STATIC_URL,'images/logo.jpg') }
+    gasto = get_object_or_404(DetalleGasto, folio=folio)
 
-    # Renderiza la plantilla como HTML
+    template_path = 'recibo_gasto.html'
+    context = {
+        'gasto': gasto,
+        'icon': f"{settings.STATIC_URL}images/logo.jpg",
+    }
+
+    # Renderiza HTML
     template = get_template(template_path)
     html = template.render(context)
 
-    # Crea una respuesta HTTP para el archivo PDF
-    response = HttpResponse(content_type='application/pdf')
+    # Función para convertir rutas estáticas (WeasyPrint requiere rutas absolutas)
+    def fix_static_paths(content):
+        static_prefix = settings.STATIC_URL
+        while static_prefix in content:
+            start = content.find(static_prefix)
+            end = content.find('"', start)
+            if end == -1:
+                break
+            static_path = content[start:end]
+            real_path = finders.find(static_path.replace(static_prefix, ""))
+            if real_path:
+                content = content.replace(static_path, "file://" + real_path)
+            else:
+                break
+        return content
+
+    html = fix_static_paths(html)
+
+    # Generar PDF
+    pdf = HTML(string=html).write_pdf()
+
+    # Respuesta HTTP
+    response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="recibo_{folio}.pdf"'
-
-    # Función para manejar recursos estáticos
-    def link_callback(uri, rel):
-        if uri.startswith("/static/"):
-            path = finders.find(uri[8:])  # Remueve '/static/' y busca el archivo
-            if path:
-                return path
-        return uri  # Devuelve la URI original si no es un archivo estático
-
-    # Genera el PDF
-    pisa_status = pisa.CreatePDF(
-        src=html, dest=response, link_callback=link_callback
-    )
-
-    # Si ocurre un error, regresa una respuesta de error
-    if pisa_status.err:
-        return HttpResponse(f'Error al generar el PDF: {pisa_status.err}', content_type='text/plain')
 
     return response
 
@@ -193,33 +200,49 @@ def eliminar_proveedor(request, pk):
     return render(request, 'proveedores/eliminar_proveedor.html', {'proveedor': proveedor})
 
 
+
 def generar_pdf_multiple(request):
     folios = request.GET.get('folios')
     if not folios:
         return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
 
-    folios = folios.split(",")
+    folios = folios.split(',')
     gastos = DetalleGasto.objects.filter(folio__in=folios)
 
     template_path = 'recibo_gastos_multiples.html'
-    context = {'gastos': gastos, 'icon': f"{settings.STATIC_URL}images/logo.jpg"}
+    context = {
+        'gastos': gastos,
+        'icon': f"{settings.STATIC_URL}images/logo.jpg",
+    }
 
+    # Renderiza HTML
     template = get_template(template_path)
     html = template.render(context)
 
-    response = HttpResponse(content_type='application/pdf')
+    # Convertir rutas estáticas a absolutas para WeasyPrint
+    def fix_static_paths(content):
+        static_prefix = settings.STATIC_URL
+        while static_prefix in content:
+            start = content.find(static_prefix)
+            end = content.find('"', start)
+            if end == -1:
+                break
+            static_path = content[start:end]
+            real_path = finders.find(static_path.replace(static_prefix, ""))
+            if real_path:
+                content = content.replace(static_path, "file://" + real_path)
+            else:
+                break
+        return content
+
+    html = fix_static_paths(html)
+
+    # Generar PDF final
+    pdf = HTML(string=html).write_pdf()
+
+    # Respuesta HTTP
+    response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
 
-    def link_callback(uri, rel):
-        if uri.startswith("/static/"):
-            path = finders.find(uri[8:])
-            if path:
-                return path
-        return uri
-
-    pisa_status = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
-
-    if pisa_status.err:
-        return HttpResponse(f'Error al generar el PDF: {pisa_status.err}', content_type='text/plain')
-
     return response
+
