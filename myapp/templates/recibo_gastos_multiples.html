@@ -1,131 +1,59 @@
-{% load static %}
 {% load formatos %}
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recibo de Gasto</title>
-    <style>
-        .linea-punteada {
-        border-top: 2px dashed #000;
-        margin: 40px 0;
-        height: 0;
-        width: 100%;
-        }
+    <title>Recibos</title>
 
-        @media print {
-        .linea-punteada {
-            display: block;
-            border-top: 2px dashed #000;
-            margin: 40px 0;
-            height: 0;
-            width: 100%;
-            }
-        }
-        body {
-            margin: 0;
-            padding: 0;
-        }
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial; }
 
         #customers, #customers2 {
-            font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             width: 100%;
         }
-
         #customers td, #customers th,
         #customers2 td, #customers2 th {
             border: 1px solid #ddd;
             padding: 8px;
         }
 
-        #customers tr:nth-child(even),
-        #customers2 tr:nth-child(even) { background-color: #f2f2f2; }
-
-        #customers tr:hover,
-        #customers2 tr:hover { background-color: #ddd; }
-
-        #customers th, #customers2 th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-        }
-
-        .recibo-container {
-            margin-bottom: 20px;
-        }
-
         .page-break {
             page-break-after: always;
         }
     </style>
+
 </head>
 <body>
 
 {% for gasto in gastos %}
-{% if forloop.first or forloop.counter0|divisibleby:2 %}
-<div class="page">
-    {% endif %}
 
-    <div class="recibo-container">
-        <table id="customers">
-            <tr>
-                <th><img src="{{ icon }}" alt="Logotipo" style="width: 150px; height: auto"></th>
-                <th><h1>Recibo de Gasto</h1></th>
-                <th><p><strong>Folio:</strong> {{ gasto.folio }}</p></th>
-            </tr>
-        </table>
+<div class="recibo-container">
 
-        <table id="customers2">
-            <tr>
-                <td style="width:20%;"><strong>Evento:</strong></td>
-                <td style="width:80%;">{{ gasto.evento.nombre }}</td>
-            </tr>
-            <tr>
-                <td><strong>Fecha:</strong></td>
-                <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
-            </tr>
-            <tr>
-                <td><strong>Importe:</strong></td>
-                <td>{{ gasto.importe|formato_pesos }}</td>
-            </tr>
-            <tr>
-                <td><strong>Concepto:</strong></td>
-                <td>{{ gasto.concepto }}</td>
-            </tr>
-            <tr>
-                <td><strong>Proveedor:</strong></td>
-                <td>{{ gasto.proveedor.nombre }}</td>
-            </tr>
-            <tr>
-                <td><strong>Comentarios:</strong></td>
-                <td>{{ gasto.comentarios }}</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;"><strong>Autorizo Vo.Bo:</strong><br>_______________</td>
-                <td style="text-align: center;"><strong>Firma de Recibido:</strong><br>______________________________</td>
-            </tr>
-        </table>
-    </div>
-    {% if not forloop.last and forloop.counter|divisibleby:1 and not forloop.counter|divisibleby:2 %}
-      
-    <div class="linea-punteada">
-        <table id="linea">
-            <tr>
-                <th><h1>"------------------------------------------------------------------------"</h1></th>
-            </tr>
-        </table>
-    </div>
-    {% endif %}
+    <table id="customers">
+        <tr>
+            <th><img src="{{ icon }}" style="width: 150px;"></th>
+            <th><h1>Recibo de Gasto</h1></th>
+            <th><strong>Folio:</strong> {{ gasto.folio }}</th>
+        </tr>
+    </table>
 
-    {% if forloop.counter|divisibleby:2 or forloop.last %}
+    <table id="customers2">
+        <tr><td><strong>Evento:</strong></td><td>{{ gasto.evento.nombre }}</td></tr>
+        <tr><td><strong>Fecha:</strong></td><td>{{ gasto.fecha|date:"d/m/Y" }}</td></tr>
+        <tr><td><strong>Importe:</strong></td><td>{{ gasto.importe|formato_pesos }}</td></tr>
+        <tr><td><strong>Concepto:</strong></td><td>{{ gasto.concepto }}</td></tr>
+        <tr><td><strong>Proveedor:</strong></td><td>{{ gasto.proveedor.nombre }}</td></tr>
+        <tr><td><strong>Comentarios:</strong></td><td>{{ gasto.comentarios }}</td></tr>
+    </table>
+
 </div>
+
 {% if not forloop.last %}
 <div class="page-break"></div>
 {% endif %}
-{% endif %}
+
 {% endfor %}
 
 </body>
