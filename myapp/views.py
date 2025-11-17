@@ -20,7 +20,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.db.models import Sum
-from weasyprint import HTML
+from django.contrib.staticfiles import finders
+from weasyprint import HTML, CSS
 from myapp.models import Evento, DetalleGasto
 from myapp.forms import DetalleGastoForm, EventoForm
 
@@ -81,45 +82,28 @@ def listar_gastos2(request, evento_id):
 
 
 def generar_pdf(request, folio):
+
     gasto = get_object_or_404(DetalleGasto, folio=folio)
 
     template_path = 'recibo_gasto.html'
+    template = get_template(template_path)
+
     context = {
         'gasto': gasto,
-        'icon': f"{settings.STATIC_URL}images/logo.jpg",
+        'icon': os.path.join(settings.STATIC_ROOT, "images/logo.jpg"),
     }
 
-    # Renderiza HTML
-    template = get_template(template_path)
     html = template.render(context)
 
-    # Función para convertir rutas estáticas (WeasyPrint requiere rutas absolutas)
-    def fix_static_paths(content):
-        static_prefix = settings.STATIC_URL
-        while static_prefix in content:
-            start = content.find(static_prefix)
-            end = content.find('"', start)
-            if end == -1:
-                break
-            static_path = content[start:end]
-            real_path = finders.find(static_path.replace(static_prefix, ""))
-            if real_path:
-                content = content.replace(static_path, "file://" + real_path)
-            else:
-                break
-        return content
+    pdf = HTML(
+        string=html,
+        base_url=request.build_absolute_uri('/')   # NECESARIO
+    ).write_pdf()
 
-    html = fix_static_paths(html)
-
-    # Generar PDF
-    pdf = HTML(string=html).write_pdf()
-
-    # Respuesta HTTP
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="recibo_{folio}.pdf"'
 
     return response
-
 # views.py
 
 
@@ -203,6 +187,7 @@ def eliminar_proveedor(request, pk):
 
 def generar_pdf_multiple(request):
     folios = request.GET.get('folios')
+
     if not folios:
         return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
 
@@ -219,30 +204,18 @@ def generar_pdf_multiple(request):
     template = get_template(template_path)
     html = template.render(context)
 
-    # Convertir rutas estáticas a absolutas para WeasyPrint
-    def fix_static_paths(content):
-        static_prefix = settings.STATIC_URL
-        while static_prefix in content:
-            start = content.find(static_prefix)
-            end = content.find('"', start)
-            if end == -1:
-                break
-            static_path = content[start:end]
-            real_path = finders.find(static_path.replace(static_prefix, ""))
-            if real_path:
-                content = content.replace(static_path, "file://" + real_path)
-            else:
-                break
-        return content
-
-    html = fix_static_paths(html)
-
-    # Generar PDF final
-    pdf = HTML(string=html).write_pdf()
+    # Crear PDF usando base_url (IMPORTANTE)
+    pdf = HTML(
+        string=html,
+        base_url=request.build_absolute_uri('/')   # permite resolver /static/
+    ).write_pdf(
+        stylesheets=[
+            CSS(filename=finders.find("css/pdf.css"))  # opcional
+        ]
+    )
 
     # Respuesta HTTP
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
 
     return response
-
