@@ -197,21 +197,17 @@ def generar_pdf_multiple(request):
     template_path = 'recibo_gastos_multiples.html'
     context = {
         'gastos': gastos,
-        'icon': staticfiles_storage.url('images/logo.jpg'),
+        'icon': finders.find("images/logo.jpg"),  # ← ruta real
     }
 
     template = get_template(template_path)
     html = template.render(context)
 
-    # ⛔ NO USAR función fix_static_paths
-    # WeasyPrint maneja los archivos estáticos usando base_url
+    # Convertir ruta real a file://
+    context['icon'] = "file://" + context['icon']
 
-    pdf = HTML(
-        string=html,
-        base_url=settings.STATIC_ROOT  # ← CLAVE
-    ).write_pdf()
+    pdf = HTML(string=html).write_pdf()
 
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
-
     return response
