@@ -186,7 +186,6 @@ def eliminar_proveedor(request, pk):
 
 
 def generar_pdf_multiple(request):
-    # Obtener folios desde la URL
     folios = request.GET.get('folios')
     if not folios:
         return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
@@ -194,32 +193,35 @@ def generar_pdf_multiple(request):
     folios = folios.split(',')
     gastos = DetalleGasto.objects.filter(folio__in=folios)
 
-    if not gastos.exists():
-        return HttpResponse("No se encontraron registros para los folios seleccionados.", content_type="text/plain")
-
-    # Plantilla y contexto
-    template_path = 'recibo_gastos_multiples.html'
-    try:
-        logo_path = staticfiles_storage.path('images/logo.jpg')  # ruta absoluta de la imagen
-    except Exception:
-        logo_path = ''  # en caso de que no exista la imagen, evitar crash
-
-    context = {
+    template = get_template('recibo_gastos_multiples.html')
+    html = template.render({
         'gastos': gastos,
-        'icon': f"file://{logo_path}" if logo_path else '',  # WeasyPrint necesita file://
-    }
+        'icon': f"{settings.STATIC_URL}images/logo.jpg"
+    })
 
-    # Renderizar HTML
-    template = get_template(template_path)
-    html = template.render(context)
+    # Convertir rutas estáticas a absolutas para WeasyPrint
+    def fix_static_paths(content):
+        static_prefix = settings.STATIC_URL
+        while static_prefix in content:
+            start = content.find(static_prefix)
+            end = content.find('"', start)
+            if end == -1:
+                break
+            static_path = content[start:end]
+            real_path = finders.find(static_path.replace(static_prefix, ""))
+            if real_path:
+                content = content.replace(static_path, "file://" + real_path)
+            else:
+                break
+        return content
 
-    # Generar PDF
+    html = fix_static_paths(html)
+
     try:
         pdf = HTML(string=html).write_pdf()
     except Exception as e:
-        return HttpResponse(f"Error al generar PDF: {str(e)}", content_type="text/plain")
+        return HttpResponse(f'Error al generar el PDF: {e}', content_type='text/plain')
 
-    # Retornar PDF como respuesta
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="recibo_gastos_multiples.pdf"'
     return response
