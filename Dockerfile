@@ -1,29 +1,34 @@
+# Imagen base
 FROM python:3.11-slim
 
-# Instalar dependencias necesarias para WeasyPrint
+# Instalar dependencias del sistema para WeasyPrint
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpango-1.0-0 \
     libcairo2 \
-    libffi-dev \
+    pango1.0-tools \
     libgdk-pixbuf-2.0-0 \
+    libffi-dev \
+    libfreetype6 \
+    libharfbuzz0b \
+    libfribidi0 \
     libxml2 \
-    libxslt1.1 \
     libjpeg62-turbo \
-    libpng-dev \
+    fonts-dejavu-core \
+    wget \
     && apt-get clean
 
-# Crear ambiente virtual
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Copiar aplicación
+# Crear directorio de app
 WORKDIR /app
-COPY . /app
 
-# Instalar requirements.txt
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Copiar archivos
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Arrancar la aplicación
-CMD ["gunicorn", "mysite.wsgi:application", "--bind", "0.0.0.0:$PORT"]
+COPY . .
+
+# Exponer puerto
+EXPOSE 8000
+
+# Iniciar Django con Gunicorn
+CMD ["gunicorn", "mysite.wsgi:application", "--bind", "0.0.0.0:8000"]
