@@ -20,3 +20,19 @@ class ProveedorForm(forms.ModelForm):
         model = Proveedor
         fields = ['nombre', 'contacto']
 
+class ReportePagosForm(forms.Form):
+    proveedor = forms.ModelChoiceField(
+        queryset=Proveedor.objects.all(),
+        label="Proveedor",
+        required=True
+    )
+    fecha_inicio = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label="Desde",
+        required=True
+    )
+    fecha_fin = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label="Hasta",
+        required=True
+    )

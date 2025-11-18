@@ -217,3 +217,34 @@ def generar_pdf_multiple(request):
     response['Content-Disposition'] = 'attachment; filename="recibos.pdf"'
 
     return response
+
+
+
+
+from myapp.forms import ReportePagosForm
+
+def reporte_pagos_proveedor(request):
+    form = ReportePagosForm(request.GET or None)
+
+    gastos = []
+    total_importe = 0
+
+    if form.is_valid():
+        proveedor = form.cleaned_data['proveedor']
+        fecha_inicio = form.cleaned_data['fecha_inicio']
+        fecha_fin = form.cleaned_data['fecha_fin']
+
+        gastos = DetalleGasto.objects.filter(
+            proveedor=proveedor,
+            fecha__date__gte=fecha_inicio,
+            fecha__date__lte=fecha_fin
+        ).order_by('fecha')
+
+        total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0
+
+    context = {
+        'form': form,
+        'gastos': gastos,
+        'total_importe': total_importe,
+    }
+    return render(request, "reporte_pagos_proveedor.html", context)

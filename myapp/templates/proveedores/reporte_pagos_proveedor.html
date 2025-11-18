@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+{% load formatos %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Pagos por Proveedor</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .total { font-weight: bold; background: #e9ecef; }
+    </style>
+</head>
+<body>
+
+<h2>Reporte de Pagos por Proveedor</h2>
+
+<form method="GET">
+    {{ form.as_p }}
+    <button type="submit">Consultar</button>
+</form>
+
+{% if gastos %}
+<h3>Resultados</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Folio</th>
+        <th>Evento</th>
+        <th>Fecha</th>
+        <th>Concepto</th>
+        <th>Tipo Gasto</th>
+        <th>Importe</th>
+        <th>Comentarios</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for g in gastos %}
+    <tr>
+        <td>{{ g.folio }}</td>
+        <td>{{ g.evento.nombre }}</td>
+        <td>{{ g.fecha|date:"d/m/Y" }}</td>
+        <td>{{ g.get_concepto_display }}</td>
+        <td>{{ g.get_tipo_gasto_display }}</td>
+        <td>{{ g.importe|formato_pesos }}</td>
+        <td>{{ g.comentarios }}</td>
+    </tr>
+    {% endfor %}
+
+    <tr class="total">
+        <td colspan="5">TOTAL</td>
+        <td colspan="2">{{ total_importe|formato_pesos }}</td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+
+</body>
+</html>
+{% endblock %}
