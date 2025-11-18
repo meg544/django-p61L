@@ -69,7 +69,7 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('proveedores/eliminar/<int:pk>/', eliminar_proveedor, name='eliminar_proveedor'),
     path('seleccionar-evento-listar-gastos/', seleccionar_evento_listar_gastos, name='seleccionar_evento_listar_gastos'),
     path('seleccionar-evento-listar-gastos2/', seleccionar_evento_listar_gastos2, name='seleccionar_evento_listar_gastos2'),
-    path("reporte-pagos/", reporte_pagos_proveedor, name="reporte_pagos_proveedor"),
+    path('reporte-pagos/', reporte_pagos_proveedor, name='reporte_pagos_proveedor'),
 ]
 
 

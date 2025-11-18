@@ -22,12 +22,11 @@ from django.template.loader import get_template
 from django.db.models import Sum
 from django.contrib.staticfiles import finders
 from weasyprint import HTML, CSS
-from myapp.models import Evento, DetalleGasto
-from myapp.forms import DetalleGastoForm, EventoForm
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Evento, Proveedor
-from .forms import EventoForm, ProveedorForm
+from .models import Evento, Proveedor, DetalleGasto
+from .forms import EventoForm, ProveedorForm, ReportePagosForm, DetalleGastoForm
+
 
 from django.conf import settings
 from django.contrib.staticfiles import finders
@@ -221,7 +220,7 @@ def generar_pdf_multiple(request):
 
 
 
-from myapp.forms import ReportePagosForm
+
 
 def reporte_pagos_proveedor(request):
     form = ReportePagosForm(request.GET or None)
