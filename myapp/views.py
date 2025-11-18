@@ -247,3 +247,17 @@ def reporte_pagos_proveedor(request):
         'total_importe': total_importe,
     }
     return render(request, "reporte_pagos_proveedor.html", context)
+
+def seleccionar_proveedor(request):
+    proveedores = Proveedor.objects.all().order_by('nombre')
+    if request.method == 'POST':
+        proveedor_id = request.POST.get('proveedor')
+        return redirect('listar_gastos_proveedor', proveedor_id=proveedor_id)
+    return render(request, 'seleccionar_proveedor.html', {'proveedores': proveedores})
+
+def listar_gastos_proveedor(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
+    gastos = DetalleGasto.objects.filter(proveedor=proveedor)
+    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0  # Calcula la suma de los importes
+    return render(request, 'listar_gastos_proveedor.html', {'proveedor': proveedor, 'gastos': gastos,  'total': total_importe,})
+
