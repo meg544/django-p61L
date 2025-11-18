@@ -80,7 +80,7 @@ def listar_gastos(request, evento_id):
 
 def listar_gastos2(request, evento_id):
     evento = get_object_or_404(Evento, pk=evento_id)
-    gastos = DetalleGasto.objects.filter(evento=evento)
+    gastos = DetalleGasto.objects.filter(evento=evento).order_by('-fecha')
     total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0  # Calcula la suma de los importes
     return render(request, 'listar_gastos2.html', {'gastos': gastos, 'evento': evento, 'total': total_importe,})
 
