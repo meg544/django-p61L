@@ -237,7 +237,7 @@ def reporte_pagos_proveedor(request):
             proveedor=proveedor,
             fecha__date__gte=fecha_inicio,
             fecha__date__lte=fecha_fin
-        ).order_by('fecha')
+        ).order_by('-fecha')
 
         total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0
 
