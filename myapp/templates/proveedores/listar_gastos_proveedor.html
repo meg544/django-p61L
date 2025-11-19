@@ -1,123 +1,28 @@
-
-{% extends 'base.html' %}
-
-
-{% load static %}
-{% load formatos %}
+{% extends "base.html" %}
 
 {% block content %}
+<h2>Gastos del proveedor: {{ proveedor.nombre }}</h2>
 
+<p><strong>Total: </strong> ${{ total }}</p>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Gastos del Proveedor</title>
-
-  <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-        }
-
-        th {
-            background-color: #f0f0f0;
-            text-align: left;
-        }
-
-        tr:nth-child(even) {
-            background-color: #fafafa;
-        }
-
-        .total-box {
-            margin-top: 25px;
-            text-align: right;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .volver {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-        }
-
-        .volver:hover {
-            background: #0056b3;
-        }
-
-        .no-registros {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #b00;
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-
-<h1>Gastos del Proveedor: {{ proveedor.nombre }}</h1>
-
-{% if gastos %}
 <table>
   <thead>
   <tr>
-    <th>Folio</th>
-    <th>Evento</th>
     <th>Fecha</th>
+    <th>Descripción</th>
     <th>Importe</th>
-    <th>Concepto</th>
-    <th>Tipo de Gasto</th>
-    <th>Comentarios</th>
   </tr>
   </thead>
 
   <tbody>
   {% for gasto in gastos %}
   <tr>
-    <td>{{ gasto.folio }}</td>
-    <td>{{ gasto.evento.nombre }}</td>
-    <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
-    <td>{{ gasto.importe|formato_pesos }}</td>
-    <td>{{ gasto.get_concepto_display }}</td>
-    <td>{{ gasto.get_tipo_gasto_display }}</td>
-    <td>{{ gasto.comentarios|default:"-" }}</td>
+    <td>{{ gasto.fecha }}</td>
+    <td>{{ gasto.descripcion }}</td>
+    <td>${{ gasto.importe }}</td>
   </tr>
   {% endfor %}
   </tbody>
 </table>
 
-<p class="total-box">
-  Total pagado al proveedor: {{ total|formato_pesos }}
-</p>
-
-{% else %}
-<p class="no-registros">No existen gastos registrados para este proveedor.</p>
-{% endif %}
-
-<a href="{% url 'seleccionar_proveedor' %}" class="volver">← Volver</a>
-
-</body>
-</html>
 {% endblock %}

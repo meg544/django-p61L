@@ -41,11 +41,11 @@ urlpatterns = [
     path('proveedores/eliminar/<int:pk>/', eliminar_proveedor, name='eliminar_proveedor'),
 
     # REPORTES POR PROVEEDOR
-    path('proveedores/seleccionar/', seleccionar_proveedor, name='seleccionar_proveedor'),
-    path('proveedores/gastos/<int:proveedor_id>/', listar_gastos_proveedor, name='listar_gastos_proveedor'),
 
     # Reporte con fechas
-    path('reporte-pagos-proveedor/', reporte_pagos_proveedor, name='reporte_pagos_proveedor'),
+    path('reporte_pagos_proveedor/', reporte_pagos_proveedor, name='reporte_pagos_proveedor'),
+    path("seleccionar-proveedor/", seleccionar_proveedor, name="seleccionar_proveedor"),
+    path("proveedor/<int:proveedor_id>/gastos/", listar_gastos_proveedor, name="listar_gastos_proveedor"),
 
     # Selecciones extra
     path('seleccionar-evento-listar-gastos/', seleccionar_evento_listar_gastos, name='seleccionar_evento_listar_gastos'),

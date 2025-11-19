@@ -255,9 +255,20 @@ def seleccionar_proveedor(request):
         return redirect('listar_gastos_proveedor', proveedor_id=proveedor_id)
     return render(request, 'seleccionar_proveedor.html', {'proveedores': proveedores})
 
+# views.py
 def listar_gastos_proveedor(request, proveedor_id):
     proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
-    gastos = DetalleGasto.objects.filter(proveedor=proveedor)
-    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0  # Calcula la suma de los importes
-    return render(request, 'listar_gastos_proveedor.html', {'proveedor': proveedor, 'gastos': gastos,  'total': total_importe,})
 
+    gastos = DetalleGasto.objects.filter(
+        proveedor=proveedor
+    ).order_by("-fecha")  # DESC
+
+    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0
+
+    context = {
+        "proveedor": proveedor,
+        "gastos": gastos,
+        "total": total_importe,
+    }
+
+    return render(request, "listar_gastos_proveedor.html", context)

@@ -1,26 +1,20 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
+<h2>Seleccionar proveedor</h2>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleccionar Proveedor</title>
-</head>
-<body>
-<h1>Seleccionar Proveedor</h1>
-<form method="post">
+<form method="POST">
     {% csrf_token %}
+
+    <label>Proveedor:</label>
     <select name="proveedor" required>
-        {% for proveedor in proveedores %}
-        <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+        <option value="">Seleccione...</option>
+        {% for p in proveedores %}
+        <option value="{{ p.id }}">{{ p.nombre }}</option>
         {% endfor %}
     </select>
-    <button type="submit">Continuar</button>
+
+    <button type="submit">Ver gastos</button>
 </form>
-</body>
-</html>
 
 {% endblock %}
