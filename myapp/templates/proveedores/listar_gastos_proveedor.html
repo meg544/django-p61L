@@ -1,25 +1,31 @@
 {% extends "base.html" %}
-
+{% load formatos %}
 {% block content %}
 <h2>Gastos del proveedor: {{ proveedor.nombre }}</h2>
 
-<p><strong>Total: </strong> ${{ total }}</p>
+<p><strong>Total: </strong> ${{ total|formato_pesos }}</p>
 
 <table>
   <thead>
   <tr>
+    <<th>Folio</th>
     <th>Fecha</th>
-    <th>Descripción</th>
+    <th>Evento</th>
     <th>Importe</th>
+    <th>Concepto</th>
+    <th>Comentarios</th>
   </tr>
   </thead>
 
   <tbody>
   {% for gasto in gastos %}
   <tr>
-    <td>{{ gasto.fecha }}</td>
-    <td>{{ gasto.descripcion }}</td>
-    <td>${{ gasto.importe }}</td>
+    <td>{{ gasto.folio }}</td>
+    <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
+    <td>{{ gasto.evento.nombre }}</td>
+    <td>{{ gasto.importe|formato_pesos }}</td>
+    <td>{{ gasto.concepto }}</td>
+    <td>{{ gasto.comentarios }}</td>
   </tr>
   {% endfor %}
   </tbody>
