@@ -246,14 +246,14 @@ def reporte_pagos_proveedor(request):
         'gastos': gastos,
         'total_importe': total_importe,
     }
-    return render(request, "reporte_pagos_proveedor.html", context)
+    return render(request, "proveedores/reporte_pagos_proveedor.html", context)
 
 def seleccionar_proveedor(request):
     proveedores = Proveedor.objects.all().order_by('nombre')
     if request.method == 'POST':
         proveedor_id = request.POST.get('proveedor')
         return redirect('listar_gastos_proveedor', proveedor_id=proveedor_id)
-    return render(request, 'seleccionar_proveedor.html', {'proveedores': proveedores})
+    return render(request, 'proveedores/seleccionar_proveedor.html', {'proveedores': proveedores})
 
 # views.py
 def listar_gastos_proveedor(request, proveedor_id):
@@ -271,4 +271,4 @@ def listar_gastos_proveedor(request, proveedor_id):
         "total": total_importe,
     }
 
-    return render(request, "listar_gastos_proveedor.html", context)
+    return render(request, "proveedores/listar_gastos_proveedor.html", context)
