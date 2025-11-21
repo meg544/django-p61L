@@ -284,5 +284,5 @@ def editar_gasto(request, pk):
     else:
         form = DetalleGastoForm(instance=gasto)
 
-    return render(request, "gastos/editar_gasto.html", {"form": form, "gasto": gasto})
+    return render(request, "proveedores/editar_gasto.html", {"form": form, "gasto": gasto})
 
