@@ -1,40 +1,58 @@
 {% extends "base.html" %}
 {% load formatos %}
 {% block content %}
+
 <h2>Gastos del proveedor: {{ proveedor.nombre }}</h2>
 
 <p><strong>Total: </strong> {{ total|formato_pesos }}</p>
+
 <style>
-         #customers {
+    #customers {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
-        }
+    }
 
-        #customers td, #customers th {
+    #customers td, #customers th {
         border: 1px solid #ddd;
         padding: 8px;
-        }
+        vertical-align: top;
+    }
 
-        #customers tr:nth-child(even){background-color: #f2f2f2;}
+    #customers tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
-        #customers tr:hover {background-color: #ddd;}
+    #customers tr:hover {
+        background-color: #ddd;
+    }
 
-        #customers th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-        }
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #f8f9fa;
+    }
+
+    /* 🔥 Hace que comentarios no crezcan demasiado */
+    .comentarios-col {
+        max-width: 250px;      /* ancho fijo */
+        white-space: normal;   /* permite saltos */
+        word-wrap: break-word; /* corta palabras largas */
+        overflow-wrap: break-word;
+    }
 </style>
+
 <table id="customers">
   <thead>
   <tr>
-    <<th>Folio</th>
+    <th>Folio</th>
     <th>Fecha</th>
     <th>Evento</th>
     <th>Importe</th>
     <th>Concepto</th>
     <th>Comentarios</th>
+    <th>Acciones</th>
   </tr>
   </thead>
 
@@ -46,7 +64,12 @@
     <td>{{ gasto.evento.nombre }}</td>
     <td>{{ gasto.importe|formato_pesos }}</td>
     <td>{{ gasto.concepto }}</td>
-    <td>{{ gasto.comentarios }}</td>
+
+    <!-- 🔥 Comentarios controlado -->
+    <td class="comentarios-col">
+      {{ gasto.comentarios }}
+    </td>
+
     <td>
       <a href="{% url 'editar_gasto' gasto.pk %}" class="btn btn-sm btn-warning">
         Editar
