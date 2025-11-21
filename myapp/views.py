@@ -272,3 +272,17 @@ def listar_gastos_proveedor(request, proveedor_id):
     }
 
     return render(request, "proveedores/listar_gastos_proveedor.html", context)
+
+def editar_gasto(request, pk):
+    gasto = get_object_or_404(DetalleGasto, pk=pk)
+
+    if request.method == "POST":
+        form = DetalleGastoForm(request.POST, instance=gasto)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_gastos_proveedor", proveedor_id=gasto.proveedor.id)
+    else:
+        form = DetalleGastoForm(instance=gasto)
+
+    return render(request, "gastos/editar_gasto.html", {"form": form, "gasto": gasto})
+

@@ -47,6 +47,17 @@
     <td>{{ gasto.importe|formato_pesos }}</td>
     <td>{{ gasto.concepto }}</td>
     <td>{{ gasto.comentarios }}</td>
+    <td>
+      <a href="{% url 'editar_gasto' gasto.pk %}" class="btn btn-sm btn-warning">
+        Editar
+      </a>
+
+      <a href="{% url 'generar_pdf' gasto.folio %}"
+         class="btn btn-sm btn-secondary"
+         target="_blank">
+        Imprimir
+      </a>
+    </td>
   </tr>
   {% endfor %}
   </tbody>

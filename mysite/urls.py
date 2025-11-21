@@ -7,7 +7,7 @@ from myapp.views import (
     seleccionar_evento, capturar_gastos, listar_gastos,
     generar_pdf, listar_eventos, crear_evento, editar_evento,
     eliminar_evento, listar_proveedores, crear_proveedor,
-    editar_proveedor, eliminar_proveedor, reporte_pagos_proveedor
+    editar_proveedor, eliminar_proveedor, reporte_pagos_proveedor, editar_gasto
 )
 from django.contrib.auth import views as auth_views
 
@@ -41,6 +41,10 @@ urlpatterns = [
     path('proveedores/eliminar/<int:pk>/', eliminar_proveedor, name='eliminar_proveedor'),
 
     # REPORTES POR PROVEEDOR
+
+    # nuevas rutas para editar e imprimir gastos
+    path("gasto/<int:pk>/editar/", editar_gasto, name="editar_gasto"),
+    # path("gasto/<int:folio>/imprimir/", views.generar_pdf, name="generar_pdf"),
 
     # Reporte con fechas
     path('reporte_pagos_proveedor/', reporte_pagos_proveedor, name='reporte_pagos_proveedor'),

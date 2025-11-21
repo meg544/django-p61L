@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Editar Gasto</h2>
+
+<form method="post" id="editForm">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <button type="submit" id="btnSubmit" class="btn btn-primary">Guardar Cambios</button>
+  <a href="{% url 'listar_gastos_proveedor' gasto.proveedor.id %}" class="btn btn-secondary">
+    Cancelar
+  </a>
+</form>
+
+<script>
+    const form = document.getElementById("editForm");
+    const btn = document.getElementById("btnSubmit");
+
+    form.addEventListener("submit", () => {
+        btn.disabled = true;
+        btn.innerText = "Guardando...";
+    });
+</script>
+
+{% endblock %}
