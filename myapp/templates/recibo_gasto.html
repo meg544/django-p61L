@@ -1,105 +1,66 @@
 
- {% load static %}
+{% load static %}
 {% load formatos %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recibo de Pago</title>
+    <title>Recibos</title>
+
     <style>
-        #customers {
-        font-family: Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
+        body { margin: 0; padding: 0; font-family: Arial; }
+
+        #customers, #customers2 {
+            border-collapse: collapse;
+            width: 100%;
         }
-
-        #customers td, #customers th {
-        border: 1px solid #ddd;
-        padding: 8px;
-        }
-
-        #customers tr:nth-child(even){background-color: #f2f2f2;}
-
-        #customers tr:hover {background-color: #ddd;}
-
-        #customers th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-        }
-
-        #customers2 {
-        font-family: Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-        }
-
+        #customers td, #customers th,
         #customers2 td, #customers2 th {
-        border: 1px solid #ddd;
-        padding: 4px;
-        text-align: left;
-        }
-        #etiqueta {
-            width: 20%;
-            }
-        #valor {
-            width:75%;
-            }
-
-        #customers2 tr:nth-child(even){background-color: #f2f2f2;}
-
-        #customers2 tr:hover {background-color: #ddd;}
-
-        #customers2 th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
+            border: 1px solid #ddd;
+            padding: 8px;
         }
 
+        .recibo-container {
+            margin-bottom: 20px;
+        }
 
+        .linea-punteada {
+            width: 100%;
+            border-top: 2px dashed #000;
+            margin: 25px 0;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
     </style>
 </head>
 <body>
-    <table id="customers">
-    <tr>
-        <th><img src="{{icon}}" alt="Logotipo" style="width: 150px; height: auto"></th>
-        <th><h1>Recibo de Gasto</h1></th>
-        <th><p><strong>Folio:</strong> {{ gasto.folio }}</p></th>
-    </tr>
-    </table>
-    <table id="customers2">
-        <tr>
-            <td style="width:20%;"><p><strong>Evento:</strong></p></td>
-            <td style="width:80%;"><p>{{ gasto.evento.nombre }}</p></td>
-        </tr>
-        <tr>
-            <td><p><strong>Fecha:</strong></p></td>
-            <td><p>{{ gasto.fecha }}</p></td>
-        </tr>
-        <tr>
-            <td><p><strong>Importe:</strong></p></td>
-            <td><p>{{ gasto.importe |formato_pesos }}</p></td>
-        </tr>
-        <tr>
-            <td><p><strong>Concepto:</strong></p></td>
-            <td><p>{{ gasto.concepto }}</p></td>
-        </tr>
-        <tr>
-            <td><p><strong>Proveedor:</strong></p></td>
-            <td><p>{{ gasto.proveedor.nombre }}</p></td>
-        </tr>
-        <tr>
-            <td><p><strong>Comentarios:</strong></p></td>
-            <td><p>{{ gasto.comentarios }}</p></td>
-        </tr>
-        <tr>
-            <td style="text-align: center"><p><strong>Autorizo VoBo:</strong></p><br><p>_______________</p></td>
-            <td style="text-align: center"><p><strong>Firma de Recibido:</strong></p><br><p>______________________________</p></td>
-        </tr>
+<div class="recibo-container">
 
+    <table id="customers">
+        <tr>
+            <th><img src="{{ icon }}" style="width: 150px;"></th>
+            <th><h1>Recibo de Gasto</h1></th>
+            <th><strong>Folio:</strong> {{ gasto.folio }}</th>
+        </tr>
     </table>
+
+    <table id="customers2">
+        <tr><td><strong>Evento:</strong></td><td>{{ gasto.evento.nombre }}</td></tr>
+        <tr><td><strong>Fecha:</strong></td><td>{{ gasto.fecha|date:"d/m/Y" }}</td></tr>
+        <tr><td><strong>Importe:</strong></td><td>{{ gasto.importe|formato_pesos }}</td></tr>
+        <tr><td><strong>Concepto:</strong></td><td>{{ gasto.concepto }}</td></tr>
+        <tr><td><strong>Proveedor:</strong></td><td>{{ gasto.proveedor.nombre }}</td></tr>
+        <tr><td><strong>Comentarios:</strong></td><td>{{ gasto.comentarios }}</td></tr>
+        <tr>
+            <td style="text-align: center;"><strong>Autorizo Vo.Bo:</strong><br>_______________</td>
+            <td style="text-align: center;"><strong>Firma de Recibido:</strong><br>______________________________</td>
+        </tr>
+    </table>
+
+</div>
 </body>
 </html>
 
