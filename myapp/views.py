@@ -92,10 +92,10 @@ def generar_pdf(request, folio):
 
     template_path = 'recibo_gasto.html'
     template = get_template(template_path)
-
+    icon_path = abs_static("images/logo.jpg")   # ← ESTA ES LA CLAVE
     context = {
         'gasto': gasto,
-        'icon': os.path.join(settings.STATIC_ROOT, "images/logo.jpg"),
+        "icon": icon_path,
     }
 
     html = template.render(context)
