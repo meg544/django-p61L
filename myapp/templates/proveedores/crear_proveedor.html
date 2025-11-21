@@ -8,14 +8,33 @@
     <title>Crear Proveedor</title>
 </head>
 <body>
+
 <h1>Crear Proveedor</h1>
-<form method="post">
+
+<form method="post" id="proveedorForm">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Guardar</button>
+
+    <button type="submit" id="btnSubmit">
+        Guardar
+    </button>
 </form>
+
 <a href="{% url 'listar_proveedores' %}">Regresar</a>
+
+<!-- JS para evitar múltiples envíos -->
+<script>
+    const form = document.getElementById("proveedorForm");
+    const btn = document.getElementById("btnSubmit");
+
+    form.addEventListener("submit", () => {
+        btn.disabled = true;            // Evita doble click
+        btn.innerText = "Guardando..."; // Feedback visual
+    });
+</script>
+
 </body>
 </html>
+
 
 {% endblock %}
