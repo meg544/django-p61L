@@ -32,6 +32,13 @@
             padding-bottom: 12px;
             text-align: left;
         }
+        /* 🔥 Hace que comentarios no crezcan demasiado */
+    .comentarios-col {
+        max-width: 250px;      /* ancho fijo */
+        white-space: normal;   /* permite saltos */
+        word-wrap: break-word; /* corta palabras largas */
+        overflow-wrap: break-word;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +65,8 @@
         <td>{{ gasto.importe|formato_pesos }}</td>
         <td>{{ gasto.concepto }}</td>
         <td>{{ gasto.proveedor.nombre }}</td>
-        <td>{{ gasto.comentarios }}</td>
+        <!-- 🔥 Comentarios controlado -->
+        <td class="comentarios-col">{{ gasto.comentarios }}</td>
         <td>
             <a href="{% url 'generar_pdf' gasto.folio %}">Imprimir Recibo</a>
         </td>
