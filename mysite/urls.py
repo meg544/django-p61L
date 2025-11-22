@@ -58,15 +58,15 @@ urlpatterns = [
     path('seleccionar-evento-listar-gastos2/', seleccionar_evento_listar_gastos2, name='seleccionar_evento_listar_gastos2'),
 
     # Categorías
-    path("categorias/", views.listar_categorias, name="listar_categorias"),
-    path("categorias/crear/", views.crear_categoria, name="crear_categoria"),
-    path("categorias/editar/<int:pk>/", views.editar_categoria, name="editar_categoria"),
-    path("categorias/eliminar/<int:pk>/", views.eliminar_categoria, name="eliminar_categoria"),
+    path("categorias/", listar_categorias, name="listar_categorias"),
+    path("categorias/crear/", crear_categoria, name="crear_categoria"),
+    path("categorias/editar/<int:pk>/", editar_categoria, name="editar_categoria"),
+    path("categorias/eliminar/<int:pk>/", eliminar_categoria, name="eliminar_categoria"),
 
     # Conceptos
-    path("conceptos/", views.listar_conceptos, name="listar_conceptos"),
-    path("conceptos/crear/", views.crear_concepto, name="crear_concepto"),
-    path("conceptos/editar/<int:pk>/", views.editar_concepto, name="editar_concepto"),
-    path("conceptos/eliminar/<int:pk>/", views.eliminar_concepto, name="eliminar_concepto"),
+    path("conceptos/", listar_conceptos, name="listar_conceptos"),
+    path("conceptos/crear/", crear_concepto, name="crear_concepto"),
+    path("conceptos/editar/<int:pk>/", editar_concepto, name="editar_concepto"),
+    path("conceptos/eliminar/<int:pk>/", eliminar_concepto, name="eliminar_concepto"),
 
 ]
