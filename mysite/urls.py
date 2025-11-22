@@ -68,5 +68,4 @@ urlpatterns = [
     path("conceptos/crear/", crear_concepto, name="crear_concepto"),
     path("conceptos/editar/<int:pk>/", editar_concepto, name="editar_concepto"),
     path("conceptos/eliminar/<int:pk>/", eliminar_concepto, name="eliminar_concepto"),
-
 ]
