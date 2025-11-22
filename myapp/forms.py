@@ -1,5 +1,6 @@
 from django import forms
-from .models import DetalleGasto, Evento, Proveedor
+from .models import DetalleGasto, Evento, Proveedor, Concepto, Categoria
+
 
 class DetalleGastoForm(forms.ModelForm):
     class Meta:
@@ -36,3 +37,22 @@ class ReportePagosForm(forms.Form):
         label="Hasta",
         required=True
     )
+
+
+
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nombre']
+
+
+class ConceptoForm(forms.ModelForm):
+    class Meta:
+        model = Concepto
+        fields = ['concepto', 'estatus', 'categoria']
+
+        widgets = {
+            'concepto': forms.TextInput(attrs={'class': 'form-control'}),
+            'estatus': forms.CheckboxInput(),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+        }

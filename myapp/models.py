@@ -49,6 +49,20 @@ class DetalleGasto(models.Model):
         return f"Folio {self.folio} - {self.evento.nombre}"
 
 # models.py
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nombre
+
+
+class Concepto(models.Model):
+    concepto = models.CharField(max_length=200)
+    estatus = models.BooleanField(default=True)  # Activo / Inactivo
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.concepto
 
 
 

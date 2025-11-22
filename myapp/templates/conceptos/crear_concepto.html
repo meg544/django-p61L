@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Nuevo Concepto</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success">Guardar</button>
+</form>
+
+<a href="{% url 'listar_conceptos' %}" class="btn btn-secondary mt-3">Regresar</a>
+{% endblock %}

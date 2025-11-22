@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Eliminar Concepto</h2>
+
+<p>¿Seguro que deseas eliminar el concepto <strong>{{ concepto.concepto }}</strong>?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger" type="submit">Eliminar</button>
+  <a href="{% url 'listar_conceptos' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock %}

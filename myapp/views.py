@@ -26,6 +26,8 @@ from weasyprint import HTML, CSS
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Evento, Proveedor, DetalleGasto
 from .forms import EventoForm, ProveedorForm, ReportePagosForm, DetalleGastoForm
+from .models import Concepto, Categoria
+from .forms import ConceptoForm, CategoriaForm
 
 
 from django.conf import settings
@@ -286,3 +288,85 @@ def editar_gasto(request, pk):
 
     return render(request, "proveedores/editar_gasto.html", {"form": form, "gasto": gasto})
 
+# -------- CATEGORÍAS ----------
+def listar_categorias(request):
+    categorias = Categoria.objects.all()
+    return render(request, "conceptos/listar_categorias.html", {"categorias": categorias})
+
+
+def crear_categoria(request):
+    if request.method == "POST":
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_categorias")
+    else:
+        form = CategoriaForm()
+
+    return render(request, "conceptos/crear_categoria.html", {"form": form})
+
+
+def editar_categoria(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
+
+    if request.method == "POST":
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_categorias")
+    else:
+        form = CategoriaForm(instance=categoria)
+
+    return render(request, "conceptos/editar_categoria.html", {"form": form})
+
+
+def eliminar_categoria(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
+
+    if request.method == "POST":
+        categoria.delete()
+        return redirect("listar_categorias")
+
+    return render(request, "conceptos/eliminar_categoria.html", {"categoria": categoria})
+
+
+# -------- CONCEPTOS ----------
+def listar_conceptos(request):
+    conceptos = Concepto.objects.select_related("categoria").all()
+    return render(request, "conceptos/listar_conceptos.html", {"conceptos": conceptos})
+
+
+def crear_concepto(request):
+    if request.method == "POST":
+        form = ConceptoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_conceptos")
+    else:
+        form = ConceptoForm()
+
+    return render(request, "conceptos/crear_concepto.html", {"form": form})
+
+
+def editar_concepto(request, pk):
+    concepto = get_object_or_404(Concepto, pk=pk)
+
+    if request.method == "POST":
+        form = ConceptoForm(request.POST, instance=concepto)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_conceptos")
+    else:
+        form = ConceptoForm(instance=concepto)
+
+    return render(request, "conceptos/editar_concepto.html", {"form": form})
+
+
+def eliminar_concepto(request, pk):
+    concepto = get_object_or_404(Concepto, pk=pk)
+
+    if request.method == "POST":
+        concepto.delete()
+        return redirect("listar_conceptos")
+
+    return render(request, "conceptos/eliminar_concepto.html", {"concepto": concepto})

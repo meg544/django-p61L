@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Conceptos</h2>
+
+<a href="{% url 'crear_concepto' %}" class="btn btn-primary mb-3">Nuevo Concepto</a>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>Concepto</th>
+    <th>Estatus</th>
+    <th>Categoría</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {% for c in conceptos %}
+  <tr>
+    <td>{{ c.concepto }}</td>
+    <td>{{ c.estatus|yesno:"Activo,Inactivo" }}</td>
+    <td>{{ c.categoria.nombre }}</td>
+    <td>
+      <a href="{% url 'editar_concepto' c.pk %}" class="btn btn-warning btn-sm">Editar</a>
+      <a href="{% url 'eliminar_concepto' c.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+l>

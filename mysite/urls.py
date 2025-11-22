@@ -7,7 +7,9 @@ from myapp.views import (
     seleccionar_evento, capturar_gastos, listar_gastos,
     generar_pdf, listar_eventos, crear_evento, editar_evento,
     eliminar_evento, listar_proveedores, crear_proveedor,
-    editar_proveedor, eliminar_proveedor, reporte_pagos_proveedor, editar_gasto
+    editar_proveedor, eliminar_proveedor, reporte_pagos_proveedor, editar_gasto,
+    listar_conceptos, editar_concepto,eliminar_concepto, crear_concepto,
+    listar_categorias,editar_categoria,eliminar_categoria,crear_categoria
 )
 from django.contrib.auth import views as auth_views
 
@@ -54,4 +56,17 @@ urlpatterns = [
     # Selecciones extra
     path('seleccionar-evento-listar-gastos/', seleccionar_evento_listar_gastos, name='seleccionar_evento_listar_gastos'),
     path('seleccionar-evento-listar-gastos2/', seleccionar_evento_listar_gastos2, name='seleccionar_evento_listar_gastos2'),
+
+    # Categorías
+    path("categorias/", views.listar_categorias, name="listar_categorias"),
+    path("categorias/crear/", views.crear_categoria, name="crear_categoria"),
+    path("categorias/editar/<int:pk>/", views.editar_categoria, name="editar_categoria"),
+    path("categorias/eliminar/<int:pk>/", views.eliminar_categoria, name="eliminar_categoria"),
+
+    # Conceptos
+    path("conceptos/", views.listar_conceptos, name="listar_conceptos"),
+    path("conceptos/crear/", views.crear_concepto, name="crear_concepto"),
+    path("conceptos/editar/<int:pk>/", views.editar_concepto, name="editar_concepto"),
+    path("conceptos/eliminar/<int:pk>/", views.eliminar_concepto, name="eliminar_concepto"),
+
 ]
