@@ -2,10 +2,13 @@ from django.contrib import admin
 from django.urls import path
 from myapp.views import (
     seleccionar_proveedor, listar_gastos_proveedor,
-    logout_view, generar_pdf_multiple, listar_gastos2,
+    logout_view,
+    generar_pdf_multiple,
+    listar_gastos2,
     seleccionar_evento_listar_gastos2, seleccionar_evento_listar_gastos,
     seleccionar_evento, capturar_gastos, listar_gastos,
-    generar_pdf, listar_eventos, crear_evento, editar_evento,
+    generar_pdf,
+    listar_eventos, crear_evento, editar_evento,
     eliminar_evento, listar_proveedores, crear_proveedor,
     editar_proveedor, eliminar_proveedor, reporte_pagos_proveedor, editar_gasto,
     listar_conceptos, editar_concepto,eliminar_concepto, crear_concepto,
