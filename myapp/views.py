@@ -332,7 +332,7 @@ def eliminar_categoria(request, pk):
 
 # -------- CONCEPTOS ----------
 def listar_conceptos(request):
-    conceptos = Concepto.objects.select_related("categoria").all()
+    conceptos = Concepto.objects.select_related("categoria").order_by("concepto")
     return render(request, "conceptos/listar_conceptos.html", {"conceptos": conceptos})
 
 
