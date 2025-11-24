@@ -57,7 +57,7 @@ class DetalleGasto(models.Model):
         ('caja', 'Caja Chica'),
         ('boveda', 'Boveda')
     ], default='efe')
-    concepto2 = models.ForeignKey(Concepto, on_delete=models.CASCADE, default=215)
+    concepto2 = models.ForeignKey(Concepto, on_delete=models.CASCADE)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     comentarios = models.TextField(blank=True, null=True)
 
