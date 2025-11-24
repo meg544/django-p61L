@@ -5,7 +5,7 @@ from .models import DetalleGasto, Evento, Proveedor, Concepto, Categoria
 class DetalleGastoForm(forms.ModelForm):
     class Meta:
         model = DetalleGasto
-        fields = ['importe', 'concepto', 'tipo_gasto', 'proveedor', 'comentarios']
+        fields = ['importe', 'concepto', 'tipo_gasto', 'concepto2', 'proveedor', 'comentarios']
 
 class EventoForm(forms.ModelForm):
     class Meta:
