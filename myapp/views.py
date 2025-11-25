@@ -375,8 +375,18 @@ def seleccionar_evento2(request):
     eventos = Evento.objects.all().order_by("nombre")
     return render(request, "eventos/seleccionar_evento.html", {"eventos": eventos})
 
+
 def gastos_lista(request):
-    gastos = DetalleGasto.objects.select_related("evento", "proveedor").order_by('-folio')
+    hoy = now().date()
+
+    gastos = (
+        DetalleGasto.objects
+        .annotate(fecha_solo_dia=TruncDate("fecha"))
+        .filter(fecha_solo_dia=hoy)
+        .select_related("evento", "proveedor")
+        .order_by('-folio')
+    )
+
     return render(request, 'ogastos/lista.html', {'gastos': gastos})
 
 
@@ -392,7 +402,7 @@ def gasto_crear(request):
             gasto.save()
             return redirect('gastos_lista')
     else:
-        form = DetalleGastoForm()
+        form = DetalleGastoFormSinEvento()
 
     return render(request, 'ogastos/formSinEvento.html', {'form': form})
 
