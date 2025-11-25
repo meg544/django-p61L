@@ -385,7 +385,6 @@ def gastos_lista(request):
         DetalleGasto.objects
         .annotate(fecha_solo_dia=TruncDate("fecha"))
         .filter(fecha_solo_dia=hoy)
-        .filter(evento_id=1)  # 👈 FILTRO NUEVO
         .select_related("evento", "proveedor")
         .order_by('-folio')
     )
@@ -403,7 +402,7 @@ def gasto_crear(request):
             gasto = form.save(commit=False)
             gasto.evento = evento  # 👈 se asigna automáticamente
             gasto.save()
-            return redirect('ogastos/formSinEvento.html')
+            return redirect('gastos_lista')
     else:
         form = DetalleGastoFormSinEvento()
 
