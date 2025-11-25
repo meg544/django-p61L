@@ -403,7 +403,7 @@ def gasto_crear(request):
             gasto = form.save(commit=False)
             gasto.evento = evento  # 👈 se asigna automáticamente
             gasto.save()
-            return redirect('gastos_lista')
+            return redirect('ogastos/formSinEvento.html')
     else:
         form = DetalleGastoFormSinEvento()
 
