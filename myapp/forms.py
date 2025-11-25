@@ -61,5 +61,5 @@ class ConceptoForm(forms.ModelForm):
 class DetalleGastoFormSinEvento(forms.ModelForm):
     class Meta:
         model = DetalleGasto
-        fields = ['fecha', 'importe', 'concepto', 'tipo_gasto',
+        fields = ['importe', 'concepto', 'tipo_gasto',
                   'concepto2', 'proveedor', 'comentarios']
