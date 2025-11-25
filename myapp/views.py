@@ -385,6 +385,7 @@ def gastos_lista(request):
         DetalleGasto.objects
         .annotate(fecha_solo_dia=TruncDate("fecha"))
         .filter(fecha_solo_dia=hoy)
+        .filter(evento_id=1)  # 👈 FILTRO NUEVO
         .select_related("evento", "proveedor")
         .order_by('-folio')
     )
