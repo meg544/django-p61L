@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <h2>Capturar Gasto</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{% url 'gastos_lista' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+
+</div>
+{% endblock %}

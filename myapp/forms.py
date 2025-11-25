@@ -56,3 +56,10 @@ class ConceptoForm(forms.ModelForm):
             'estatus': forms.CheckboxInput(),
             'categoria': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+class DetalleGastoFormSinEvento(forms.ModelForm):
+    class Meta:
+        model = DetalleGasto
+        fields = ['fecha', 'importe', 'concepto', 'tipo_gasto',
+                  'concepto2', 'proveedor', 'comentarios']

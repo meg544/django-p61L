@@ -25,7 +25,7 @@ from weasyprint import HTML, CSS
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Evento, Proveedor, DetalleGasto
-from .forms import EventoForm, ProveedorForm, ReportePagosForm, DetalleGastoForm
+from .forms import EventoForm, ProveedorForm, ReportePagosForm, DetalleGastoForm,DetalleGastoFormSinEvento
 from .models import Concepto, Categoria
 from .forms import ConceptoForm, CategoriaForm
 
@@ -370,3 +370,48 @@ def eliminar_concepto(request, pk):
         return redirect("listar_conceptos")
 
     return render(request, "conceptos/eliminar_concepto.html", {"concepto": concepto})
+
+def seleccionar_evento2(request):
+    eventos = Evento.objects.all().order_by("nombre")
+    return render(request, "eventos/seleccionar_evento.html", {"eventos": eventos})
+
+def gastos_lista(request):
+    gastos = DetalleGasto.objects.select_related("evento", "proveedor").order_by('-folio')
+    return render(request, 'ogastos/lista.html', {'gastos': gastos})
+
+
+def gasto_crear(request):
+    evento_id_fijo = 1  # 👈 cambia este ID por el que tú quieras
+    evento = Evento.objects.get(pk=evento_id_fijo)
+
+    if request.method == 'POST':
+        form = DetalleGastoFormSinEvento(request.POST)
+        if form.is_valid():
+            gasto = form.save(commit=False)
+            gasto.evento = evento  # 👈 se asigna automáticamente
+            gasto.save()
+            return redirect('gastos_lista')
+    else:
+        form = DetalleGastoForm()
+
+    return render(request, 'ogastos/formSinEvento.html', {'form': form})
+
+def gasto_editar(request, folio):
+    gasto = get_object_or_404(DetalleGasto, pk=folio)
+
+    if request.method == 'POST':
+        form = DetalleGastoFormSinEvento(request.POST, instance=gasto)
+        if form.is_valid():
+            form.save()
+            return redirect('gastos_lista')
+    else:
+        form = DetalleGastoFormSinEvento(instance=gasto)
+
+    return render(request, 'ogastos/formSinEvento.html', {'form': form})
+
+def gasto_eliminar(request, folio):
+    gasto = get_object_or_404(DetalleGasto, pk=folio)
+    gasto.delete()
+    return redirect('gastos_lista')
+
+

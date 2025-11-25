@@ -12,7 +12,8 @@ from myapp.views import (
     eliminar_evento, listar_proveedores, crear_proveedor,
     editar_proveedor, eliminar_proveedor, reporte_pagos_proveedor, editar_gasto,
     listar_conceptos, editar_concepto,eliminar_concepto, crear_concepto,
-    listar_categorias,editar_categoria,eliminar_categoria,crear_categoria
+    listar_categorias,editar_categoria,eliminar_categoria,crear_categoria,
+    gastos_lista,gasto_crear,gasto_editar,gasto_eliminar,
 )
 from django.contrib.auth import views as auth_views
 
@@ -71,4 +72,10 @@ urlpatterns = [
     path("conceptos/crear/", crear_concepto, name="crear_concepto"),
     path("conceptos/editar/<int:pk>/", editar_concepto, name="editar_concepto"),
     path("conceptos/eliminar/<int:pk>/", eliminar_concepto, name="eliminar_concepto"),
+
+    # Nuevas rutas de gastos
+    path('ogastos/', gastos_lista, name='gastos_lista'),
+    path('ogastos/nuevo/', gasto_crear, name='gasto_crear'),
+    path('ogastos/editar/<int:folio>/', gasto_editar, name='gasto_editar'),
+    path('ogastos/eliminar/<int:folio>/', gasto_eliminar, name='gasto_eliminar'),
 ]
