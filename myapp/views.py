@@ -379,15 +379,11 @@ def seleccionar_evento2(request):
 
 
 def gastos_lista(request):
-    hoy = now().date()
-
     gastos = (
         DetalleGasto.objects
-        .annotate(fecha_solo_dia=TruncDate("fecha"))
-        .filter(fecha_solo_dia=hoy)
-        .filter(evento_id=1)  # 👈 FILTRO NUEVO
+        .filter(evento_id=1)                     # Filtro por evento
         .select_related("evento", "proveedor")
-        .order_by('-folio')
+        .order_by('-folio')[:50]                 # 👈 Limitar a los últimos 50
     )
 
     return render(request, 'ogastos/lista.html', {'gastos': gastos})
