@@ -457,3 +457,44 @@ def gasto_eliminar(request, folio):
     return redirect('gastos_lista')
 
 
+def gastos_lista3(request):
+    gastos = (
+        DetalleGasto.objects
+        .filter(evento_id=1)                     # Filtro por evento
+        .select_related("evento", "proveedor")
+        .order_by('-folio')[:50]                 # 👈 Limitar a los últimos 50
+    )
+
+    return render(request, 'ogastos/lista3.html', {'gastos': gastos})
+
+def generar_pdf_multiple3(request):
+    folios = request.GET.get('folios')
+    if not folios:
+        return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
+
+    folios = folios.split(',')
+    gastos = DetalleGasto.objects.filter(folio__in=folios)
+
+    template_path = "ogastos/recibo_gastos_multiples3.html"
+    template = get_template(template_path)
+
+    icon_path = abs_static("images/logo.jpg")   # ← ESTA ES LA CLAVE
+
+    context = {
+        "gastos": gastos,
+        "icon": icon_path,
+    }
+
+    html = template.render(context)
+
+    pdf = HTML(string=html).write_pdf()
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="recibos.pdf"'
+
+    return response
+
+
+
+
+

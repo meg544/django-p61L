@@ -1,0 +1,80 @@
+{% load formatos %}
+
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recibos</title>
+
+  <style>
+        body { margin: 0; padding: 0; font-family: Arial; }
+
+        #customers, #customers2 {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #customers td, #customers th,
+        #customers2 td, #customers2 th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .recibo-container {
+            margin-bottom: 20px;
+        }
+
+        .linea-punteada {
+            width: 100%;
+            border-top: 2px dashed #000;
+            margin: 25px 0;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+
+</head>
+<body>
+
+{% for gasto in gastos %}
+
+<div class="recibo-container">
+
+  <table id="customers">
+    <tr>
+      <th><img src="{{ icon }}" style="width: 150px;"></th>
+      <th><h1>Recibo de Gasto</h1></th>
+      <th><strong>Folio:</strong> {{ gasto.folio }}</th>
+    </tr>
+  </table>
+
+  <table id="customers2">
+
+    <tr><td><strong>Fecha:</strong></td><td>{{ gasto.fecha|date:"d/m/Y" }}</td></tr>
+    <tr><td><strong>Importe:</strong></td><td>{{ gasto.importe|formato_pesos }}</td></tr>
+    <tr><td><strong>Concepto:</strong></td><td>{{ gasto.concepto }}</td></tr>
+    <tr><td><strong>Proveedor:</strong></td><td>{{ gasto.proveedor.nombre }}</td></tr>
+    <tr><td><strong>Comentarios:</strong></td><td>{{ gasto.comentarios }}</td></tr>
+    <tr>
+      <td style="text-align: center;"><strong>Autorizo Vo.Bo:</strong><br>_______________</td>
+      <td style="text-align: center;"><strong>Firma de Recibido:</strong><br>______________________________</td>
+    </tr>
+  </table>
+
+</div>
+
+{# === Línea punteada ENTRE recibos 1 y 2 === #}
+{% if forloop.counter|divisibleby:1 and not forloop.counter|divisibleby:2 %}
+<div class="linea-punteada"></div>
+{% endif %}
+
+{# === Salto de página DESPUÉS de cada 2 recibos === #}
+{% if forloop.counter|divisibleby:2 and not forloop.last %}
+<div class="page-break"></div>
+{% endif %}
+
+{% endfor %}
+
+</body>
+</html>
