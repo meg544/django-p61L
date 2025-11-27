@@ -494,7 +494,33 @@ def generar_pdf_multiple3(request):
 
     return response
 
+def seleccionar_evento1(request):
+    eventos = Evento.objects.all().order_by('nombre')
+    if request.method == 'POST':
+        evento_id = request.POST.get('evento')
+        return redirect('capturar_gastos1', evento_id=evento_id)
+    return render(request, 'seleccionar_evento1.html', {'eventos': eventos})
 
+@login_required
+@permission_required('myapp.add_detallegasto', login_url='/sin_permiso/')
+def capturar_gastos1(request, evento_id):
+    evento = get_object_or_404(Evento, pk=evento_id)
+    if request.method == 'POST':
+        form = DetalleGastoForm(request.POST)
+        if form.is_valid():
+            gasto = form.save(commit=False)
+            gasto.evento = evento
+            gasto.save()
+            return redirect('capturar_gastos1', evento_id=evento_id)
+    else:
+        form = DetalleGastoForm()
+    return render(request, 'capturar_gastos1.html', {'form': form, 'evento': evento})
+
+def listar_gastos1(request, evento_id):
+    evento = get_object_or_404(Evento, pk=evento_id)
+    gastos = DetalleGasto.objects.filter(evento=evento).order_by('-fecha')
+    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0  # Calcula la suma de los importes
+    return render(request, 'listar_gastos1.html', {'gastos': gastos, 'evento': evento, 'total': total_importe,})
 
 
 

@@ -14,6 +14,7 @@ from myapp.views import (
     listar_conceptos, editar_concepto,eliminar_concepto, crear_concepto,
     listar_categorias,editar_categoria,eliminar_categoria,crear_categoria,
     gastos_lista,gasto_crear,gasto_editar,gasto_eliminar,sin_permiso,generar_pdf_multiple3,gastos_lista3,
+    seleccionar_evento1,capturar_gastos1,listar_gastos1
 )
 from django.contrib.auth import views as auth_views
 
@@ -84,5 +85,10 @@ urlpatterns = [
     path('ogastos/lista3', gastos_lista3, name='gastos_lista3'),
     #sin permiso
     path('sin_permiso/', sin_permiso, name='sin_permiso'),
+
+    # Captura de gastos New
+    path('seleccionar-evento1/', seleccionar_evento1, name='seleccionar_evento1'),
+    path('capturar-gastos1/<int:evento_id>/', capturar_gastos1, name='capturar_gastos1'),
+    path('listar-gastos1/<int:evento_id>/', listar_gastos1, name='listar_gastos1'),
 
 ]
