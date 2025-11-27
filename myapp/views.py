@@ -127,8 +127,8 @@ def listar_eventos(request):
     return render(request, 'eventos/listar_eventos.html', {'eventos': eventos})
 
 # Crear evento
-#@login_required
-#@permission_required('myapp.add_evento', raise_exception=True)
+@login_required
+@permission_required('myapp.add_evento', login_url='/sin_permiso/')
 def crear_evento(request):
     if request.method == 'POST':
         form = EventoForm(request.POST)
@@ -140,8 +140,8 @@ def crear_evento(request):
     return render(request, 'eventos/crear_evento.html', {'form': form})
 
 # Editar evento
-#@login_required
-#@permission_required('myapp.change_evento', raise_exception=True)
+@login_required
+@permission_required('myapp.change_evento', login_url='/sin_permiso/')
 def editar_evento(request, pk):
     evento = get_object_or_404(Evento, pk=pk)
     if request.method == 'POST':
@@ -154,8 +154,8 @@ def editar_evento(request, pk):
     return render(request, 'eventos/editar_evento.html', {'form': form})
 
 # Eliminar evento
-#@login_required
-#@permission_required('myapp.delete_evento', raise_exception=True)
+@login_required
+@permission_required('myapp.delete_evento', login_url='/sin_permiso/')
 def eliminar_evento(request, pk):
     evento = get_object_or_404(Evento, pk=pk)
     if request.method == 'POST':
@@ -174,8 +174,8 @@ def listar_proveedores(request):
 
 # Crear proveedor
 
-#@login_required
-#@permission_required('myapp.add_proveedor', raise_exception=True)
+@login_required
+@permission_required('myapp.add_proveedor', login_url='/sin_permiso/')
 def crear_proveedor(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST)
@@ -187,8 +187,8 @@ def crear_proveedor(request):
     return render(request, 'proveedores/crear_proveedor.html', {'form': form})
 
 # Editar proveedor
-#@login_required
-#@permission_required('myapp.change_proveedor', raise_exception=True)
+@login_required
+@permission_required('myapp.change_proveedor', login_url='/sin_permiso/')
 def editar_proveedor(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
     if request.method == 'POST':
@@ -201,8 +201,8 @@ def editar_proveedor(request, pk):
     return render(request, 'proveedores/editar_proveedor.html', {'form': form})
 
 # Eliminar proveedor
-#@login_required
-#@permission_required('myapp.delete_proveedor', raise_exception=True)
+@login_required
+@permission_required('myapp.delete_proveedor', login_url='/sin_permiso/')
 def eliminar_proveedor(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
     if request.method == 'POST':
@@ -295,8 +295,8 @@ def listar_gastos_proveedor(request, proveedor_id):
 
     return render(request, "proveedores/listar_gastos_proveedor.html", context)
 
-#@login_required
-#@permission_required('myapp.change_detallegasto', raise_exception=True)
+@login_required
+@permission_required('myapp.change_detallegasto', login_url='/sin_permiso/')
 def editar_gasto(request, pk):
     gasto = get_object_or_404(DetalleGasto, pk=pk)
 
@@ -316,8 +316,8 @@ def listar_categorias(request):
     categorias = Categoria.objects.all()
     return render(request, "conceptos/listar_categorias.html", {"categorias": categorias})
 
-#@login_required
-#@permission_required('myapp.add_categoria', raise_exception=True)
+@login_required
+@permission_required('myapp.add_categoria', login_url='/sin_permiso/')
 def crear_categoria(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
@@ -329,8 +329,8 @@ def crear_categoria(request):
 
     return render(request, "conceptos/crear_categoria.html", {"form": form})
 
-#@login_required
-#@permission_required('myapp.change_categoria', raise_exception=True)
+@login_required
+@permission_required('myapp.change_categoria', login_url='/sin_permiso/')
 def editar_categoria(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
 
@@ -344,8 +344,8 @@ def editar_categoria(request, pk):
 
     return render(request, "conceptos/editar_categoria.html", {"form": form})
 
-#@login_required
-#@permission_required('myapp.delete_categoria', raise_exception=True)
+@login_required
+@permission_required('myapp.delete_categoria', login_url='/sin_permiso/')
 def eliminar_categoria(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
 
@@ -357,11 +357,13 @@ def eliminar_categoria(request, pk):
 
 
 # -------- CONCEPTOS ----------
+
 def listar_conceptos(request):
     conceptos = Concepto.objects.select_related("categoria").order_by("concepto")
     return render(request, "conceptos/listar_conceptos.html", {"conceptos": conceptos})
 
-
+@login_required
+@permission_required('myapp.add_concepto', login_url='/sin_permiso/')
 def crear_concepto(request):
     if request.method == "POST":
         form = ConceptoForm(request.POST)
@@ -373,7 +375,8 @@ def crear_concepto(request):
 
     return render(request, "conceptos/crear_concepto.html", {"form": form})
 
-
+@login_required
+@permission_required('myapp.change_concepto', login_url='/sin_permiso/')
 def editar_concepto(request, pk):
     concepto = get_object_or_404(Concepto, pk=pk)
 
@@ -387,7 +390,8 @@ def editar_concepto(request, pk):
 
     return render(request, "conceptos/editar_concepto.html", {"form": form})
 
-
+@login_required
+@permission_required('myapp.delete_concepto', login_url='/sin_permiso/')
 def eliminar_concepto(request, pk):
     concepto = get_object_or_404(Concepto, pk=pk)
 
@@ -412,7 +416,8 @@ def gastos_lista(request):
 
     return render(request, 'ogastos/lista.html', {'gastos': gastos})
 
-
+@login_required
+@permission_required('myapp.add_detallegasto', login_url='/sin_permiso/')
 def gasto_crear(request):
     evento_id_fijo = 1  # 👈 cambia este ID por el que tú quieras
     evento = Evento.objects.get(pk=evento_id_fijo)
@@ -429,6 +434,8 @@ def gasto_crear(request):
 
     return render(request, 'ogastos/formSinEvento.html', {'form': form})
 
+@login_required
+@permission_required('myapp.change_detallegasto', login_url='/sin_permiso/')
 def gasto_editar(request, folio):
     gasto = get_object_or_404(DetalleGasto, pk=folio)
 
@@ -442,6 +449,8 @@ def gasto_editar(request, folio):
 
     return render(request, 'ogastos/formSinEvento.html', {'form': form})
 
+@login_required
+@permission_required('myapp.delete_detallegasto', login_url='/sin_permiso/')
 def gasto_eliminar(request, folio):
     gasto = get_object_or_404(DetalleGasto, pk=folio)
     gasto.delete()
