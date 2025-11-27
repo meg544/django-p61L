@@ -50,9 +50,10 @@ def seleccionar_evento(request):
         return redirect('capturar_gastos', evento_id=evento_id)
     return render(request, 'seleccionar_evento.html', {'eventos': eventos})
 
-
+def sin_permiso(request):
+    return HttpResponse("Usted no tiene permiso para ver esta página.")
 @login_required
-@permission_required('myapp.add_detallegasto', raise_exception=True)
+@permission_required('myapp.add_detallegasto', login_url='/sin_permiso/')
 def capturar_gastos(request, evento_id):
     evento = get_object_or_404(Evento, pk=evento_id)
     if request.method == 'POST':

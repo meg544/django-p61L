@@ -13,9 +13,11 @@ from myapp.views import (
     editar_proveedor, eliminar_proveedor, reporte_pagos_proveedor, editar_gasto,
     listar_conceptos, editar_concepto,eliminar_concepto, crear_concepto,
     listar_categorias,editar_categoria,eliminar_categoria,crear_categoria,
-    gastos_lista,gasto_crear,gasto_editar,gasto_eliminar,
+    gastos_lista,gasto_crear,gasto_editar,gasto_eliminar,sin_permiso
 )
 from django.contrib.auth import views as auth_views
+
+
 
 urlpatterns = [
 
@@ -78,4 +80,7 @@ urlpatterns = [
     path('ogastos/nuevo/', gasto_crear, name='gasto_crear'),
     path('ogastos/editar/<int:folio>/', gasto_editar, name='gasto_editar'),
     path('ogastos/eliminar/<int:folio>/', gasto_eliminar, name='gasto_eliminar'),
+    #sin permiso
+    path('sin_permiso/', sin_permiso, name='sin_permiso'),
+
 ]
