@@ -35,6 +35,7 @@ from .forms import ConceptoForm, CategoriaForm
 from django.conf import settings
 from django.contrib.staticfiles import finders
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.contrib.auth.decorators import login_required, permission_required
 
 def abs_static(path):
     real_path = finders.find(path)
@@ -49,6 +50,9 @@ def seleccionar_evento(request):
         return redirect('capturar_gastos', evento_id=evento_id)
     return render(request, 'seleccionar_evento.html', {'eventos': eventos})
 
+
+@login_required
+@permission_required('myapp.add_detallegasto', raise_exception=True)
 def capturar_gastos(request, evento_id):
     evento = get_object_or_404(Evento, pk=evento_id)
     if request.method == 'POST':
@@ -122,6 +126,8 @@ def listar_eventos(request):
     return render(request, 'eventos/listar_eventos.html', {'eventos': eventos})
 
 # Crear evento
+#@login_required
+#@permission_required('myapp.add_evento', raise_exception=True)
 def crear_evento(request):
     if request.method == 'POST':
         form = EventoForm(request.POST)
@@ -133,6 +139,8 @@ def crear_evento(request):
     return render(request, 'eventos/crear_evento.html', {'form': form})
 
 # Editar evento
+#@login_required
+#@permission_required('myapp.change_evento', raise_exception=True)
 def editar_evento(request, pk):
     evento = get_object_or_404(Evento, pk=pk)
     if request.method == 'POST':
@@ -145,6 +153,8 @@ def editar_evento(request, pk):
     return render(request, 'eventos/editar_evento.html', {'form': form})
 
 # Eliminar evento
+#@login_required
+#@permission_required('myapp.delete_evento', raise_exception=True)
 def eliminar_evento(request, pk):
     evento = get_object_or_404(Evento, pk=pk)
     if request.method == 'POST':
@@ -162,6 +172,9 @@ def listar_proveedores(request):
     return render(request, 'proveedores/listar_proveedores.html', {'proveedores': proveedores})
 
 # Crear proveedor
+
+#@login_required
+#@permission_required('myapp.add_proveedor', raise_exception=True)
 def crear_proveedor(request):
     if request.method == 'POST':
         form = ProveedorForm(request.POST)
@@ -173,6 +186,8 @@ def crear_proveedor(request):
     return render(request, 'proveedores/crear_proveedor.html', {'form': form})
 
 # Editar proveedor
+#@login_required
+#@permission_required('myapp.change_proveedor', raise_exception=True)
 def editar_proveedor(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
     if request.method == 'POST':
@@ -185,6 +200,8 @@ def editar_proveedor(request, pk):
     return render(request, 'proveedores/editar_proveedor.html', {'form': form})
 
 # Eliminar proveedor
+#@login_required
+#@permission_required('myapp.delete_proveedor', raise_exception=True)
 def eliminar_proveedor(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
     if request.method == 'POST':
@@ -277,6 +294,8 @@ def listar_gastos_proveedor(request, proveedor_id):
 
     return render(request, "proveedores/listar_gastos_proveedor.html", context)
 
+#@login_required
+#@permission_required('myapp.change_detallegasto', raise_exception=True)
 def editar_gasto(request, pk):
     gasto = get_object_or_404(DetalleGasto, pk=pk)
 
@@ -291,11 +310,13 @@ def editar_gasto(request, pk):
     return render(request, "proveedores/editar_gasto.html", {"form": form, "gasto": gasto})
 
 # -------- CATEGORÍAS ----------
+
 def listar_categorias(request):
     categorias = Categoria.objects.all()
     return render(request, "conceptos/listar_categorias.html", {"categorias": categorias})
 
-
+#@login_required
+#@permission_required('myapp.add_categoria', raise_exception=True)
 def crear_categoria(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
@@ -307,7 +328,8 @@ def crear_categoria(request):
 
     return render(request, "conceptos/crear_categoria.html", {"form": form})
 
-
+#@login_required
+#@permission_required('myapp.change_categoria', raise_exception=True)
 def editar_categoria(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
 
@@ -321,7 +343,8 @@ def editar_categoria(request, pk):
 
     return render(request, "conceptos/editar_categoria.html", {"form": form})
 
-
+#@login_required
+#@permission_required('myapp.delete_categoria', raise_exception=True)
 def eliminar_categoria(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
 
