@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'seleccionar_evento' %}">Registro de Gastos</a>
+                    <a class="nav-link" href="{% url 'seleccionar_evento1' %}">Registro de Gastos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'seleccionar_evento_listar_gastos' %}">Listar Gastos x Evento</a>
@@ -45,9 +45,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'gastos_lista3' %}">Imprimir Otros Gastos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'seleccionar_evento1' %}">v1</a>
-                </li>
+                
             </ul>
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
