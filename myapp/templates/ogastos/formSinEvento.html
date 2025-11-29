@@ -1,17 +1,55 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
 
-  <h2>Capturar Gasto</h2>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-info-subtle text-black">
+      <h5 class="mb-0">Captura de Gastos</h5>
+    </div>
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <div class="card-body">
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="{% url 'gastos_lista' %}" class="btn btn-secondary">Cancelar</a>
-  </form>
+      <h6 class="text-secondary">Evento:</h6>
+      <h3>{{ evento.nombre }}</h3>
 
+      <form method="post" class="mt-4" id="gastoForm">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="row mb-3 align-items-center">
+          <label class="col-md-3 col-form-label fw-bold">
+            {{ field.label }}
+          </label>
+          <div class="col-md-9">
+            {{ field }}
+            <!-- Mostrar errores del campo -->
+            {% if field.errors %}
+            <div class="text-danger small">
+              {{ field.errors }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+
+        <button type="submit" id="btnSubmit" class="btn btn-secondary w-100">
+          Guardar Gasto
+        </button>
+      </form>
+
+    </div>
+  </div>
 </div>
+
+<script>
+    const form = document.getElementById("gastoForm");
+    const btn = document.getElementById("btnSubmit");
+
+    form.addEventListener("submit", () => {
+        btn.disabled = true;
+        btn.innerText = "Guardando...";
+    });
+</script>
+
 {% endblock %}
