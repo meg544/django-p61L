@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<!DOCTYPE html>
+
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -73,6 +73,8 @@
 <body>
 <div class="container mt-4">
   <h6>Gastos: {{ evento.nombre }}</h6>
+  <p><strong>Total:</strong> ${{ total }}</p>
+  <button type="button" class="btn btn-primary" onclick="imprimirSeleccionados()">Imprimir Seleccionados</button>
   <table class="table table-bordered">
     <thead>
     <tr>
