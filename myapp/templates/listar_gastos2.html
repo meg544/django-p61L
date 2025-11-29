@@ -38,6 +38,14 @@
         let url = base_url + "?folios=" + folios.join(",");
         window.open(url, "_blank"); // Abre el PDF en una nueva pestaña
     }
+    .sticky-top-buttons {
+    position: sticky;
+    top: 0;
+    background: white;   /* Fondo para evitar que el contenido se vea debajo */
+    padding: 10px 0;
+    z-index: 1000;
+}
+
   </script>
   <style>
          #customers {
@@ -72,9 +80,13 @@
 </head>
 <body>
 <div class="container mt-4">
-  <h6>Gastos: {{ evento.nombre }}</h6>
-  <p><strong>Total:</strong> ${{ total }}</p>
-  <button type="button" class="btn btn-primary" onclick="imprimirSeleccionados()">Imprimir Seleccionados</button>
+  <div class="sticky-top-buttons">
+    <h6>Gastos: {{ evento.nombre }}</h6>
+    <p><strong>Total:</strong> ${{ total }}</p>
+    <button type="button" class="btn btn-primary" onclick="imprimirSeleccionados()">
+      Imprimir Seleccionados
+    </button>
+  </div>
   <table class="table table-bordered">
     <thead>
     <tr>
