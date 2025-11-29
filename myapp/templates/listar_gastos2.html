@@ -83,7 +83,7 @@
 <div class="container mt-4">
   <div class="sticky-top-buttons">
     <h6>Gastos: {{ evento.nombre }}</h6>
-    <p><strong>Total:</strong> ${{ total }}</p>
+    <p><strong>Total:</strong> ${{ total | formato_pesos}}</p>
     <button type="button" class="btn btn-primary" onclick="imprimirSeleccionados()">
       Imprimir Seleccionados
     </button>
@@ -106,7 +106,7 @@
       <td><input type="checkbox" name="gastos_seleccionados" value="{{ gasto.folio }}"></td>
       <td>{{ gasto.folio }}</td>
       <!-- <td>{{ gasto.fecha }}</td>
-       <td>{{ gasto.importe }}</td> -->
+       <td>{{ gasto.importe |formato_pesos }}</td> -->
       <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
       <td>{{ gasto.importe|formato_pesos }}</td>
       <td>{{ gasto.concepto }}</td>
