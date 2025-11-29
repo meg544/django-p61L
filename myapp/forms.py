@@ -11,6 +11,14 @@ class DetalleGastoForm(forms.ModelForm):
             'tipo_gasto': 'Forma de Pago',# 👈 CAMBIO SOLO VISUAL
             'concepto2': 'Cuenta',# 👈 CAMBIO SOLO VISUAL
         }
+        widgets = {
+            'importe': forms.NumberInput(attrs={'class': 'form-control'}),
+            'concepto': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_gasto': forms.Select(attrs={'class': 'form-control'}),
+            'concepto2': forms.Select(attrs={'class': 'form-control'}),
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
+            'comentarios': forms.Textarea(attrs={'class': 'form-control'}),
+        }
 class EventoForm(forms.ModelForm):
     class Meta:
         model = Evento
@@ -70,4 +78,13 @@ class DetalleGastoFormSinEvento(forms.ModelForm):
         labels = {'concepto': 'Tipo de Movimiento',
                   'tipo_gasto': 'Forma de Pago',# 👈 CAMBIO SOLO VISUAL
                   'concepto2': 'Cuenta',# 👈 CAMBIO SOLO VISUAL
+
                  }
+        widgets = {
+            'importe': forms.NumberInput(attrs={'class': 'form-control'}),
+            'concepto': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_gasto': forms.Select(attrs={'class': 'form-control'}),
+            'concepto2': forms.Select(attrs={'class': 'form-control'}),
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
+            'comentarios': forms.Textarea(attrs={'class': 'form-control'}),
+            }
