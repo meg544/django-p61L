@@ -40,6 +40,12 @@
     }
   </script>
   <style>
+        .sticky-top-buttons {
+          position: sticky;
+          top: 0;
+          background: white;   /* Fondo para evitar que el contenido se vea debajo */
+          padding: 10px 0;
+          }
          #customers {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
@@ -72,7 +78,14 @@
 </head>
 <body>
 <div class="container mt-4">
-  <h6>Gastos: {{ evento.nombre }}</h6>
+  <div class="sticky-top-buttons">
+    <h6>Gastos: {{ evento.nombre }}</h6>
+    <p><strong>Total:</strong> {{ total | formato_pesos}}</p>
+    <button type="button" class="btn btn-primary" onclick="imprimirSeleccionados()">
+      Imprimir Seleccionados
+    </button>
+  </div>
+
   <table class="table table-bordered">
     <thead>
     <tr>
