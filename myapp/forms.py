@@ -7,7 +7,7 @@ class DetalleGastoForm(forms.ModelForm):
         model = DetalleGasto
         fields = ['importe', 'concepto', 'tipo_gasto', 'concepto2', 'proveedor', 'comentarios']
         labels = {
-            'concepto': 'Método de Pago',  # 👈 CAMBIO SOLO VISUAL
+            'concepto': 'Tipo de Movimiento',  # 👈 CAMBIO SOLO VISUAL
         }
 class EventoForm(forms.ModelForm):
     class Meta:
@@ -65,5 +65,5 @@ class DetalleGastoFormSinEvento(forms.ModelForm):
         model = DetalleGasto
         fields = ['importe', 'concepto', 'tipo_gasto',
                   'concepto2', 'proveedor', 'comentarios']
-        labels = {'concepto': 'Método de Pago',  # 👈 CAMBIO SOLO VISUAL
+        labels = {'concepto': 'Tipo de Movimiento',  # 👈 CAMBIO SOLO VISUAL
                  }
