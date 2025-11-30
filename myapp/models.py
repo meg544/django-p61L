@@ -61,6 +61,15 @@ class DetalleGasto(models.Model):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     comentarios = models.TextField(blank=True, null=True)
 
+    # 👇 NUEVO CAMPO
+    estatus = models.CharField(
+        max_length=10,
+        choices=[
+            ('ok', 'OK'),
+            ('not_ok', 'Not OK')
+        ],
+        default='ok'
+    )
     def __str__(self):
         return f"Folio {self.folio} - {self.evento.nombre}"
 
