@@ -23,6 +23,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.db.models import Sum
 from django.contrib.staticfiles import finders
+from weasyprint import HTML, CSS
 
 
 from django.shortcuts import render, get_object_or_404, redirect
