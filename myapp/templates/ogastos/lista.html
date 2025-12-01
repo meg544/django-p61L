@@ -36,7 +36,7 @@
       <td>{{ g.fecha|date:"d/m/Y" }}</td>
       <td>{{ g.concepto2 }}</td>
       <td>{{ g.proveedor.nombre }}</td>
-      <td>${{ g.importe }}</td>
+      <td>${{ g.importe |formato_pesos }}</td>
       <td class="comentarios-col">{{ g.comentarios }}</td>
       <td>
         <a href="{% url 'gasto_editar' g.folio %}" class="btn btn-warning btn-sm">Editar</a>
