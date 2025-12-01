@@ -496,7 +496,9 @@ def generar_pdf_multiple3(request):
     return response
 
 def seleccionar_evento1(request):
-    eventos = Evento.objects.all().order_by('nombre')
+    #eventos = Evento.objects.all().order_by('nombre')
+    # Filtrar eventos con ID diferente de 1
+    eventos = Evento.objects.exclude(id=1).order_by('nombre')
     if request.method == 'POST':
         evento_id = request.POST.get('evento')
         return redirect('capturar_gastos1', evento_id=evento_id)
