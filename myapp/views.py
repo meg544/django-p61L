@@ -241,6 +241,35 @@ def generar_pdf_multiple(request):
     return response
 
 
+def generar_pdf_multiple2(request):
+    folios = request.GET.get('folios')
+    if not folios:
+        return HttpResponse("No se han seleccionado registros.", content_type="text/plain")
+
+    folios = folios.split(',')
+    gastos = DetalleGasto.objects.filter(folio__in=folios)
+
+    template_path = "recibo_gastos_multiples2.html"
+    template = get_template(template_path)
+
+    icon_path = abs_static("images/logo.jpg")   # ← ESTA ES LA CLAVE
+
+    context = {
+        "gastos": gastos,
+        "icon": icon_path,
+    }
+
+    html = template.render(context)
+
+    pdf = HTML(string=html).write_pdf()
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="recibos.pdf"'
+
+    return response
+
+
+
 
 
 

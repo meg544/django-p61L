@@ -16,7 +16,8 @@ from myapp.views import (
     gastos_lista,gasto_crear,gasto_editar,gasto_eliminar,sin_permiso,
     generar_pdf_multiple3,
     gastos_lista3,
-    seleccionar_evento1,capturar_gastos1,listar_gastos1
+    seleccionar_evento1,capturar_gastos1,listar_gastos1,
+    generar_pdf_multiple2
 )
 from django.contrib.auth import views as auth_views
 
@@ -84,6 +85,7 @@ urlpatterns = [
     path('ogastos/editar/<int:folio>/', gasto_editar, name='gasto_editar'),
     path('ogastos/eliminar/<int:folio>/', gasto_eliminar, name='gasto_eliminar'),
     path('generar_pdf_multiple3/', generar_pdf_multiple3, name='generar_pdf_multiple3'),
+    path('generar_pdf_multiple2/', generar_pdf_multiple2, name='generar_pdf_multiple2'),
     path('ogastos/lista3', gastos_lista3, name='gastos_lista3'),
     #sin permiso
     path('sin_permiso/', sin_permiso, name='sin_permiso'),
