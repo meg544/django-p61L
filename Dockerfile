@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
     wget \
     && apt-get clean
 
+# Comando de diagnóstico:
+RUN pango-list --version
+
 # Set workdir
 WORKDIR /app
 
