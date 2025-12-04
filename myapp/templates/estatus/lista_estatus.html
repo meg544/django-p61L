@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load formatos %}
+{% block content %}
+
+<head>
+  <style>
+        .sticky-top-buttons {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even) { background-color: #f2f2f2; }
+        #customers tr:hover { background-color: #ddd; }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+        }
+
+        .comentarios-col {
+            max-width: 250px;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+
+<div class="container mt-4">
+  <div class="sticky-top-buttons">
+    <h3>Listado de Gastos (Modificar solo estatus)</h3>
+    <h6>Evento: {{ evento.nombre }}</h6>
+    <p><strong>Total:</strong> {{ total|formato_pesos }}</p>
+
+    <!--  FILTRO DE PROVEEDORES  -->
+    <div class="row mb-2">
+      <div class="col-md-4">
+        <label><strong>Filtrar por proveedor:</strong></label>
+        <select id="filtroProveedor" class="form-select" onchange="filtrarProveedor()">
+          <option value="">-- Todos --</option>
+
+          {% for proveedor in proveedores %}
+          <option value="{{ proveedor.nombre }}">{{ proveedor.nombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-bordered mt-3" id="tablaGastos">
+    <thead>
+    <tr>
+      <th>Folio</th>
+      <th>Fecha</th>
+      <th>Importe</th>
+      <th>Concepto</th>
+      <th>Proveedor</th>
+      <th>Comentarios</th>
+      <th>Estatus</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for gasto in gastos %}
+    <tr id="fila-{{ gasto.folio }}">
+      <td>{{ gasto.folio }}</td>
+      <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
+      <td>{{ gasto.importe|formato_pesos }}</td>
+      <td>{{ gasto.concepto }}</td>
+
+      <!-- PROVEEDOR EN UNA COLUMNA IDENTIFICABLE -->
+      <td class="col-proveedor">{{ gasto.proveedor.nombre }}</td>
+
+      <td class="comentarios-col">{{ gasto.comentarios }}</td>
+
+      <td id="estatus-{{ gasto.folio }}">
+        {% if gasto.estatus == "ok" %}
+        ✔️ OK
+        {% else %}
+        ❌ Not OK
+        {% endif %}
+      </td>
+
+      <td>
+        <button class="btn btn-warning btn-sm" onclick="cambiarEstatus({{ gasto.folio }})">
+          Cambiar rápido
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<script>
+/* ---------------------------
+   CAMBIO RÁPIDO DE ESTATUS
+----------------------------*/
+function cambiarEstatus(folio){
+    fetch(`/estatus/cambiar/${folio}/`, {
+        method: "POST",
+        headers: {"X-CSRFToken": "{{ csrf_token }}"},
+    })
+    .then(response => response.json())
+    .then(data => {
+        let celda = document.getElementById("estatus-" + folio);
+        celda.innerHTML = data.icono + " " + data.estatus.replace("_", " ");
+    });
+}
+
+
+/* ---------------------------
+   FILTRO POR PROVEEDOR
+----------------------------*/
+function filtrarProveedor() {
+    let filtro = document.getElementById("filtroProveedor").value.toLowerCase();
+    let filas = document.querySelectorAll("#tablaGastos tbody tr");
+
+    filas.forEach(fila => {
+        let proveedor = fila.querySelector(".col-proveedor").innerText.toLowerCase();
+
+        if (filtro === "" || proveedor === filtro) {
+            fila.style.display = "";
+        } else {
+            fila.style.display = "none";
+        }
+    });
+}
+</script>
+
+{% endblock %}

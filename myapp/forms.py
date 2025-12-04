@@ -88,3 +88,14 @@ class DetalleGastoFormSinEvento(forms.ModelForm):
             'proveedor': forms.Select(attrs={'class': 'form-control'}),
             'comentarios': forms.Textarea(attrs={'class': 'form-control'}),
             }
+
+class EstatusGastoForm(forms.ModelForm):
+    class Meta:
+        model = DetalleGasto
+        fields = ['estatus']
+        widgets = {
+            'estatus': forms.Select(attrs={'class': 'form-select'})
+        }
+        labels = {
+            'estatus': 'Estatus del gasto'
+        }

@@ -8,6 +8,8 @@ from django.shortcuts import render
 from django.contrib.auth import logout
 from django.utils.timezone import now
 from django.db.models.functions import TruncDate
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 def logout_view(request):
     request.session.flush()
@@ -556,3 +558,58 @@ def listar_gastos1(request, evento_id):
 
 
 
+def seleccionar_evento_estatus(request):
+    #eventos = Evento.objects.all().order_by('nombre')
+    # Filtrar eventos con ID diferente de 1
+    eventos = Evento.objects.exclude(id=1).order_by('nombre')
+    if request.method == 'POST':
+        evento_id = request.POST.get('evento')
+        return redirect('gastos_estatus_lista', evento_id=evento_id)
+    return render(request, 'estatus/seleccionar_evento_estatus.html', {'eventos': eventos})
+@login_required
+@permission_required('myapp.view_detallegasto', login_url='/sin_permiso/')
+def gastos_estatus_lista(request, evento_id):
+    evento = get_object_or_404(Evento, pk=evento_id)
+
+    # Obtener proveedores únicos del evento
+    proveedores = DetalleGasto.objects.filter(evento=evento) \
+        .values_list("proveedor__id", "proveedor__nombre") \
+        .distinct()
+
+    proveedor_filtro = request.GET.get("proveedor", "")  # valor seleccionado en el filtro
+
+    gastos = DetalleGasto.objects.filter(evento=evento)
+
+    if proveedor_filtro:
+        gastos = gastos.filter(proveedor_id=proveedor_filtro)
+
+    gastos = gastos.order_by("proveedor__nombre", "-fecha")
+
+    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0
+
+    return render(
+        request,
+        "estatus/lista_estatus.html",
+        {
+            "gastos": gastos,
+            "evento": evento,
+            "total": total_importe,
+            "proveedores": proveedores,
+            "proveedor_filtro": proveedor_filtro,
+        },
+    )
+
+@require_POST
+@login_required
+@permission_required('myapp.change_detallegasto', login_url='/sin_permiso/')
+def cambiar_estatus_rapido(request, folio):
+    gasto = get_object_or_404(DetalleGasto, pk=folio)
+
+    # Alternar estatus
+    gasto.estatus = "not_ok" if gasto.estatus == "ok" else "ok"
+    gasto.save()
+
+    return JsonResponse({
+        "estatus": gasto.estatus,
+        "icono": "✔️" if gasto.estatus == "ok" else "❌"
+    })
