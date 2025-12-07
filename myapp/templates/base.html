@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Eventos Platinum{% endblock %}</title>
-    <!-- Se actualizó la CDN de Bootstrap a la versión 5.3.3 para mejor compatibilidad con los snippets anteriores -->
-    <link href="cdn.jsdelivr.net" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,56 +15,41 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-
-                <!-- Menú Ingresos (Asumiendo que 'Registro de Gastos' es un Egreso, este menú está vacío o para futuras opciones) -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarIngresosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ingresos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarIngresosDropdown">
-                        <li><a class="dropdown-item" href="#">Registrar Ingreso (Próximamente)</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_evento1' %}">Registro de Gastos</a>
                 </li>
-
-                <!-- Menú Egresos/Gastos -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarEgresosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Egresos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarEgresosDropdown">
-                        <h6 class="dropdown-header">Gastos por Evento</h6>
-                        <li><a class="dropdown-item" href="{% url 'seleccionar_evento1' %}">Registro de Gastos</a></li>
-                        <li><a class="dropdown-item" href="{% url 'seleccionar_evento_listar_gastos' %}">Listar Gastos x Evento</a></li>
-                        <li><a class="dropdown-item" href="{% url 'seleccionar_evento_listar_gastos2' %}">Imprimir Gastos x Evento</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <h6 class="dropdown-header">Otros Gastos</h6>
-                        <li><a class="dropdown-item" href="{% url 'gastos_lista' %}">Listar Otros Gastos</a></li>
-                        <li><a class="dropdown-item" href="{% url 'gastos_lista3' %}">Imprimir Otros Gastos</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'seleccionar_proveedor' %}">Pagos x Proveedor</a></li>
-                        <h6 class="dropdown-header">Estatus</h6>
-                        <li><a class="dropdown-item" href="{% url 'seleccionar_evento_estatus' %}">Status de Eventos</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_evento_listar_gastos' %}">Listar Gastos x Evento</a>
                 </li>
-
-                <!-- Menú Catálogos -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarCatalogosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Catálogos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarCatalogosDropdown">
-                        <li><a class="dropdown-item" href="{% url 'listar_eventos' %}">Eventos</a></li>
-                        <li><a class="dropdown-item" href="{% url 'listar_proveedores' %}">Proveedores</a></li>
-                        <li><a class="dropdown-item" href="{% url 'listar_conceptos' %}">Conceptos</a></li>
-                        <li><a class="dropdown-item" href="{% url 'listar_categorias' %}">Categorias</a></li>
-                        <li><hr class="dropdown-divider"></li>
-
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_evento_listar_gastos2' %}">Imprimir Gastos x Evento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_eventos' %}">Eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_proveedores' %}">Proveedores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_proveedor' %}">Pagos x Proveedor</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_conceptos' %}">Conceptos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_categorias' %}">Categorias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'gastos_lista' %}">Otros Gastos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'gastos_lista3' %}">Imprimir Otros Gastos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seleccionar_evento_estatus' %}">Status</a>
                 </li>
 
             </ul>
-
-            <!-- Sección de Usuario (Alineada a la derecha) -->
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -74,7 +58,7 @@
                     </span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                    <a href="{% url 'logout' %}">Logout</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
@@ -88,11 +72,9 @@
 
 <div class="container mt-4">
     {% block content %}
-    <!-- Contenido específico de la página va aquí -->
     {% endblock %}
 </div>
 
-<!-- Scripts de Bootstrap (Popper.js y JS bundle) -->
-<script src="cdn.jsdelivr.net" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslKqOpmb7Hzar5c0KrRlF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
