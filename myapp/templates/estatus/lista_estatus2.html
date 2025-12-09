@@ -2,13 +2,52 @@
 {% load formatos %}
 {% block content %}
 
+<head>
+  <style>
+.sticky-top-buttons {
+position: sticky;
+top: 0;
+background: white;
+padding: 10px 0;
+z-index: 10;
+}
+
+#customers {
+font-family: Arial, Helvetica, sans-serif;
+border-collapse: collapse;
+width: 100%;
+}
+
+#customers td, #customers th {
+border: 1px solid #ddd;
+padding: 8px;
+}
+
+#customers tr:nth-child(even) { background-color: #f2f2f2; }
+#customers tr:hover { background-color: #ddd; }
+
+#customers th {
+padding-top: 12px;
+padding-bottom: 12px;
+text-align: left;
+}
+
+.comentarios-col {
+max-width: 250px;
+white-space: normal;
+word-wrap: break-word;
+overflow-wrap: break-word;
+}
+</style>
+</head>
+
 <div class="container mt-4">
   <div class="sticky-top-buttons">
     <h3>Listado de Gastos (Modificar solo estatus)</h3>
     <h6>Evento: {{ evento.nombre }}</h6>
-    <!-- CORREGIDO: Elimino el </strong> anidado incorrectamente -->
     <p><strong>Total:</strong> {{ total|formato_pesos }}</p>
 
+    <!--  FILTRO DE PROVEEDORES  -->
     <div class="row mb-2">
       <div class="col-md-4">
         <label><strong>Filtrar por proveedor:</strong></label>
@@ -16,6 +55,7 @@
           <option value="">-- Todos --</option>
 
           {% for proveedor_id, proveedor_nombre in proveedores %}
+          <!-- Usamos el nombre para el valor, ya que tu JS filtra por el nombre -->
           <option value="{{ proveedor_nombre|lower }}">{{ proveedor_nombre }}</option>
           {% endfor %}
         </select>
@@ -32,8 +72,8 @@
       <th>Tipo Movimiento</th>
       <th>Proveedor</th>
       <th>Comentarios</th>
-      <!-- AÑADIDO: Columna para el estatus visual -->
       <th>Estatus</th>
+      <th>Acciones</th>
     </tr>
     </thead>
 
@@ -44,28 +84,25 @@
       <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
       <td>{{ gasto.importe|formato_pesos }}</td>
       <td>{{ gasto.concepto }}</td>
+
+      <!-- PROVEEDOR EN UNA COLUMNA IDENTIFICABLE -->
       <td class="col-proveedor">{{ gasto.proveedor.nombre }}</td>
+
       <td class="comentarios-col">{{ gasto.comentarios }}</td>
 
-      <td>
-        <!-- SELECT PARA CAMBIAR ESTATUS -->
-        <!-- NOTA: El valor del select ya refleja el estatus actual debido al 'selected' de Django. -->
-        <select class="form-select form-select-sm"
-                onchange="actualizarEstatus({{ gasto.folio }}, this.value)">
-          <option value="ok" {% if gasto.estatus == 'ok' %}selected{% endif %}>✔️</option>
-          <option value="not_ok" {% if gasto.estatus == 'not_ok' %}selected{% endif %}>❌</option>
-        </select>
-
-        <!-- Ícono dinámico que se actualiza con JS -->
-        <div id="icono-{{ gasto.folio }}" class="mt-1">
-          {% if gasto.estatus == "ok" %}
-          ✔️
-          {% else %}
-          ❌
-          {% endif %}
-        </div>
+      <td id="estatus-{{ gasto.folio }}">
+        {% if gasto.estatus == "ok" %}
+        ✔️ OK
+        {% else %}
+        ❌ Not OK
+        {% endif %}
       </td>
 
+      <td>
+        <button class="btn btn-warning btn-sm" onclick="cambiarEstatus({{ gasto.folio }})">
+          Cambiar Estatus
+        </button>
+      </td>
     </tr>
     {% endfor %}
     </tbody>
@@ -74,47 +111,38 @@
 
 
 <script>
-/* ======================================================
-   ACTUALIZAR ESTATUS CON SELECT (AJAX)
-====================================================== */
-function actualizarEstatus(folio, nuevoEstatus){
-
-    // CORREGIDO: La URL de fetch debe coincidir con el endpoint de tu vista.
-    // Asumo que tu URL para cambiar estatus espera el folio como parámetro de URL
-    // y lee el nuevo estatus del cuerpo JSON.
-    fetch(`/estatus/cambiar/${folio}/`, {
-        method: "POST",
-        headers: {
-            "X-CSRFToken": "{{ csrf_token }}",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ estatus: nuevoEstatus })
-    })
-    .then(res => res.json())
-    .then(data => {
-        // Asumo que 'data.icono' devuelve el string "✔️" o "❌"
-        let icono = document.getElementById("icono-" + folio);
-        icono.innerHTML = data.icono;
-    })
-    .catch(error => {
-        console.error('Error actualizando el estatus:', error);
-        alert('Hubo un error al actualizar el estatus.');
-    });
+/* ---------------------------
+  CAMBIO RÁPIDO DE ESTATUS
+----------------------------*/
+function cambiarEstatus(folio){
+fetch(`/estatus/cambiar/${folio}/`, {
+method: "POST",
+headers: {"X-CSRFToken": "{{ csrf_token }}"},
+})
+.then(response => response.json())
+.then(data => {
+let celda = document.getElementById("estatus-" + folio);
+celda.innerHTML = data.icono + " " + data.estatus.replace("_", " ");
+});
 }
 
 
-/* ======================================================
-   FILTRO PROVEEDOR
-====================================================== */
+/* ---------------------------
+  FILTRO POR PROVEEDOR
+----------------------------*/
 function filtrarProveedor() {
-    let filtro = document.getElementById("filtroProveedor").value.toLowerCase();
-    let filas = document.querySelectorAll("#tablaGastos tbody tr");
+let filtro = document.getElementById("filtroProveedor").value.toLowerCase();
+let filas = document.querySelectorAll("#tablaGastos tbody tr");
 
-    filas.forEach(fila => {
-        let proveedor = fila.querySelector(".col-proveedor").innerText.toLowerCase();
+filas.forEach(fila => {
+let proveedor = fila.querySelector(".col-proveedor").innerText.toLowerCase();
 
-        fila.style.display = (filtro === "" || proveedor === filtro) ? "" : "none";
-    });
+if (filtro === "" || proveedor === filtro) {
+fila.style.display = "";
+} else {
+fila.style.display = "none";
+}
+});
 }
 </script>
 
