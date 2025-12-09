@@ -615,8 +615,7 @@ def cambiar_estatus_rapido(request, folio):
     })
 
 
-@login_required
-@permission_required('myapp.change_detallegasto', login_url='/sin_permiso/')
+
 def editar_gasto_evento(request, folio):
     gasto = get_object_or_404(DetalleGasto, folio=folio)
 
