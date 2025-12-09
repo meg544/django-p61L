@@ -622,10 +622,12 @@ def editar_gasto_evento(request, folio):
 
     if request.method == "POST":
         form = GastoFormConEvento(request.POST, instance=gasto)
-        if form.is_valid():
+        if form.is_valid()
+            print(f"--- Formulario es válido. Guardando gasto {folio} ---") # <-- AÑADE ESTO
             gasto_actualizado = form.save()  # ← el evento ya está actualizado
             return redirect("listar_gastos", evento_id=gasto_actualizado.evento.id)
     else:
+        print("--- Formulario NO es válido. Errores: ", form.errors) # <-- Y ESTO
         form = GastoFormConEvento(instance=gasto)
 
     return render(request, "editar_gasto_evento.html", {
