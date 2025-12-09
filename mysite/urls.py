@@ -18,7 +18,8 @@ from myapp.views import (
     gastos_lista3,
     seleccionar_evento1,capturar_gastos1,listar_gastos1,
     generar_pdf_multiple2,
-    gastos_estatus_lista,cambiar_estatus_rapido,seleccionar_evento_estatus
+    gastos_estatus_lista,cambiar_estatus_rapido,seleccionar_evento_estatus,
+    editar_gasto_evento,
 )
 from django.contrib.auth import views as auth_views
 
@@ -66,6 +67,7 @@ urlpatterns = [
 
     # Selecciones extra
     path('seleccionar-evento-listar-gastos/', seleccionar_evento_listar_gastos, name='seleccionar_evento_listar_gastos'),
+    path("gasto-evento/editar/<int:folio>/", editar_gasto_evento, name="editar_gasto_evento"),
     path('seleccionar-evento-listar-gastos2/', seleccionar_evento_listar_gastos2, name='seleccionar_evento_listar_gastos2'),
 
     # Categorías

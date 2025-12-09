@@ -30,7 +30,7 @@ from weasyprint import HTML, CSS
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Evento, Proveedor, DetalleGasto
-from .forms import EventoForm, ProveedorForm, ReportePagosForm, DetalleGastoForm,DetalleGastoFormSinEvento
+from .forms import EventoForm, ProveedorForm, ReportePagosForm, DetalleGastoForm,DetalleGastoFormSinEvento,GastoFormConEvento
 from .models import Concepto, Categoria
 from .forms import ConceptoForm, CategoriaForm
 
@@ -612,4 +612,25 @@ def cambiar_estatus_rapido(request, folio):
     return JsonResponse({
         "estatus": gasto.estatus,
         "icono": "✔️" if gasto.estatus == "ok" else "❌"
+    })
+
+
+@login_required
+@permission_required('myapp.change_detallegasto', login_url='/sin_permiso/')
+def editar_gasto_evento(request, folio):
+    gasto = get_object_or_404(DetalleGasto, folio=folio)
+    evento = gasto.evento
+
+    if request.method == "POST":
+        form = GastoFormConEvento(request.POST, instance=gasto)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_gastos", evento_id=evento.id)
+    else:
+        form = GastoFormConEvento(instance=gasto)
+
+    return render(request, "editar_gasto_evento.html", {
+        "form": form,
+        "gasto": gasto,
+        "evento": evento,
     })

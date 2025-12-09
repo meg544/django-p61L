@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Editar Gasto - Folio {{ gasto.folio }}</h3>
+<h5>Evento: {{ evento.nombre }}</h5>
+
+<div class="card p-4">
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label class="form-label">Evento</label>
+      {{ form.evento }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Importe</label>
+      {{ form.importe }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Concepto</label>
+      {{ form.concepto }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Proveedor</label>
+      {{ form.proveedor }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Comentarios</label>
+      {{ form.comentarios }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Estatus</label>
+      {{ form.estatus }}
+    </div>
+
+    <button class="btn btn-primary">Guardar Cambios</button>
+    <a href="{% url 'listar_gastos' evento.id %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+
+{% endblock %}

@@ -99,3 +99,23 @@ class EstatusGastoForm(forms.ModelForm):
         labels = {
             'estatus': 'Estatus del gasto'
         }
+
+
+class GastoFormConEvento(forms.ModelForm):
+    class Meta:
+        model = DetalleGasto
+        fields = ['evento', 'importe', 'concepto', 'tipo_gasto', 'concepto2', 'proveedor', 'comentarios']
+        labels = {
+            'concepto': 'Tipo de Movimiento',  # 👈 CAMBIO SOLO VISUAL
+            'tipo_gasto': 'Forma de Pago',# 👈 CAMBIO SOLO VISUAL
+            'concepto2': 'Cuenta',# 👈 CAMBIO SOLO VISUAL
+        }
+        widgets = {
+            'evento': forms.Select(attrs={'class': 'form-control'}),
+            'importe': forms.NumberInput(attrs={'class': 'form-control'}),
+            'concepto': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_gasto': forms.Select(attrs={'class': 'form-control'}),
+            'concepto2': forms.Select(attrs={'class': 'form-control'}),
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
+            'comentarios': forms.Textarea(attrs={'class': 'form-control'}),
+        }

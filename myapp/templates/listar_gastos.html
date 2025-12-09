@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,7 +68,14 @@
         <!-- 🔥 Comentarios controlado -->
         <td class="comentarios-col">{{ gasto.comentarios }}</td>
         <td>
-            <a href="{% url 'generar_pdf' gasto.folio %}">Imprimir Recibo</a>
+            <a href="{% url 'generar_pdf' gasto.folio %}" class="btn btn-sm btn-primary">
+                Imprimir
+            </a>
+        </td>
+        <td>
+        <a href="{% url 'editar_gasto_evento' gasto.folio %}" class="btn btn-sm btn-primary">
+            Editar
+        </a>
         </td>
     </tr>
     {% endfor %}
