@@ -102,13 +102,14 @@ class EstatusGastoForm(forms.ModelForm):
 
 
 class GastoFormConEvento(forms.ModelForm):
+
     class Meta:
         model = DetalleGasto
         fields = ['evento', 'importe', 'concepto', 'tipo_gasto', 'concepto2', 'proveedor', 'comentarios']
         labels = {
-            'concepto': 'Tipo de Movimiento',  # 👈 CAMBIO SOLO VISUAL
-            'tipo_gasto': 'Forma de Pago',# 👈 CAMBIO SOLO VISUAL
-            'concepto2': 'Cuenta',# 👈 CAMBIO SOLO VISUAL
+            'concepto': 'Tipo de Movimiento',
+            'tipo_gasto': 'Forma de Pago',
+            'concepto2': 'Cuenta',
         }
         widgets = {
             'evento': forms.Select(attrs={'class': 'form-control'}),
@@ -119,8 +120,9 @@ class GastoFormConEvento(forms.ModelForm):
             'proveedor': forms.Select(attrs={'class': 'form-control'}),
             'comentarios': forms.Textarea(attrs={'class': 'form-control'}),
         }
-    def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
 
-    # Orden alfabético
-    self.fields["evento"].queryset = Evento.objects.order_by("nombre")
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # 🔥 Ordenar eventos alfabéticamente
+        self.fields['evento'].queryset = Evento.objects.order_by('nombre')
