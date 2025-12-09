@@ -34,13 +34,10 @@
       {{ form.comentarios }}
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">Estatus</label>
-      {{ form.estatus }}
-    </div>
 
-    <button class="btn btn-primary">Guardar Cambios</button>
-    <a href="{% url 'listar_gastos' evento.id %}" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{% url 'listar_gastos' evento.id %}" class="btn btn-secondary ms-2">Cancelar</a>
+
   </form>
 </div>
 

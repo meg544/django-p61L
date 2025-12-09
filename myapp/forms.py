@@ -126,3 +126,5 @@ class GastoFormConEvento(forms.ModelForm):
 
         # 🔥 Ordenar eventos alfabéticamente
         self.fields['evento'].queryset = Evento.objects.order_by('nombre')
+        self.fields['concepto2'].queryset = Concepto.objects.order_by('nombre')
+        self.fields['proveedor'].queryset = Proveedor.objects.order_by('nombre')
