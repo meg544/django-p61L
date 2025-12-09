@@ -624,8 +624,8 @@ def editar_gasto_evento(request, folio):
 
         # CORRECCIÓN APLICADA AQUÍ:
         if form.is_valid():
-            gasto_actualizado = form.save()
-            return redirect("listar_gastos", evento_id=gasto_actualizado.evento.id)
+            form.save()
+            return redirect("listar_gastos", evento_id=gasto.evento.id)
         # Nota: Si falla la validación, el código continuará al render final,
         # donde la plantilla (si está bien configurada) mostrará los errores.
 

@@ -121,8 +121,4 @@ class GastoFormConEvento(forms.ModelForm):
             'comentarios': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
-        # 🔥 Ordenar eventos alfabéticamente
-        self.fields['evento'].queryset = Evento.objects.order_by('nombre')
