@@ -619,18 +619,17 @@ def cambiar_estatus_rapido(request, folio):
 @permission_required('myapp.change_detallegasto', login_url='/sin_permiso/')
 def editar_gasto_evento(request, folio):
     gasto = get_object_or_404(DetalleGasto, folio=folio)
-    evento = gasto.evento
 
     if request.method == "POST":
         form = GastoFormConEvento(request.POST, instance=gasto)
         if form.is_valid():
-            form.save()
-            return redirect("listar_gastos", evento_id=evento.id)
+            gasto_actualizado = form.save()  # ← el evento ya está actualizado
+            return redirect("listar_gastos", evento_id=gasto_actualizado.evento.id)
     else:
         form = GastoFormConEvento(instance=gasto)
 
     return render(request, "editar_gasto_evento.html", {
         "form": form,
         "gasto": gasto,
-        "evento": evento,
+        "evento": gasto.evento,  # para mostrar en pantalla
     })
