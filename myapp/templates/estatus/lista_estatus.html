@@ -54,16 +54,15 @@
         <select id="filtroProveedor" class="form-select" onchange="filtrarProveedor()">
           <option value="">-- Todos --</option>
 
-          {% for proveedor_id, proveedor_nombre in proveedores %}
-          <!-- Usamos el nombre para el valor, ya que tu JS filtra por el nombre -->
-          <option value="{{ proveedor_nombre|lower }}">{{ proveedor_nombre }}</option>
+          {% for proveedor in proveedores %}
+          <option value="{{ proveedor.nombre }}">{{ proveedor.nombre }}</option>
           {% endfor %}
         </select>
       </div>
     </div>
   </div>
 
-  <table id="customers">
+  <table class="table table-bordered mt-3" id="tablaGastos">
     <thead>
     <tr>
       <th>Folio</th>
