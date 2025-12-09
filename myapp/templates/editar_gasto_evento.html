@@ -9,29 +9,62 @@
   <form method="POST">
     {% csrf_token %}
 
+    <!-- AÑADIDO: Muestra errores globales del formulario si existen -->
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>Error:</strong>
+      <ul>
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+
     <div class="mb-3">
       <label class="form-label">Evento</label>
       {{ form.evento }}
+      <!-- AÑADIDO: Muestra errores específicos del campo Evento -->
+      {% for error in form.evento.errors %}
+      <p class="text-danger small mt-1">{{ error }}</p>
+      {% endfor %}
     </div>
 
     <div class="mb-3">
       <label class="form-label">Importe</label>
       {{ form.importe }}
+      <!-- AÑADIDO: Muestra errores específicos del campo Importe -->
+      {% for error in form.importe.errors %}
+      <p class="text-danger small mt-1">{{ error }}</p>
+      {% endfor %}
     </div>
 
     <div class="mb-3">
       <label class="form-label">Concepto</label>
       {{ form.concepto }}
+      <!-- AÑADIDO: Muestra errores específicos del campo Concepto -->
+      {% for error in form.concepto.errors %}
+      <p class="text-danger small mt-1">{{ error }}</p>
+      {% endfor %}
     </div>
 
     <div class="mb-3">
       <label class="form-label">Proveedor</label>
       {{ form.proveedor }}
+      <!-- AÑADIDO: Muestra errores específicos del campo Proveedor -->
+      {% for error in form.proveedor.errors %}
+      <p class="text-danger small mt-1">{{ error }}</p>
+      {% endfor %}
     </div>
 
     <div class="mb-3">
       <label class="form-label">Comentarios</label>
       {{ form.comentarios }}
+      <!-- AÑADIDO: Muestra errores específicos del campo Comentarios -->
+      {% for error in form.comentarios.errors %}
+      <p class="text-danger small mt-1">{{ error }}</p>
+      {% endfor %}
     </div>
 
 
