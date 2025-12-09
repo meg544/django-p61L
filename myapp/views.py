@@ -617,17 +617,26 @@ def cambiar_estatus_rapido(request, folio):
 
 @login_required
 @permission_required('myapp.change_detallegasto', login_url='/sin_permiso/')
+from django.shortcuts import render, redirect, get_object_or_404
+# Asegúrate de importar tus modelos y formularios aquí
+# from .models import DetalleGasto
+# from .forms import GastoFormConEvento
+
 def editar_gasto_evento(request, folio):
     gasto = get_object_or_404(DetalleGasto, folio=folio)
 
     if request.method == "POST":
         form = GastoFormConEvento(request.POST, instance=gasto)
-        if form.is_valid()
-            print(f"--- Formulario es válido. Guardando gasto {folio} ---") # <-- AÑADE ESTO
-            gasto_actualizado = form.save()  # ← el evento ya está actualizado
+
+        # CORRECCIÓN APLICADA AQUÍ:
+        if form.is_valid():
+            gasto_actualizado = form.save()
             return redirect("listar_gastos", evento_id=gasto_actualizado.evento.id)
+        # Nota: Si falla la validación, el código continuará al render final,
+        # donde la plantilla (si está bien configurada) mostrará los errores.
+
     else:
-        print("--- Formulario NO es válido. Errores: ", form.errors) # <-- Y ESTO
+        # Para peticiones GET, inicializa el formulario con los datos existentes
         form = GastoFormConEvento(instance=gasto)
 
     return render(request, "editar_gasto_evento.html", {
