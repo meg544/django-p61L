@@ -22,7 +22,7 @@ class DetalleGastoForm(forms.ModelForm):
 class EventoForm(forms.ModelForm):
     class Meta:
         model = Evento
-        fields = ['nombre']
+        fields = ['nombre','fecha_evento','estatus']
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
