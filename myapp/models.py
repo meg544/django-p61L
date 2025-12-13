@@ -16,6 +16,12 @@ class Evento(models.Model):
     ]
 
     nombre = models.CharField(max_length=200, unique=True)
+    fecha_evento = models.DateField(
+        verbose_name="Fecha del evento",
+        null=True,
+        blank=True
+    )
+
     estatus = models.CharField(
         max_length=10,
         choices=ESTATUS_CHOICES,
