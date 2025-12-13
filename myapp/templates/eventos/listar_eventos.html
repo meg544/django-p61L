@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<!DOCTYPE html>
+
 <html>
 <head>
     <title>Lista de Eventos</title>
@@ -35,11 +35,15 @@
 <table id="customers">
     <tr>
         <th>Nombre</th>
+        <th>Fecha</th>
+        <th>Estatus</th>
         <th>Opciones</th>
     </tr>
     {% for evento in eventos %}
     <tr>
         <td>{{ evento.nombre }}</td>
+        <td>{{ evento.fecha_evento }}</td>
+        <td>{{ evento.estatus }}</td>
         <td>
             <a href="{% url 'editar_evento' evento.pk %}">Editar</a>
 
