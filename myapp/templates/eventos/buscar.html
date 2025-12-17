@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Evento</title>
+</head>
+<body>
+<h1>Buscar Evento</h1>
+
+<form action="{% url 'buscar_eventos' %}" method="get">
+    <input type="text" name="q" placeholder="Buscar..." value="{{ query|default:'' }}">
+    <button type="submit">Buscar</button>
+</form>
+{% for evento in resultados %}
+<p>{{ evento.nombre }}</p>
+{% endfor %}>
+
+</body>
+</html>
+
+{% endblock %}

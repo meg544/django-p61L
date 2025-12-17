@@ -659,12 +659,10 @@ def gastos_estatus_lista2(request, evento_id):
         .values_list("proveedor__id", "proveedor__nombre") \
         .distinct()
 
-    proveedor_filtro = request.GET.get("proveedor", "")  # valor seleccionado en el filtro
 
     gastos = DetalleGasto.objects.filter(evento=evento)
 
-    if proveedor_filtro:
-        gastos = gastos.filter(proveedor_id=proveedor_filtro)
+
 
     gastos = gastos.order_by("proveedor__nombre", "-fecha")
 
@@ -678,7 +676,7 @@ def gastos_estatus_lista2(request, evento_id):
             "evento": evento,
             "total": total_importe,
             "proveedores": proveedores,
-            "proveedor_filtro": proveedor_filtro,
+           
         },
     )
 
@@ -696,3 +694,19 @@ def cambiar_estatus_rapido2(request, folio):
         "estatus": gasto.estatus,
         "icono": "✔️" if gasto.estatus == "ok" else "❌"
     })
+
+
+def buscar_evento(request):
+    query = request.GET.get('q') # Obtiene el término de búsqueda del formulario (ej: ?q=laptop)
+    resultados = []
+    if query:
+        # Búsqueda en múltiples campos usando Q objects para AND/OR
+        # from django.db.models import Q
+        # resultados = Producto.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains=query))
+
+        # O búsqueda más simple en un campo
+        resultados = Evento.objects.filter(nombre__icontains=query) # No distingue mayús/minús
+        # resultados = Producto.objects.filter(nombre__startswith=query) # Empieza con...
+
+    return render(request, 'buscar.html', {'resultados': resultados, 'query': query})
+
