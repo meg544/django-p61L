@@ -38,8 +38,7 @@ white-space: normal;
 word-wrap: break-word;
 overflow-wrap: break-word;
 }
-
-    </style>
+</style>
 </head>
 
 <div class="container mt-4">
@@ -116,7 +115,7 @@ overflow-wrap: break-word;
   CAMBIO RÁPIDO DE ESTATUS
 ----------------------------*/
 function cambiarEstatus(folio){
-fetch(`/estatus/cambiar2/${folio}/`, {
+fetch(`/estatus/cambiar/${folio}/`, {
 method: "POST",
 headers: {"X-CSRFToken": "{{ csrf_token }}"},
 })
@@ -145,7 +144,6 @@ fila.style.display = "none";
 }
 });
 }
-
 </script>
 
 {% endblock %}
