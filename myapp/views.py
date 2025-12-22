@@ -639,7 +639,8 @@ def editar_gasto_evento(request, folio):
         "gasto": gasto,
         "evento": gasto.evento,  # para mostrar en pantalla
     })
-
+@login_required
+@permission_required('myapp.view_detallegasto', login_url='/sin_permiso/')
 def seleccionar_evento_estatus2(request):
     #eventos = Evento.objects.all().order_by('nombre')
     # Filtrar eventos con ID diferente de 1
