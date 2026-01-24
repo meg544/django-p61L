@@ -115,7 +115,7 @@ overflow-wrap: break-word;
   CAMBIO RÁPIDO DE ESTATUS
 ----------------------------*/
 function cambiarEstatus(folio){
-fetch(`/estatus/cambiar/${folio}/`, {
+fetch(`/estatus2/cambiar2/${folio}/`, {
 method: "POST",
 headers: {"X-CSRFToken": "{{ csrf_token }}"},
 })

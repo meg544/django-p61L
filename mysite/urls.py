@@ -106,7 +106,7 @@ urlpatterns = [
 
     #estatus version 2
     path('estatus2/<int:evento_id>/', gastos_estatus_lista2, name="gastos_estatus_lista2"),
-    path('estatus/cambiar2/<int:folio>/', cambiar_estatus_rapido2, name="cambiar_estatus_rapido2"),
-    path('seleccionar-evento-estatus2/', seleccionar_evento_estatus2, name='seleccionar_evento_estatus2'),
+    path('estatus2/cambiar2/<int:folio>/', cambiar_estatus_rapido2, name="cambiar_estatus_rapido2"),
+    path('estatus2/seleccionar-evento-estatus2/', seleccionar_evento_estatus2, name='seleccionar_evento_estatus2'),
 
 ]

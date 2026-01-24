@@ -649,6 +649,7 @@ def seleccionar_evento_estatus2(request):
         return redirect('gastos_estatus_lista2', evento_id=evento_id)
     return render(request, 'estatus/seleccionar_evento_estatus2.html', {'eventos': eventos})
 
+
 @login_required
 @permission_required('myapp.view_detallegasto', login_url='/sin_permiso/')
 def gastos_estatus_lista2(request, evento_id):
