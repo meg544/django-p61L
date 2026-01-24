@@ -647,7 +647,7 @@ def seleccionar_evento_estatus2(request):
     if request.method == 'POST':
         evento_id = request.POST.get('evento')
         return redirect('gastos_estatus_lista2', evento_id=evento_id)
-    return render(request, 'estatus/seleccionar_evento_estatus2.html', {'eventos': eventos})
+    return render(request, 'estatus2/seleccionar_evento_estatus2.html', {'eventos': eventos})
 
 
 @login_required
@@ -673,7 +673,7 @@ def gastos_estatus_lista2(request, evento_id):
 
     return render(
         request,
-        "estatus/lista_estatus2.html",
+        "estatus2/lista_estatus2.html",
         {
             "gastos": gastos,
             "evento": evento,
