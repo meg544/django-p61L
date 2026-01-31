@@ -21,6 +21,7 @@ from myapp.views import (
     gastos_estatus_lista,cambiar_estatus_rapido,seleccionar_evento_estatus,
     editar_gasto_evento,
     gastos_estatus_lista2,cambiar_estatus_rapido2,seleccionar_evento_estatus2,
+    seleccionar_prov2, listar_gtos_prov2,
 
 )
 from django.contrib.auth import views as auth_views
@@ -108,5 +109,9 @@ urlpatterns = [
     path('estatus2/<int:evento_id>/', gastos_estatus_lista2, name="gastos_estatus_lista2"),
     path('estatus2/cambiar2/<int:folio>/', cambiar_estatus_rapido2, name="cambiar_estatus_rapido2"),
     path('estatus2/seleccionar-evento-estatus2/', seleccionar_evento_estatus2, name='seleccionar_evento_estatus2'),
+
+    #se adiciona seleccionar proveedor 2
+    path("seleccionar-prov2/", seleccionar_prov2, name="seleccionar_prov2"),
+    path("prov2/<int:proveedor_id>/gastos/", listar_gtos_prov2, name="listar_gtos_prov2"),
 
 ]

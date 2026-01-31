@@ -713,3 +713,27 @@ def buscar_evento(request):
 
     return render(request, 'buscar.html', {'resultados': resultados, 'query': query})
 
+def seleccionar_prov2(request):
+    proveedores = Proveedor.objects.all().order_by('nombre')
+    if request.method == 'POST':
+        proveedor_id = request.POST.get('proveedor')
+        return redirect('listar_gtos_prov2', proveedor_id=proveedor_id)
+    return render(request, 'proveedores/seleccionar_prov2.html', {'proveedores': proveedores})
+
+# views.py
+def listar_gtos_prov2(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
+
+    gastos = DetalleGasto.objects.filter(
+        proveedor=proveedor
+    ).order_by("-fecha")  # DESC
+
+    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0
+
+    context = {
+        "proveedor": proveedor,
+        "gastos": gastos,
+        "total": total_importe,
+    }
+
+    return render(request, "proveedores/listar_gtos_prov2.html", context)
