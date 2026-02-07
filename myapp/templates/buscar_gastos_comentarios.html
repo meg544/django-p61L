@@ -2,6 +2,42 @@
 
 {% block content %}
 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Gastos</title>
+  <style>
+         #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        }
+
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers tr:hover {background-color: #ddd;}
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+        }
+        /* 🔥 Hace que comentarios no crezcan demasiado */
+    .comentarios-col {
+        max-width: 250px;      /* ancho fijo */
+        white-space: normal;   /* permite saltos */
+        word-wrap: break-word; /* corta palabras largas */
+        overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
 <div class="container mt-4">
 
   <h3>Buscar gastos por comentarios</h3>
@@ -16,7 +52,7 @@
 
   {% if gastos %}
 
-  <table class="table table-bordered">
+  <table id="customers">
 
     <thead>
     <tr>
@@ -49,5 +85,6 @@
   {% endif %}
 
 </div>
-
+</body>
+</html>
 {% endblock %}
