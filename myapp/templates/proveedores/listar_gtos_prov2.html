@@ -6,6 +6,33 @@
 
 <p><strong>Total: </strong> {{ total|formato_pesos }}</p>
 
+<script>
+function seleccionarTodo(source) {
+    let checkboxes = document.getElementsByName('gastos_seleccionados');
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = source.checked;
+    }
+}
+
+function imprimirSeleccionados() {
+    let seleccionados = document.querySelectorAll('input[name="gastos_seleccionados"]:checked');
+
+    if (seleccionados.length === 0) {
+        alert("Por favor selecciona al menos un gasto para imprimir.");
+        return;
+    }
+
+    let folios = [];
+    seleccionados.forEach((checkbox) => {
+        folios.push(checkbox.value);
+    });
+
+    let base_url = "{% url 'generar_pdf_multiple2' %}";
+    let url = base_url + "?folios=" + folios.join(",");
+    window.open(url, "_blank");
+}
+</script>
+
 <style>
     #customers {
         font-family: Arial, Helvetica, sans-serif;
