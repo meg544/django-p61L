@@ -66,20 +66,31 @@ overflow-wrap: break-word;
     <table class="table table-bordered mt-3" id="tablaGastos">
         <thead>
         <tr>
+            <th>Estatus</th>
             <th>Folio</th>
             <th>Fecha</th>
             <th>Importe</th>
             <th>Tipo Movimiento</th>
             <th>Proveedor</th>
             <th>Comentarios</th>
-            <th>Estatus</th>
-            <th>Acciones</th>
+
+
         </tr>
         </thead>
 
         <tbody>
         {% for gasto in gastos %}
         <tr id="fila-{{ gasto.folio }}">
+            <td id="estatus-{{ gasto.folio }}"
+                style="cursor:pointer"
+                onclick="cambiarEstatus({{ gasto.folio }})">
+
+                {% if gasto.estatus == "ok" %}
+                ✔️
+                {% else %}
+                ❌
+                {% endif %}
+            </td>
             <td>{{ gasto.folio }}</td>
             <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
             <td>{{ gasto.importe|formato_pesos }}</td>
@@ -90,19 +101,9 @@ overflow-wrap: break-word;
 
             <td class="comentarios-col">{{ gasto.comentarios }}</td>
 
-            <td id="estatus-{{ gasto.folio }}">
-                {% if gasto.estatus == "ok" %}
-                ✔️ OK
-                {% else %}
-                ❌ Not OK
-                {% endif %}
-            </td>
 
-            <td>
-                <button class="btn btn-warning btn-sm" onclick="cambiarEstatus({{ gasto.folio }})">
-                    Cambiar Estatus
-                </button>
-            </td>
+
+
         </tr>
         {% endfor %}
         </tbody>
