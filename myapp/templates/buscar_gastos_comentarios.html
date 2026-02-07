@@ -71,7 +71,7 @@
       <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
       <td>{{ gasto.proveedor.nombre }}</td>
       <td>{{ gasto.importe }}</td>
-      <td>{{ gasto.comentarios }}</td>
+      <td class="comentarios-col">{{ gasto.comentarios }}</td>
     </tr>
     {% endfor %}
     </tbody>
