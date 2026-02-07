@@ -123,7 +123,7 @@ headers: {"X-CSRFToken": "{{ csrf_token }}"},
 .then(response => response.json())
 .then(data => {
 let celda = document.getElementById("estatus-" + folio);
-celda.innerHTML = data.icono + " " + data.estatus.replace("_", " ");
+celda.innerHTML = data.icono;
 });
 }
 
