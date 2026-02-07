@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+  <h3>Buscar gastos por comentarios</h3>
+
+  <form method="get" class="mb-3">
+    <input type="text"
+           name="q"
+           value="{{ query }}"
+           class="form-control"
+           placeholder="Buscar en comentarios...">
+  </form>
+
+  {% if gastos %}
+
+  <table class="table table-bordered">
+
+    <thead>
+    <tr>
+      <th>Folio</th>
+      <th>Fecha</th>
+      <th>Proveedor</th>
+      <th>Importe</th>
+      <th>Comentarios</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for gasto in gastos %}
+    <tr>
+      <td>{{ gasto.folio }}</td>
+      <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
+      <td>{{ gasto.proveedor.nombre }}</td>
+      <td>{{ gasto.importe }}</td>
+      <td>{{ gasto.comentarios }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+  {% elif query %}
+
+  <p>No se encontraron resultados.</p>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}

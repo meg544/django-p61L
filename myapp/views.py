@@ -796,3 +796,21 @@ def gastos_lista20(request, evento_id):
             "proveedor_filtro": proveedor_filtro,
         },
     )
+
+def buscar_gastos_comentarios(request):
+
+    query = request.GET.get('q', '')
+
+    gastos = []
+
+    if query:
+        gastos = DetalleGasto.objects.filter(
+            comentarios__icontains=query
+        ).select_related('proveedor', 'evento')
+
+    context = {
+        'gastos': gastos,
+        'query': query
+    }
+
+    return render(request, 'buscar_gastos_comentarios.html', context)
