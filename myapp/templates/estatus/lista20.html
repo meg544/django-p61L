@@ -46,6 +46,7 @@ overflow-wrap: break-word;
         <h3>Revision de Gastos </h3>
         <h6>Evento: {{ evento.nombre }}</h6>
         <p><strong>Total:</strong> {{ total|formato_pesos }}</p>
+        <p><strong>Subtotal proveedor:</strong> <span id="subtotalProveedor">$0.00</span></p>
 
         <!--  FILTRO DE PROVEEDORES  -->
         <div class="row mb-2">
@@ -132,19 +133,41 @@ celda.innerHTML = data.icono;
   FILTRO POR PROVEEDOR
 ----------------------------*/
 function filtrarProveedor() {
+
 let filtro = document.getElementById("filtroProveedor").value.toLowerCase();
 let filas = document.querySelectorAll("#tablaGastos tbody tr");
 
+let subtotal = 0;
+
 filas.forEach(fila => {
+
 let proveedor = fila.querySelector(".col-proveedor").innerText.toLowerCase();
+let importeTexto = fila.children[3].innerText;   // columna importe
+let importe = parseFloat(
+    importeTexto.replace(/[$,]/g,"")
+);
 
 if (filtro === "" || proveedor === filtro) {
-fila.style.display = "";
+    fila.style.display = "";
+
+    if (!isNaN(importe)) {
+        subtotal += importe;
+    }
+
 } else {
-fila.style.display = "none";
+    fila.style.display = "none";
 }
+
+});
+
+// Mostrar subtotal formateado
+document.getElementById("subtotalProveedor").innerText =
+subtotal.toLocaleString("es-MX", {
+    style: "currency",
+    currency: "MXN"
 });
 }
+
 </script>
 
 {% endblock %}
