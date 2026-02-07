@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load formatos %}
 {% block content %}
 
 <html lang="en">
@@ -70,7 +70,7 @@
       <td>{{ gasto.folio }}</td>
       <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
       <td>{{ gasto.proveedor.nombre }}</td>
-      <td>{{ gasto.importe }}</td>
+      <td>{{ gasto.importe|formato_pesos }}</td>
       <td class="comentarios-col">{{ gasto.comentarios }}</td>
     </tr>
     {% endfor %}
