@@ -770,7 +770,7 @@ def gastos_lista20(request, evento_id):
 
     # Obtener proveedores únicos del evento
     proveedores = DetalleGasto.objects.filter(evento=evento) \
-        .values_list("proveedor__id", "proveedor__nombre").order_by('nombre') \
+        .values_list("proveedor__id", "proveedor__nombre").order_by('proveedor__nombre') \
         .distinct()
 
 
