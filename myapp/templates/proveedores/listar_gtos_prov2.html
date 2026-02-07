@@ -6,6 +6,10 @@
 
 <p><strong>Total: </strong> {{ total|formato_pesos }}</p>
 
+<button type="button" class="btn btn-primary" onclick="imprimirSeleccionados()">
+    Imprimir Seleccionados
+</button>
+
 <script>
 function seleccionarTodo(source) {
     let checkboxes = document.getElementsByName('gastos_seleccionados');
@@ -73,6 +77,7 @@ function imprimirSeleccionados() {
 <table id="customers">
     <thead>
     <tr>
+        <th><input type="checkbox" onclick="seleccionarTodo(this)"></th>
         <th>Folio</th>
         <th>Fecha</th>
         <th>Evento</th>
@@ -86,6 +91,7 @@ function imprimirSeleccionados() {
     <tbody>
     {% for gasto in gastos %}
     <tr>
+        <td><input type="checkbox" name="gastos_seleccionados" value="{{ gasto.folio }}"></td>
         <td>{{ gasto.folio }}</td>
         <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
         <td>{{ gasto.evento.nombre }}</td>
