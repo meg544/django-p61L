@@ -24,6 +24,7 @@ from myapp.views import (
     seleccionar_prov2, listar_gtos_prov2,
     seleccionar_evento20,gastos_lista20,cambiar2,
     buscar_gastos_comentarios,
+    lista_graduados, editar_graduado, eliminar_graduado, crear_graduado,
 
 )
 from django.contrib.auth import views as auth_views
@@ -119,5 +120,10 @@ urlpatterns = [
     path("seleccionar-prov2/", seleccionar_prov2, name="seleccionar_prov2"),
     path("prov2/<int:proveedor_id>/gastos/", listar_gtos_prov2, name="listar_gtos_prov2"),
     path('buscar-gastos/', buscar_gastos_comentarios, name='buscar_gastos_comentarios'),
+
+    path('graduados/', lista_graduados, name='lista_graduados'),
+    path('graduados/nuevo/', crear_graduado, name='crear_graduado'),
+    path('graduados/editar/<int:id>/', editar_graduado, name='editar_graduado'),
+    path('graduados/eliminar/<int:id>/', eliminar_graduado, name='eliminar_graduado'),
 
 ]

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+  <a href="{% url 'crear_graduado' %}" class="btn btn-success mb-3">
+    Nuevo Graduado
+  </a>
+
+  <table class="table table-bordered">
+
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Evento</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for g in graduados %}
+    <tr>
+      <td>{{ g.nombre }}</td>
+      <td>{{ g.email }}</td>
+      <td>{{ g.telefono }}</td>
+      <td>{{ g.evento.nombre }}</td>
+      <td>
+        <a href="{% url 'editar_graduado' g.id %}" class="btn btn-warning btn-sm">Editar</a>
+        <a href="{% url 'eliminar_graduado' g.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+</div>
+
+{% endblock %}

@@ -11,6 +11,9 @@ from django.db.models.functions import TruncDate
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 
+from .models import Graduado
+from .forms import GraduadoForm
+
 def logout_view(request):
     request.session.flush()
     if hasattr(request, 'user'):
@@ -814,3 +817,54 @@ def buscar_gastos_comentarios(request):
     }
 
     return render(request, 'buscar_gastos_comentarios.html', context)
+
+
+def lista_graduados(request):
+
+    graduados = Graduado.objects.select_related('evento').order_by('nombre')
+
+    return render(request, 'graduados/lista.html', {
+        'graduados': graduados
+    })
+
+
+def crear_graduado(request):
+
+    form = GraduadoForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('lista_graduados')
+
+    return render(request, 'graduados/form.html', {
+        'form': form,
+        'accion': 'Nuevo'
+    })
+
+
+def editar_graduado(request, id):
+
+    graduado = get_object_or_404(Graduado, id=id)
+    form = GraduadoForm(request.POST or None, instance=graduado)
+
+    if form.is_valid():
+        form.save()
+        return redirect('lista_graduados')
+
+    return render(request, 'graduados/form.html', {
+        'form': form,
+        'accion': 'Editar'
+    })
+
+
+def eliminar_graduado(request, id):
+
+    graduado = get_object_or_404(Graduado, id=id)
+
+    if request.method == 'POST':
+        graduado.delete()
+        return redirect('lista_graduados')
+
+    return render(request, 'graduados/eliminar.html', {
+        'graduado': graduado
+    })

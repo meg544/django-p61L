@@ -1,5 +1,5 @@
 from django import forms
-from .models import DetalleGasto, Evento, Proveedor, Concepto, Categoria
+from .models import DetalleGasto, Evento, Proveedor, Concepto, Categoria, Graduado
 
 
 class DetalleGastoForm(forms.ModelForm):
@@ -126,4 +126,10 @@ class GastoFormConEvento(forms.ModelForm):
         # 🔥 Ordenar eventos alfabéticamente
         self.fields['evento'].queryset = Evento.objects.order_by('nombre')
 
+
+class GraduadoForm(forms.ModelForm):
+
+    class Meta:
+        model = Graduado
+        fields = '__all__'
 
