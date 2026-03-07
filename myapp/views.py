@@ -11,8 +11,9 @@ from django.db.models.functions import TruncDate
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 
-from .models import Graduado
-from .forms import GraduadoForm
+
+from django.utils.dateparse import parse_date
+
 
 def logout_view(request):
     request.session.flush()
@@ -32,10 +33,10 @@ from weasyprint import HTML, CSS
 
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Evento, Proveedor, DetalleGasto
+from .models import Evento, Proveedor, DetalleGasto, Graduado
 from .forms import EventoForm, ProveedorForm, ReportePagosForm, DetalleGastoForm,DetalleGastoFormSinEvento,GastoFormConEvento
 from .models import Concepto, Categoria
-from .forms import ConceptoForm, CategoriaForm
+from .forms import ConceptoForm, CategoriaForm, GraduadoForm
 
 
 from django.conf import settings
@@ -868,3 +869,35 @@ def eliminar_graduado(request, id):
     return render(request, 'graduados/eliminar.html', {
         'graduado': graduado
     })
+
+
+
+
+def detalle_gastos_rango(request):
+    fecha_inicio = request.GET.get('fecha_inicio')
+    fecha_fin = request.GET.get('fecha_fin')
+    evento_id = request.GET.get('evento')
+
+    gastos = DetalleGasto.objects.all().select_related(
+        'evento', 'concepto2', 'proveedor'
+    ).order_by('-fecha')
+
+    if fecha_inicio and fecha_fin:
+        gastos = gastos.filter(
+            fecha__date__range=[fecha_inicio, fecha_fin]
+        )
+
+    if evento_id:
+        gastos = gastos.filter(evento_id=evento_id)
+
+    total = gastos.aggregate(total=Sum('importe'))['total'] or 0
+
+    context = {
+        'gastos': gastos,
+        'total': total,
+        'fecha_inicio': fecha_inicio,
+        'fecha_fin': fecha_fin,
+        'evento_id': evento_id
+    }
+
+    return render(request, 'reportes/detalle_gastos_rango.html', context)

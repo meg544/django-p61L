@@ -131,5 +131,5 @@ class GraduadoForm(forms.ModelForm):
 
     class Meta:
         model = Graduado
-        fields = '__all__'
+        fields = ['nombre','telefono','email','evento']
 

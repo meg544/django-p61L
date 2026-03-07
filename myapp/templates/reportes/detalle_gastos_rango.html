@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2>Reporte de Gastos por Rango de Fechas</h2>
+
+  <!-- Filtro -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+      <label>Fecha Inicio</label>
+      <input type="date"
+             name="fecha_inicio"
+             value="{{ fecha_inicio }}"
+             class="form-control">
+    </div>
+
+    <div class="col-md-3">
+      <label>Fecha Fin</label>
+      <input type="date"
+             name="fecha_fin"
+             value="{{ fecha_fin }}"
+             class="form-control">
+    </div>
+
+    <div class="col-md-3 align-self-end">
+      <button type="submit" class="btn btn-primary">
+        Filtrar
+      </button>
+    </div>
+  </form>
+
+  <!-- Total -->
+  <div class="alert alert-info">
+    <strong>Total del periodo:</strong>
+    ${{ total_periodo|floatformat:2 }}
+  </div>
+
+  <!-- Tabla -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+      <tr>
+        <th>Folio</th>
+        <th>Fecha</th>
+        <th>Evento</th>
+        <th>Importe</th>
+        <th>Concepto</th>
+        <th>Tipo Gasto</th>
+        <th>Proveedor</th>
+        <th>Estatus</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for gasto in gastos %}
+      <tr>
+        <td>{{ gasto.folio }}</td>
+        <td>{{ gasto.fecha|date:"d/m/Y H:i" }}</td>
+        <td>{{ gasto.evento.nombre }}</td>
+        <td>${{ gasto.importe|floatformat:2 }}</td>
+        <td>{{ gasto.get_concepto_display }}</td>
+        <td>{{ gasto.get_tipo_gasto_display }}</td>
+        <td>{{ gasto.proveedor.nombre }}</td>
+        <td>
+          {% if gasto.estatus == "ok" %}
+          <span class="badge bg-success">OK</span>
+          {% else %}
+          <span class="badge bg-danger">Not OK</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8" class="text-center">
+          No existen gastos en este rango
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
