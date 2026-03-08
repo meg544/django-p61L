@@ -890,11 +890,12 @@ def detalle_gastos_rango(request):
     if evento_id:
         gastos = gastos.filter(evento_id=evento_id)
 
-    total_periodo = gastos.aggregate(Sum("importe"))["importe__sum"] or 0
+
+    total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0
 
     context = {
         'gastos': gastos,
-        'total': total,
+        'total_periodo':total_importe,
         'fecha_inicio': fecha_inicio,
         'fecha_fin': fecha_fin,
         'evento_id': evento_id
