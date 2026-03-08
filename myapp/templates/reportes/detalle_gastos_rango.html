@@ -2,6 +2,15 @@
 {% load formatos %}
 {% block content %}
 
+<style>
+/* Limitar tamaño de la columna comentarios */
+.col-comentarios{
+    max-width:250px;
+    white-space:normal;
+    word-wrap:break-word;
+    overflow-wrap: break-word;
+}
+</style>
 <div class="container mt-4">
   <h2>Reporte de Gastos por Rango de Fechas</h2>
 
@@ -63,7 +72,7 @@
         <td>{{ gasto.get_concepto_display }}</td>
         <td>{{ gasto.get_tipo_gasto_display }}</td>
         <td>{{ gasto.proveedor.nombre }}</td>
-        <td>{{ gasto.comentarios }}</td>
+        <td class="comentarios-col">{{ gasto.comentarios }}</td>
         <td>
           {% if gasto.estatus == "ok" %}
           <span class="badge bg-success">OK</span>
