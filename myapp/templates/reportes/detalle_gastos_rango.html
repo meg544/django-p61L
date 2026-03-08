@@ -85,8 +85,9 @@
         <th>Fecha</th>
         <th>Evento</th>
         <th>Importe</th>
-        <th>Concepto</th>
-        <th>Tipo Gasto</th>
+        <th>Mov</th>
+        <th>Forma Pago</th>
+        <th>Categoria</th>
         <th>Proveedor</th>
         <th>Comentarios</th>
         <th>Estatus</th>
@@ -101,6 +102,7 @@
         <td>{{ gasto.importe|formato_pesos }}</td>
         <td>{{ gasto.get_concepto_display }}</td>
         <td>{{ gasto.get_tipo_gasto_display }}</td>
+        <td>{{ gasto.concepto.categoria }}</td>
         <td>{{ gasto.proveedor.nombre }}</td>
         <td class="comentarios-col">{{ gasto.comentarios }}</td>
         <td>
