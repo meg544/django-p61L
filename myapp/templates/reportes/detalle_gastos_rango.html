@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load formatos %}
 {% block content %}
 
 <div class="container mt-4">
@@ -57,7 +58,7 @@
         <td>{{ gasto.folio }}</td>
         <td>{{ gasto.fecha|date:"d/m/Y H:i" }}</td>
         <td>{{ gasto.evento.nombre }}</td>
-        <td>${{ gasto.importe|floatformat:2 }}</td>
+        <td>${{ gasto.importe|formato_pesos }}</td>
         <td>{{ gasto.get_concepto_display }}</td>
         <td>{{ gasto.get_tipo_gasto_display }}</td>
         <td>{{ gasto.proveedor.nombre }}</td>
