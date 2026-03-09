@@ -10,6 +10,7 @@ from django.utils.timezone import now
 from django.db.models.functions import TruncDate
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from datetime import date
 
 
 from django.utils.dateparse import parse_date
@@ -874,28 +875,37 @@ def eliminar_graduado(request, id):
 
 
 def detalle_gastos_rango(request):
+
     fecha_inicio = request.GET.get('fecha_inicio')
     fecha_fin = request.GET.get('fecha_fin')
     evento_id = request.GET.get('evento')
 
-    gastos = DetalleGasto.objects.all().select_related(
+    hoy = date.today()
+    primer_dia_mes = hoy.replace(day=1)
+
+    # Si no vienen fechas del formulario
+    if not fecha_inicio:
+        fecha_inicio = primer_dia_mes.strftime('%Y-%m-%d')
+
+    if not fecha_fin:
+        fecha_fin = hoy.strftime('%Y-%m-%d')
+
+    gastos = DetalleGasto.objects.select_related(
         'evento', 'concepto2', 'proveedor'
     ).order_by('-fecha')
 
-    if fecha_inicio and fecha_fin:
-        gastos = gastos.filter(
-            fecha__date__range=[fecha_inicio, fecha_fin]
-        )
+    gastos = gastos.filter(
+        fecha__date__range=[fecha_inicio, fecha_fin]
+    )
 
     if evento_id:
         gastos = gastos.filter(evento_id=evento_id)
-
 
     total_importe = gastos.aggregate(total=Sum('importe'))['total'] or 0
 
     context = {
         'gastos': gastos,
-        'total_periodo':total_importe,
+        'total_periodo': total_importe,
         'fecha_inicio': fecha_inicio,
         'fecha_fin': fecha_fin,
         'evento_id': evento_id
