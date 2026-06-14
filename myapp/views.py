@@ -762,7 +762,7 @@ def listar_gtos_prov2(request, proveedor_id):
 def seleccionar_evento20(request):
     #eventos = Evento.objects.all().order_by('nombre')
     # Filtrar eventos con ID diferente de 1
-    eventos = Evento.objects.exclude(id=1).order_by('nombre')
+    eventos = Evento.objects.exclude(id=1).filter(estatus='abierto').order_by('nombre')
     if request.method == 'POST':
         evento_id = request.POST.get('evento')
         return redirect('gastos_lista20', evento_id=evento_id)
